@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 15:45:21 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/06 11:02:05 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2021/10/13 15:26:26 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,22 @@ typedef struct s_files
 	char	*file_out;
 }	t_files;
 
+typedef struct s_pipefds
+{
+	int	read;
+	int	write;
+}	t_pipefds;
+
 typedef enum e_status
 {
-	FAILURE,
-	SUCCESS
+	SUCCESS,
+	FAILURE
 }	t_status;
+
+typedef enum e_bool
+{
+	false,
+	true
+}	t_bool;
 
 #endif
