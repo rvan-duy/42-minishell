@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 15:45:21 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/06 11:02:05 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2021/10/13 14:14:22 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,24 @@ typedef enum e_status
 	FAILURE,
 	SUCCESS
 }	t_status;
+
+typedef enum e_bool
+{
+	false,
+	true
+}	t_bool;
+
+typedef enum e_arg_type
+{
+	LITERAL,
+	VARIABLE
+}	t_arg_type;
+
+typedef struct s_arg
+{
+	t_arg_type		type;
+	char			*value;
+	struct s_arg	*next_part;
+}	t_arg;
 
 #endif

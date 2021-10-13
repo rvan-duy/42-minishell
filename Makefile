@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
+#                                                    +#+                       #
+#    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
+#    Updated: 2021/10/13 14:36:19 by mvan-wij      ########   odam.nl          #
+#                                                                              #
+# **************************************************************************** #
+
 PROJECT		= minishell
 NAME		= minishell
 NAME_BONUS	= minishell
@@ -13,9 +25,14 @@ CFLAGS	+= -g
 endif
 
 # Common
-LIBS	= -L$(dir $(LIBFT)) -lft
-HEADERS	= libft/libft.h
-SOURCES	=
+LIBS	= -L$(dir $(LIBFT)) -lft -L$(HOME)/.brew/Cellar/criterion/2.3.3/lib -lcriterion
+HEADERS	= libft/libft.h include/structs.h include/utilities.h include/lex.h
+SOURCES	= src/lexing/lex.c src/lexing/utils.c src/lexing/lex_part.c
+
+ifdef DO_TESTS
+CFLAGS	+= -DDO_TESTS=1
+SOURCES += src/test/*.c
+endif
 
 ifndef BONUS
 # Not Bonus
@@ -25,7 +42,7 @@ CFLAGS	+=
 LIBS	+=
 else
 # Bonus
-NAME	=$(NAME_BONUS)
+NAME	= $(NAME_BONUS)
 SOURCES	+=
 HEADERS	+=
 CFLAGS	+=
@@ -40,7 +57,7 @@ SRCDIR = src
 OBJDIR = obj
 
 OBJECTS = $(patsubst $(SRCDIR)/%,$(OBJDIR)/%, $(SOURCES:c=o))
-INCLUDES = $(addprefix -I,$(dir $(HEADERS)))
+INCLUDES = $(addprefix -I,$(dir $(HEADERS))) -I$(HOME)/.brew/Cellar/criterion/2.3.3/include
 
 .PHONY: all clean fclean re debug bonus
 
