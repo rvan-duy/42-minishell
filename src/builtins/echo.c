@@ -6,13 +6,13 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/07 15:30:01 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/13 12:45:21 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/10/14 11:27:41 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-int	echo(t_cmd_node *nodes)
+int	builtin_echo(t_cmd_node *nodes)
 {
 	int		i;
 	t_bool	n_flag;

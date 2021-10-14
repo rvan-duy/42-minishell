@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 16:51:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/13 15:19:47 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/10/14 11:46:25 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@ int	main(int argc, char **argv, char **envp)
 		// parse_line(line, &nodes, &files);
 		// init_echo_plus_n_flag(&nodes);
 		// init_echo_without_n_flag(&nodes);
-		nodes.argv = calloc(2, sizeof(char *));
-		nodes.argv[0] = strdup("pwd");
+		nodes.argv = calloc(3, sizeof(char *));
+		nodes.argv[0] = strdup("echooo");
+		nodes.argv[1] = strdup("hello");
 		nodes.cmd = nodes.argv[0];
-		if (!ft_strncmp(line, "test", 4))
-			start_tests_echo(&nodes);
+		// if (!ft_strncmp(line, "test", 4))
+		// 	start_tests_echo(&nodes);
 		execute_line(&nodes, &files, envp);
+		printf("current dir: %s\n", getcwd(NULL, 0));
 	}
 	return (0);
 }

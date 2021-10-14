@@ -6,14 +6,14 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/13 15:09:25 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/13 16:58:38 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/10/14 11:27:48 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 #include <unistd.h>
 
-int	pwd(void)
+int	builtin_pwd(void)
 {
 	char	*buf;
 

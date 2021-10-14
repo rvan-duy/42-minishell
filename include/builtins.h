@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/07 15:46:40 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/13 15:18:05 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/10/14 11:15:15 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-int	echo(t_cmd_node *nodes);
-// cd
-int	pwd(void);
+int	builtin_echo(t_cmd_node *nodes);
+int	builtin_cd(t_cmd_node *nodes);
+int	builtin_pwd(void);
 
 #endif
