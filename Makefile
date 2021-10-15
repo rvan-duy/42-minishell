@@ -24,15 +24,16 @@ HEADERS	=	libft/libft.h \
 
 SOURCES	= 	src/execute.c \
 			src/safe/safe_chdir.c \
+			src/safe/safe_check_acces.c \
 			src/safe/safe_close.c \
 			src/safe/safe_create_pipe.c \
 			src/safe/safe_dup2.c \
 			src/safe/safe_fork.c \
 			src/safe/safe_open.c \
 			src/utils_2.c \
-			src/builtins/echo.c \
-			src/builtins/cd.c \
-			src/builtins/pwd.c \
+			src/builtins/builtin_echo.c \
+			src/builtins/builtin_cd.c \
+			src/builtins/builtin_pwd.c \
 			src/envp/envp_dup.c \
 			src/envp/envp_get_var.c \
 			src/ruben_tests/criterion/criterion_tests_utilities.c

@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/07 10:35:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/15 13:49:23 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/10/15 16:36:23 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,6 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-void	check_acces(const char *cmd, int oflag)
-{
-	if (access(cmd, oflag) < 0)
-	{
-		if (cmd == NULL)
-			ft_putstr_fd("(acces) NULL: ", 2);
-		perror(cmd);
-		exit(EXIT_FAILURE);
-	}
-}
 
 t_bool	contains_flag(const char *string, const char *flag)
 {

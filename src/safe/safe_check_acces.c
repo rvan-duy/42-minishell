@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   safe.h                                             :+:    :+:            */
+/*   safe_check_acces.c                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/15 12:48:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/15 16:42:05 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/15 16:36:25 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/10/15 16:38:05 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SAFE_H
-# define SAFE_H
+#include "libft.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
 
-# include "structs.h"
-# include <unistd.h>
-
-pid_t		safe_fork(void);
-t_pipefds	safe_create_pipe(void);
-void		safe_close(int fd);
-int			safe_open(const char *filename, int oflag);
-void		safe_dup2(int fildes1, int fildes2);
-void		safe_chdir(const char *dir);
-void		safe_check_acces(const char *cmd, int oflag);
-
-#endif
+void	safe_check_acces(const char *cmd, int oflag)
+{
+	if (access(cmd, oflag) < 0)
+	{
+		if (cmd == NULL)
+			ft_putstr_fd("(acces) NULL: ", 2);
+		perror(cmd);
+		exit(EXIT_FAILURE);
+	}
+}
