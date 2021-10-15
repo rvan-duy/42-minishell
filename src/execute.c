@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/15 16:43:25 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/10/15 17:01:23 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	end_chain(t_cmd_node *nodes, t_files *files, int fd_in, char **envp)
 		fd_out = safe_open(files->file_out, O_WRONLY | O_CREAT | O_TRUNC);
 		safe_dup2(fd_in, STDIN_FILENO);
 		safe_dup2(fd_out, STDOUT_FILENO);
-		safe_check_acces(nodes->cmd, X_OK);
+		safe_check_access(nodes->cmd, X_OK);
 		execve(nodes->cmd, nodes->argv, envp);
 	}
 	safe_close(fd_in);
@@ -51,7 +51,7 @@ static void	continue_chain(t_cmd_node *nodes, t_files *files, int fd_in, char **
 			safe_close(pipe_fds.read);
 			safe_dup2(fd_in, STDIN_FILENO);
 			safe_dup2(pipe_fds.write, STDOUT_FILENO);
-			safe_check_acces(nodes[i].cmd, X_OK);
+			safe_check_access(nodes[i].cmd, X_OK);
 			execve(nodes[i].cmd, nodes[i].argv, envp);
 		}
 		safe_close(fd_in);
@@ -90,7 +90,7 @@ static void	start_chain(t_cmd_node *nodes, t_files *files, char **envp)
 		if (nodes->pipe_to != NULL)
 			safe_dup2(pipe_fds.write, STDOUT_FILENO);
 		check_builtin(nodes, envp);
-		safe_check_acces(nodes->cmd, X_OK);
+		safe_check_access(nodes->cmd, X_OK);
 		execve(nodes->cmd, nodes->argv, envp);
 	}
 	safe_close(pipe_fds.write);
