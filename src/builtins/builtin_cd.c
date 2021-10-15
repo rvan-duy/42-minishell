@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pwd.c                                              :+:    :+:            */
+/*   cd.c                                               :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/13 15:09:25 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/14 11:27:48 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/14 11:14:09 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/10/15 13:52:59 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "structs.h"
+#include "envp.h"
+#include "safe.h"
 #include <unistd.h>
+#include <stdlib.h>
 
-int	builtin_pwd(void)
+int	builtin_cd(t_cmd_node *nodes, char *envp[])
 {
-	char	*buf;
+	char	*home;
 
-	buf = getcwd(NULL, 0);
-	if (buf == NULL)
+	if (nodes->argv[1] == NULL || nodes->argv[1][0] == '~')
 	{
-		perror("getcwd");
-		return (EXIT_FAILURE);
+		if (envp_get_var("HOME", envp, &home) == FAILURE)
+			return (EXIT_FAILURE);
+		safe_chdir(home);
 	}
-	ft_putendl_fd(buf, STDOUT_FILENO);
-	free(buf);
+	else
+		safe_chdir(nodes->argv[1]);
 	return (EXIT_SUCCESS);
 }

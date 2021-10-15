@@ -1,37 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   echo.c                                             :+:    :+:            */
+/*   pwd.c                                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/07 15:30:01 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/14 11:27:41 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/13 15:09:25 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/10/15 13:53:50 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
-int	builtin_echo(t_cmd_node *nodes)
+int	builtin_pwd(void)
 {
-	int		i;
-	t_bool	n_flag;
+	char	*buf;
 
-	i = 1;
-	n_flag = false;
-	while (contains_flag(nodes->argv[i], "-n") == true)
+	buf = getcwd(NULL, 0);
+	if (buf == NULL)
 	{
-		n_flag = true;
-		i++;
+		perror("getcwd");
+		return (EXIT_FAILURE);
 	}
-	while (nodes->argv[i] != NULL)
-	{
-		ft_putstr_fd(nodes->argv[i], STDOUT_FILENO);
-		if (nodes->argv[i] != NULL)
-			ft_putchar_fd(' ', STDOUT_FILENO);
-		i++;
-	}
-	if (n_flag == false)
-		ft_putchar_fd('\n', STDOUT_FILENO);
+	ft_putendl_fd(buf, STDOUT_FILENO);
+	free(buf);
 	return (EXIT_SUCCESS);
 }
