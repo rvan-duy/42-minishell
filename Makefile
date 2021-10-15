@@ -24,7 +24,7 @@ HEADERS	=	libft/libft.h \
 
 SOURCES	= 	src/execute.c \
 			src/safe/safe_chdir.c \
-			src/safe/safe_check_acces.c \
+			src/safe/safe_check_access.c \
 			src/safe/safe_close.c \
 			src/safe/safe_create_pipe.c \
 			src/safe/safe_dup2.c \
