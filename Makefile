@@ -14,7 +14,7 @@ endif
 
 # Common
 LIBS	= -L$(dir $(LIBFT)) -lft -lreadline -L$(HOME)/.brew/Cellar/criterion/2.3.3/lib -lcriterion
-HEADERS	= libft/libft.h include/structs.h include/execute.h include/utilities.h src/ruben_tests/tests.h
+HEADERS	= libft/libft.h include/structs.h include/execute.h include/safe.h include/utilities.h src/ruben_tests/tests.h
 SOURCES	= 	src/main.c \
 			src/execute.c \
 			src/safe/chdir.c \

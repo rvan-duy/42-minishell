@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utilities.h                                        :+:    :+:            */
+/*   safe.h                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/06 11:48:54 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/15 12:48:22 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/15 12:48:05 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/10/15 12:48:45 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILITIES_H
-# define UTILITIES_H
+#ifndef SAFE_H
+# define SAFE_H
 
-# include "libft.h"
 # include "structs.h"
 # include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <fcntl.h>
-# include <sys/errno.h>
 
-void		check_acces(const char *cmd, int oflag);
-t_bool		contains_flag(const char *string, const char *flag);
-t_status	get_env_var(char *var, char *envp[], char **dst);
+pid_t		safe_fork(void);
+t_pipefds	safe_create_pipe(void);
+void		safe_close(int fd);
+int			safe_open(const char *filename, int oflag);
+void		safe_dup2(int fildes1, int fildes2);
+void		safe_chdir(const char *dir);
 
 #endif
