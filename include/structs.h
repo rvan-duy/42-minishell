@@ -6,24 +6,12 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 15:45:21 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/13 15:26:26 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/10/15 12:29:30 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
-
-/**
- * cmd: command/file to execute
- * argv: { argv0, argv1, ... }
- * pipe_to: next command in series, NULL if final
- */
-typedef struct s_cmd_node
-{
-	char				*cmd;
-	char				**argv;
-	struct s_cmd_node	*pipe_to;
-}	t_cmd_node;
 
 /**
  * file_in: file to put on stdin (NULL if no file specified)
@@ -34,6 +22,20 @@ typedef struct s_files
 	char	*file_in;
 	char	*file_out;
 }	t_files;
+
+/**
+ * cmd: command/file to execute
+ * argv: { argv0, argv1, ... }
+ * pipe_to: next command in series, NULL if final
+ * files: in and out files for that cmd
+ */
+typedef struct s_cmd_node
+{
+	char				*cmd;
+	char				**argv;
+	struct s_cmd_node	*pipe_to;
+	t_files				files;
+}	t_cmd_node;
 
 typedef struct s_pipefds
 {

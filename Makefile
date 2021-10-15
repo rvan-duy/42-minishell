@@ -15,7 +15,17 @@ endif
 # Common
 LIBS	= -L$(dir $(LIBFT)) -lft -lreadline -L$(HOME)/.brew/Cellar/criterion/2.3.3/lib -lcriterion
 HEADERS	= libft/libft.h include/structs.h include/execute.h include/utilities.h src/ruben_tests/tests.h
-SOURCES	= src/main.c src/execute.c src/utils_1.c src/utils_2.c src/builtins/echo.c src/ruben_tests/init_test_struct_echo.c src/ruben_tests/start_tests_echo.c src/ruben_tests/criterion/contains_flag.c src/builtins/pwd.c  src/builtins/cd.c
+SOURCES	= 	src/main.c \
+			src/execute.c \
+			src/utils_1.c \
+			src/utils_2.c \
+			src/builtins/echo.c \
+			src/builtins/cd.c \
+			src/builtins/pwd.c \
+			src/envp/envp_dup.c \
+			src/ruben_tests/init_test_struct_echo.c \
+			src/ruben_tests/start_tests_echo.c \
+			src/ruben_tests/criterion/criterion_tests_utilities.c
 
 ifndef BONUS
 # Not Bonus
