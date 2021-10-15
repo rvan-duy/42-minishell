@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/14 11:48:40 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/10/14 15:53:32 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,12 @@ static void	continue_chain(t_cmd_node *nodes, t_files *files, int fd_in, char **
 
 static int	check_builtin(t_cmd_node *nodes, char **envp)
 {
-	(void)envp;
 	if (!ft_strncmp(nodes->cmd, "echo", ft_strlen(nodes->cmd) + 1))
 		return (builtin_echo(nodes));
 	if (!ft_strncmp(nodes->cmd, "pwd", ft_strlen(nodes->cmd) + 1))
 		return (builtin_pwd());
 	if (!ft_strncmp(nodes->cmd, "cd", ft_strlen(nodes->cmd) + 1))
-		return (builtin_cd(nodes));
+		return (builtin_cd(nodes, envp));
 	return (NO_BUILTIN);
 }
 
@@ -97,6 +96,7 @@ static void	start_chain(t_cmd_node *nodes, t_files *files, char **envp)
 
 int	execute_line(t_cmd_node *nodes, t_files *files, char **envp)
 {
+	// this can return -1 1 or 2 .. check that
 	if (check_builtin(nodes, envp) != NO_BUILTIN)
 		return (SUCCESS);
 	start_chain(nodes, files, envp);
