@@ -6,12 +6,15 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/07 10:35:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/15 12:55:12 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/10/15 13:49:23 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utilities.h"
-#include <criterion/criterion.h>
+#include "structs.h"
+#include "libft.h"
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 void	check_acces(const char *cmd, int oflag)
 {

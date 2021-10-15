@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   close.c                                            :+:    :+:            */
+/*   safe_open.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/15 12:39:29 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/15 12:40:26 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/15 12:41:06 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/10/15 13:45:52 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+#include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <sys/errno.h>
+#include <fcntl.h>
 
-void	safe_close(int fd)
+int	safe_open(const char *filename, int oflag)
 {
-	if (close(fd) < 0)
+	int	fd;
+
+	if (filename == NULL)
+		return (-1);
+	fd = open(filename, oflag, 0644);
+	if (fd < 0)
 	{
-		ft_putstr_fd(strerror(errno), STDERR_FILENO);
-		ft_putstr_fd(": Close (fd: ", STDERR_FILENO);
-		ft_putnbr_fd(fd, STDERR_FILENO);
-		ft_putendl_fd(")", STDERR_FILENO);
+		ft_putstr_fd(filename, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		perror("");
 		exit(EXIT_FAILURE);
 	}
+	return (fd);
 }

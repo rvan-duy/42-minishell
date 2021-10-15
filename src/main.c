@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 16:51:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/14 11:46:25 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/10/15 13:38:30 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "execute.h"
 #include "tests.h"
 #include <stdio.h>
+#include <unistd.h>
+#include <string.h>
 #include <readline/readline.h>
 
 int	main(int argc, char **argv, char **envp)
@@ -33,8 +35,8 @@ int	main(int argc, char **argv, char **envp)
 		// init_echo_plus_n_flag(&nodes);
 		// init_echo_without_n_flag(&nodes);
 		nodes.argv = calloc(3, sizeof(char *));
-		nodes.argv[0] = strdup("echooo");
-		nodes.argv[1] = strdup("hello");
+		nodes.argv[0] = strdup("cd");
+		nodes.argv[1] = strdup("./libft/../include");
 		nodes.cmd = nodes.argv[0];
 		// if (!ft_strncmp(line, "test", 4))
 		// 	start_tests_echo(&nodes);

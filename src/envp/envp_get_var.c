@@ -6,11 +6,12 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/15 12:55:04 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/15 12:55:53 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/10/15 13:54:14 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
+#include "libft.h"
 #include <unistd.h>
 #include <stdlib.h>
 

@@ -5,7 +5,7 @@ LIBFT		= libft/libft.a
 
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
-ifndef NO_SANITIZE
+ifdef SANITIZE
 CFLAGS	+= -fsanitize=address
 endif
 ifdef DEBUG
@@ -22,22 +22,19 @@ HEADERS	=	libft/libft.h \
 			include/utilities.h \
 			src/ruben_tests/tests.h
 
-SOURCES	= 	src/main.c \
-			src/execute.c \
-			src/safe/chdir.c \
-			src/safe/close.c \
-			src/safe/create_pipe.c \
-			src/safe/dup2.c \
-			src/safe/fork.c \
-			src/safe/open.c \
+SOURCES	= 	src/execute.c \
+			src/safe/safe_chdir.c \
+			src/safe/safe_close.c \
+			src/safe/safe_create_pipe.c \
+			src/safe/safe_dup2.c \
+			src/safe/safe_fork.c \
+			src/safe/safe_open.c \
 			src/utils_2.c \
 			src/builtins/echo.c \
 			src/builtins/cd.c \
 			src/builtins/pwd.c \
 			src/envp/envp_dup.c \
 			src/envp/envp_get_var.c \
-			src/ruben_tests/init_test_struct_echo.c \
-			src/ruben_tests/start_tests_echo.c \
 			src/ruben_tests/criterion/criterion_tests_utilities.c
 
 ifndef BONUS

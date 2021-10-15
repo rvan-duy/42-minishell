@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   create_pipe.c                                      :+:    :+:            */
+/*   close.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/15 12:38:29 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/15 12:39:02 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/15 12:39:29 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/10/15 13:42:13 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
-#include <stdio.h>
+#include "libft.h"
+#include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
+#include <sys/errno.h>
 
-t_pipefds	safe_create_pipe(void)
+void	safe_close(int fd)
 {
-	t_pipefds	result;
-	int			pipefds[2];
-
-	if (pipe(pipefds) < 0)
+	if (close(fd) < 0)
 	{
-		perror("pipe");
+		ft_putstr_fd(strerror(errno), STDERR_FILENO);
+		ft_putstr_fd(": Close (fd: ", STDERR_FILENO);
+		ft_putnbr_fd(fd, STDERR_FILENO);
+		ft_putendl_fd(")", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
-	result.read = pipefds[0];
-	result.write = pipefds[1];
-	return (result);
 }

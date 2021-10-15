@@ -6,11 +6,17 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/14 15:53:32 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/10/15 13:48:20 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+#include "utilities.h"
+#include "safe.h"
+#include "libft.h"
+#include "builtins.h"
+#include <fcntl.h>
+#include <sys/wait.h>
 
 static void	end_chain(t_cmd_node *nodes, t_files *files, int fd_in, char **envp)
 {

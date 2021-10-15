@@ -6,17 +6,14 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/07 15:46:40 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/14 15:39:43 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/10/15 13:39:09 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-# include "utilities.h"
-# include "libft.h"
-# include <unistd.h>
-# include <stdlib.h>
+# include "structs.h"
 
 int	builtin_echo(t_cmd_node *nodes);
 int	builtin_cd(t_cmd_node *nodes, char **envp);
