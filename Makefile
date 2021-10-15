@@ -17,7 +17,12 @@ LIBS	= -L$(dir $(LIBFT)) -lft -lreadline -L$(HOME)/.brew/Cellar/criterion/2.3.3/
 HEADERS	= libft/libft.h include/structs.h include/execute.h include/utilities.h src/ruben_tests/tests.h
 SOURCES	= 	src/main.c \
 			src/execute.c \
-			src/utils_1.c \
+			src/safe/chdir.c \
+			src/safe/close.c \
+			src/safe/create_pipe.c \
+			src/safe/dup2.c \
+			src/safe/fork.c \
+			src/safe/open.c \
 			src/utils_2.c \
 			src/builtins/echo.c \
 			src/builtins/cd.c \
