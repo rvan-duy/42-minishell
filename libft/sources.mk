@@ -1,4 +1,4 @@
-ARR_SRCS = src/arr/ft_array.c
+ARR_SRCS = 	src/arr/ft_array_len.c
 
 CHAR_SRCS =	src/char/ft_isalnum.c	\
 			src/char/ft_isalpha.c	\
