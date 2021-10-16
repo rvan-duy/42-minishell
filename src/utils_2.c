@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/07 10:35:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/15 16:36:23 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/10/16 16:01:33 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_bool	contains_flag(const char *string, const char *flag)
 {
 	const unsigned char	flag_type = flag[1];
 
-	if (ft_strlen(string) < 2)
+	if (string == NULL || ft_strlen(string) < 2)
 		return (false);
 	while (*flag && *string)
 	{
