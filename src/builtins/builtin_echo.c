@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   echo.c                                             :+:    :+:            */
+/*   builtin_echo.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/07 15:30:01 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/15 13:50:15 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/10/16 17:15:40 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	builtin_echo(t_cmd_node *nodes)
 	while (nodes->argv[i] != NULL)
 	{
 		ft_putstr_fd(nodes->argv[i], STDOUT_FILENO);
-		if (nodes->argv[i] != NULL)
+		if (nodes->argv[i + 1] != NULL)
 			ft_putchar_fd(' ', STDOUT_FILENO);
 		i++;
 	}
