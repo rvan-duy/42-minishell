@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/11 12:57:03 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/13 14:19:44 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2021/10/19 14:50:44 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*get_arg(char *part, char **after_part)
 	quote = '\0';
 	while (part[i] != '\0')
 	{
-		if (part[i] == '\'' || part[i] == '"')
+		if (ms_isquote(part[i]))
 		{
 			if (quote == '\0')
 				quote = part[i];

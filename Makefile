@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2021/10/14 18:33:01 by mvan-wij      ########   odam.nl          #
+#    Updated: 2021/10/19 17:21:22 by mvan-wij      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,9 @@ NAME		= minishell
 NAME_BONUS	= minishell
 LIBFT		= libft/libft.a
 
-CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror
+CC			= gcc
+CFLAGS		= -Wall -Wextra -Werror
+DATA_FILE	= .make_data.txt
 ifndef NO_SANITIZE
 CFLAGS	+= -fsanitize=address
 endif
@@ -59,14 +60,20 @@ OBJDIR = obj
 OBJECTS = $(patsubst $(SRCDIR)/%,$(OBJDIR)/%, $(SOURCES:c=o))
 INCLUDES = $(addprefix -I,$(dir $(HEADERS))) -I$(HOME)/.brew/Cellar/criterion/2.3.3/include
 
+PRE_RULES	=
+ifneq ($(shell echo "$(CFLAGS)"), $(shell cat "$(DATA_FILE)" 2> /dev/null))
+PRE_RULES	+= clean
+endif
+
 .PHONY: all clean fclean re debug bonus
 
-all: $(NAME)
+all: $(PRE_RULES) $(NAME)
 
 $(NAME): $(LIBFT) $(OBJECTS)
 	@printf "$(CYAN_FG)%-$(PROJECT_SPACING)s$(RESET_COLOR) $(GREEN_FG)%-$(RULE_SPACING)s$(RESET_COLOR) : " "[$(PROJECT)]" "make"
 	$(CC) $(CFLAGS) $(OBJECTS) $(LIBS) -o $(NAME)
 	@printf "$(CYAN_FG)%-$(PROJECT_SPACING)s$(RESET_COLOR) $(GREEN_FG)%-$(RULE_SPACING)s$(RESET_COLOR) : $(BLUE_FG)$(NAME)$(RESET_COLOR) created\n" "[$(PROJECT)]" "make"
+	@echo "$(CFLAGS)" > $(DATA_FILE)
 
 bonus:
 	@$(MAKE) BONUS=1
