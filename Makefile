@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2021/10/19 17:21:22 by mvan-wij      ########   odam.nl          #
+#    Updated: 2021/10/19 17:48:06 by mvan-wij      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SOURCES	= src/lexing/lex.c src/lexing/utils.c src/lexing/lex_part.c src/lexing/e
 
 ifdef DO_TESTS
 CFLAGS	+= -DDO_TESTS=1
-SOURCES += $(wildcard src/test/*.c)
+SOURCES += $(filter-out src/test/init.c, $(wildcard src/test/*.c)) src/test/init.c
 endif
 
 ifndef BONUS

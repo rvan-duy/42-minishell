@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/11 12:57:03 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/19 14:50:44 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2021/10/20 11:54:32 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_status	set_arg(t_arg_type type, char *value, t_arg **arg)
 {
 	if (value == NULL)
 		return (FAILURE);
+	// FIXME: exit on malloc fail
 	*arg = malloc(sizeof(t_arg));
 	if (*arg == NULL)
 		return (FAILURE);

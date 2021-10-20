@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/14 11:47:06 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/19 16:41:44 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2021/10/20 14:20:34 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,7 @@ t_status	set_node(t_cmd_node **node, char **args, int len)
 	}
 	ft_memcpy((*node)->argv, args, len * sizeof(char *));
 	(*node)->argv[len] = NULL;
-	(*node)->cmd = ft_strdup((*node)->argv[0]);
-	if ((*node)->argv[0] != NULL && (*node)->cmd == NULL)
-	{
-		free((*node)->argv);
-		free(*node);
-		return (FAILURE);
-	}
+	(*node)->cmd = NULL;
 	(*node)->files = NULL;
 	(*node)->pipe_to = NULL;
 	return (SUCCESS);
@@ -112,6 +106,7 @@ t_status	extract_pipes(char **args, t_cmd_node **node)
 	{
 		if (ft_memcmp(args[i], "|", 2) == 0)
 		{
+			free(args[i]);
 			if (set_node(node, &args[start], i - start) == FAILURE)
 				return (FAILURE);
 			node = &(*node)->pipe_to;
@@ -133,7 +128,24 @@ t_status	free_piped_nodes(t_cmd_node **node)
 	while (n != NULL)
 	{
 		ft_free_arr_dim(&n->argv, 2);
-		ft_free_and_nullify(&n->cmd);
+		next = n->pipe_to;
+		free(n);
+		n = next;
+	}
+	*node = NULL;
+	return (FAILURE);
+}
+
+t_status	free_redirected_nodes(t_cmd_node **node)
+{
+	t_cmd_node	*n;
+	t_cmd_node	*next;
+
+	n = *node;
+	while (n != NULL)
+	{
+		ft_free_arr_dim(&n->argv, 2);
+		ft_free_arr_dim(&n->files, 2);
 		next = n->pipe_to;
 		free(n);
 		n = next;
@@ -281,5 +293,67 @@ t_status	parse_thing(char *cmd, t_cmd_node **node)
 		return (free_piped_nodes(node));
 	}
 	free(args);
-	return (extract_redirects(node));
+	if (extract_redirects(node) == FAILURE)
+		return (free_redirected_nodes(node));
+	return (SUCCESS);
+}
+
+void	free_arg(t_arg *arg)
+{
+	t_arg	*next_arg;
+
+	while (arg != NULL)
+	{
+		free(arg->value);
+		next_arg = arg->next_part;
+		free(arg);
+		arg = next_arg;
+	}
+}
+
+t_status	free_things(t_cmd_node *node, int i, t_arg *arg)
+{
+	while (node->argv[i] != NULL)
+	{
+		free(node->argv[i]);
+		i++;
+	}
+	free_arg(arg);
+	return (FAILURE);
+}
+
+t_status	parse_args(t_cmd_node *node, char *envp[])
+{
+	int		i;
+	t_arg	*arg;
+	char	*new_str;
+
+	i = 0;
+	while (node->argv[i] != NULL)
+	{
+		arg = lex_arg(node->argv[i]);
+		if (expand(arg, envp, &new_str) == FAILURE)
+			return (free_things(node, i, arg));
+		free(node->argv[i]);
+		node->argv[i] = new_str;
+		i++;
+	}
+	node->cmd = node->argv[0];
+	return (SUCCESS);
+}
+
+t_status	parse_line(char *cmd, t_cmd_node **node, char *envp[])
+{
+	t_cmd_node	*n;
+
+	if (parse_thing(cmd, node) == FAILURE)
+		return (FAILURE);
+	n = *node;
+	while (n != NULL)
+	{
+		if (parse_args(n, envp) == FAILURE)
+			return (FAILURE);
+		n = n->pipe_to;
+	}
+	return (SUCCESS);
 }

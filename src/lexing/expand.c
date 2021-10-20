@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/13 16:23:05 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/13 16:45:53 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2021/10/20 14:06:26 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 
 static t_status	fix_return_var(t_arg *arg)
 {
-	// TODO:
+	// TODO: get $?
+	arg->value = ft_strdup("FIXME: get return value!!!");
 	arg->type = LITERAL;
 	return (SUCCESS);
 }
@@ -76,6 +77,8 @@ t_status	expand(t_arg *arg, char *envp[], char **dst)
 	size_t	len;
 	size_t	i;
 
+	if (arg == NULL)
+		return (FAILURE);
 	if (fix_vars(arg, envp) == FAILURE)
 		return (FAILURE);
 	*dst = malloc(arg_len(arg) * sizeof(char));
