@@ -6,14 +6,13 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/27 10:45:08 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/07/27 16:07:28 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2021/10/06 11:25:38 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include "src/arr/libft_arr.h"
 # include "src/char/libft_char.h"
 # include "src/gnl/libft_gnl.h"
 # include "src/io/libft_io.h"

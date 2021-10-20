@@ -6,7 +6,7 @@
 /*   By: marius <marius@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/26 20:37:34 by marius        #+#    #+#                 */
-/*   Updated: 2021/09/26 20:37:34 by marius        ########   odam.nl         */
+/*   Updated: 2021/10/18 11:25:20 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 #include "libft_mem.h"
 
 /**
- * \n
- * e.g.: char *a[11]; \n
- * a[10] = NULL; \n
- * ft_free_arr_n(&a);
+ * e.g.: char *a[11];
+ * a[10] = NULL;
+ * ft_free_arr(&a);
  */
 void	*ft_free_arr(void ***arr)
 {

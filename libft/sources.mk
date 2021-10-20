@@ -1,5 +1,3 @@
-ARR_SRCS = src/arr/ft_array.c
-
 CHAR_SRCS =	src/char/ft_isalnum.c	\
 			src/char/ft_isalpha.c	\
 			src/char/ft_isascii.c	\
@@ -49,7 +47,8 @@ MEM_SRCS =	src/mem/ft_bzero.c				\
 			src/mem/ft_memset.c				\
 			src/mem/ft_free_and_nullify.c	\
 			src/mem/ft_free_arr.c			\
-			src/mem/ft_free_arr_n.c
+			src/mem/ft_free_arr_n.c			\
+			src/mem/ft_free_arr_dim.c
 
 NBR_SRCS =	src/nbr/ft_atod.c		\
 			src/nbr/ft_atoi.c		\

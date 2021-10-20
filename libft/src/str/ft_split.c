@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/27 11:59:22 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/07/27 16:27:00 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2021/10/20 16:33:45 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static char	**ft_create_split_arr(char const *str, char c, int *items)
 	*items = 0;
 	while (*s != '\0')
 	{
-		*items += *s != c && (s == str || *(s - 1) == c);
+		if ((*s != c) && (s == str || *(s - 1) == c))
+			(*items)++;
 		s++;
 	}
 	arr = malloc((*items + 1) * sizeof(char *));
