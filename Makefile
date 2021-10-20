@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2021/10/19 17:48:06 by mvan-wij      ########   odam.nl          #
+#    Updated: 2021/10/20 17:59:14 by mvan-wij      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ endif
 
 # Common
 LIBS	= -L$(dir $(LIBFT)) -lft -L$(HOME)/.brew/Cellar/criterion/2.3.3/lib -lcriterion
-HEADERS	= libft/libft.h include/structs.h include/utilities.h include/lex.h
+HEADERS	= libft/libft.h include/structs.h include/utilities.h include/lex.h include/parse.h
 SOURCES	= src/lexing/lex.c src/lexing/utils.c src/lexing/lex_part.c src/lexing/expand.c src/parse.c
 
 ifdef DO_TESTS

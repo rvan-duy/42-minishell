@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/14 11:47:06 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/20 14:20:34 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2021/10/20 17:58:38 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -342,6 +342,12 @@ t_status	parse_args(t_cmd_node *node, char *envp[])
 	return (SUCCESS);
 }
 
+/**
+ * parse_line(cmd, &node, envp);
+ * @param cmd line to parse
+ * @param node pointer to `t_cmd_node *`
+ * @param envp environment
+ */
 t_status	parse_line(char *cmd, t_cmd_node **node, char *envp[])
 {
 	t_cmd_node	*n;
