@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/15 17:01:23 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/10/20 13:01:32 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
-static void	end_chain(t_cmd_node *nodes, t_files *files, int fd_in, char **envp)
+int	g_return_value;
+
+static void	end_chain(t_cmd_node *nodes, int fd_in, char **envp)
 {
 	int		fd_out;
 	pid_t	pid;
@@ -25,17 +27,17 @@ static void	end_chain(t_cmd_node *nodes, t_files *files, int fd_in, char **envp)
 	pid = safe_fork();
 	if (pid == CHILD_PROCESS)
 	{
-		fd_out = safe_open(files->file_out, O_WRONLY | O_CREAT | O_TRUNC);
+		fd_out = safe_open(nodes->files[OUT]->file_name, O_WRONLY | O_CREAT | O_TRUNC);
 		safe_dup2(fd_in, STDIN_FILENO);
 		safe_dup2(fd_out, STDOUT_FILENO);
 		safe_check_access(nodes->cmd, X_OK);
 		execve(nodes->cmd, nodes->argv, envp);
 	}
 	safe_close(fd_in);
-	waitpid(pid, NULL, 0);
+	waitpid(pid, &g_return_value, 0);
 }
 
-static void	continue_chain(t_cmd_node *nodes, t_files *files, int fd_in, char **envp)
+static void	continue_chain(t_cmd_node *nodes, int fd_in, char **envp)
 {
 	int			i;
 	pid_t		pid;
@@ -56,11 +58,11 @@ static void	continue_chain(t_cmd_node *nodes, t_files *files, int fd_in, char **
 		}
 		safe_close(fd_in);
 		safe_close(pipe_fds.write);
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &g_return_value, 0);
 		fd_in = pipe_fds.read;
 		i++;
 	}
-	end_chain(nodes, files, fd_in, envp);
+	end_chain(nodes, fd_in, envp);
 }
 
 static int	check_builtin(t_cmd_node *nodes, char **envp)
@@ -74,7 +76,7 @@ static int	check_builtin(t_cmd_node *nodes, char **envp)
 	return (NO_BUILTIN);
 }
 
-static void	start_chain(t_cmd_node *nodes, t_files *files, char **envp)
+static void	start_chain(t_cmd_node *nodes, char **envp)
 {
 	int			fd_in;
 	pid_t		pid;
@@ -85,7 +87,7 @@ static void	start_chain(t_cmd_node *nodes, t_files *files, char **envp)
 	if (pid == CHILD_PROCESS)
 	{
 		safe_close(pipe_fds.read);
-		fd_in = safe_open(files->file_in, O_RDONLY);
+		fd_in = safe_open(nodes->files[IN]->file_name, O_RDONLY);
 		safe_dup2(fd_in, STDIN_FILENO);
 		if (nodes->pipe_to != NULL)
 			safe_dup2(pipe_fds.write, STDOUT_FILENO);
@@ -94,16 +96,16 @@ static void	start_chain(t_cmd_node *nodes, t_files *files, char **envp)
 		execve(nodes->cmd, nodes->argv, envp);
 	}
 	safe_close(pipe_fds.write);
-	waitpid(pid, NULL, 0);
+	waitpid(pid, &g_return_value, 0);
 	if (nodes->pipe_to != NULL)
-		continue_chain(nodes, files, pipe_fds.read, envp);
+		continue_chain(nodes, pipe_fds.read, envp);
 }
 
-int	execute_line(t_cmd_node *nodes, t_files *files, char **envp)
+int	execute_line(t_cmd_node *nodes, char **envp)
 {
 	// this can return -1 1 or 2 .. check that
 	if (check_builtin(nodes, envp) != NO_BUILTIN)
 		return (SUCCESS);
-	start_chain(nodes, files, envp);
-	return (1);
+	start_chain(nodes, envp);
+	return (SUCCESS);
 }
