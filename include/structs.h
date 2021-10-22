@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 15:45:21 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/15 12:29:30 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/10/19 14:21:11 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,13 @@
  */
 typedef struct s_files
 {
-	char	*file_in;
-	char	*file_out;
+	enum {
+		IN,
+		OUT,
+		HEREDOC_IN,
+		HEREDOC_OUT
+	}	e_type;
+	char	*file_name;
 }	t_files;
 
 /**
@@ -34,7 +39,7 @@ typedef struct s_cmd_node
 	char				*cmd;
 	char				**argv;
 	struct s_cmd_node	*pipe_to;
-	t_files				files;
+	t_files				**files;
 }	t_cmd_node;
 
 typedef struct s_pipefds

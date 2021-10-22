@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   envp_dup.c                                         :+:    :+:            */
+/*   envp_del.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/14 15:04:11 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/21 14:18:57 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/21 11:38:15 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/10/21 17:11:23 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "structs.h"
 #include "libft.h"
+#include <signal.h>
 
-char	**envp_dup(char **envp)
+t_status	envp_del(char **envp, const char *name)
 {
 	const size_t	envp_len = ft_array_len((void **)envp);
-	char			**new_envp;
+	const size_t	name_len = ft_strlen(name);
 	size_t			i;
 
-	new_envp = malloc((sizeof(char *) * envp_len) + 1);
-	if (new_envp == NULL)
-		return (NULL);
+	if (name == NULL)
+		kill(0, SIGSEGV);
 	i = 0;
-	while (i < envp_len)
-	{
-		new_envp[i] = ft_strdup(envp[i]);
-		if (new_envp[i] == NULL)
-			return (ft_free_arr((void ***)&new_envp));
+	while (i < envp_len && ft_strncmp(envp[i], name, name_len) != 0)
 		i++;
-	}
-	new_envp[i] = NULL;
-	return (new_envp);
+	if (i == envp_len)
+		return (FAILURE);
+	if (i != envp_len)
+		ft_memmove(envp + i, envp + i + 1, (envp_len - i) * sizeof(char *));
+	return (SUCCESS);
 }

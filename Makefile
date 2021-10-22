@@ -6,7 +6,7 @@ LIBFT		= libft/libft.a
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
 ifdef SANITIZE
-CFLAGS	+= -fsanitize=address
+CFLAGS	+= -g -fsanitize=address
 endif
 ifdef DEBUG
 CFLAGS	+= -g
@@ -36,6 +36,8 @@ SOURCES	= 	src/execute.c \
 			src/builtins/builtin_pwd.c \
 			src/envp/envp_dup.c \
 			src/envp/envp_get_var.c \
+			src/envp/envp_add.c \
+			src/envp/envp_del.c \
 			src/ruben_tests/criterion/criterion_tests_utilities.c
 
 ifndef BONUS
