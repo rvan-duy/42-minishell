@@ -6,12 +6,11 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/07 15:30:01 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/16 17:15:40 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/10/20 13:05:42 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utilities.h"
-#include "structs.h"
 #include "libft.h"
 #include <stdlib.h>
 #include <unistd.h>
