@@ -34,6 +34,7 @@ SOURCES	= 	src/execute.c \
 			src/builtins/builtin_echo.c \
 			src/builtins/builtin_cd.c \
 			src/builtins/builtin_pwd.c \
+			src/builtins/builtin_export.c \
 			src/envp/envp_dup.c \
 			src/envp/envp_get_var.c \
 			src/envp/envp_add.c \

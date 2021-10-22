@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   builtins.h                                         :+:    :+:            */
+/*   builtin_export.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/07 15:46:40 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/22 13:06:14 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/20 13:04:28 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/10/22 13:14:08 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "envp.h"
+#include "libft.h"
 
-# include "structs.h"
+t_status	builtin_export(t_cmd_node *nodes, char ***envp)
+{
+	const char	*new_env_var = ft_str_filter(nodes->argv[1], "\"\'");
 
-int			builtin_echo(t_cmd_node *nodes);
-int			builtin_cd(t_cmd_node *nodes, char **envp);
-int			builtin_pwd(void);
-t_status	builtin_export(t_cmd_node *nodes, char ***envp);
-
-#endif
+	if (new_env_var == NULL)
+		return (FAILURE);
+	return (envp_add_2(envp, new_env_var));
+}

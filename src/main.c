@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 16:51:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/19 15:09:13 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/10/22 13:06:55 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int argc, char **argv, char **envp)
 		nodes.cmd = nodes.argv[0];
 		// if (!ft_strncmp(line, "test", 4))
 		// 	start_tests_echo(&nodes);
-		execute_line(&nodes, envp);
+		execute_line(&nodes, &envp);
 		printf("current dir: %s\n", getcwd(NULL, 0));
 	}
 	return (0);
