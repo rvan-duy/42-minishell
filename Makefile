@@ -35,11 +35,14 @@ SOURCES	= 	src/execute.c \
 			src/builtins/builtin_cd.c \
 			src/builtins/builtin_pwd.c \
 			src/builtins/builtin_export.c \
-			src/envp/envp_dup.c \
+			src/builtins/builtin_unset.c \
+			src/envp/env_dup.c \
 			src/envp/envp_get_var.c \
-			src/envp/envp_add.c \
+			src/envp/env_add.c \
+			src/envp/env_last.c \
+			src/envp/env_new.c \
 			src/envp/envp_del.c \
-			src/ruben_tests/criterion/criterion_tests_utilities.c
+			src/ruben_tests/criterion/criterion_tests.c
 
 ifndef BONUS
 # Not Bonus
