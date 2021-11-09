@@ -1,30 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env_dup.c                                          :+:    :+:            */
+/*   env_list_to_arr.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/14 15:04:11 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/02 12:28:34 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/11/02 14:20:38 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/11/09 11:07:40 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "structs.h"
 #include "envp.h"
 #include "libft.h"
+#include <stdlib.h>
 
-t_env_var	*env_dup(char **envp)
+char	**env_list_to_arr(t_env_var *envp)
 {
-	const size_t	envp_len = ft_array_len((void **)envp);
-	t_env_var		*new_envp;
+	const size_t	len = env_len(envp);
 	size_t			i;
+	char			**arr;
 
+	arr = malloc(sizeof(char *) * len + 1);
+	if (arr == NULL)
+		return (NULL);
 	i = 0;
-	new_envp = NULL;
-	while (i < envp_len)
+	while (i < len)
 	{
-		env_add(&new_envp, env_new(envp[i]));
+		arr[i] = ft_strjoin_three(envp->name, "=", envp->value);
+		if (arr[i] == NULL)
+			return (ft_free_arr_n((void ***)&arr, i - 1));
 		i++;
+		envp = envp->next;
 	}
-	return (new_envp);
+	arr[i] = NULL;
+	return (arr);
 }

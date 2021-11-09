@@ -1,33 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   envp_del.c                                         :+:    :+:            */
+/*   env_del.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 11:38:15 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/21 17:11:23 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/02 14:19:43 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "libft.h"
-#include <signal.h>
 
-t_status	envp_del(char **envp, const char *name)
+static void	free_node(t_env_var *node)
 {
-	const size_t	envp_len = ft_array_len((void **)envp);
-	const size_t	name_len = ft_strlen(name);
-	size_t			i;
+	free(node->name);
+	free(node->value);
+	free(node);
+}
 
-	if (name == NULL)
-		kill(0, SIGSEGV);
-	i = 0;
-	while (i < envp_len && ft_strncmp(envp[i], name, name_len) != 0)
-		i++;
-	if (i == envp_len)
-		return (FAILURE);
-	if (i != envp_len)
-		ft_memmove(envp + i, envp + i + 1, (envp_len - i) * sizeof(char *));
-	return (SUCCESS);
+void	env_del(const char *name, t_env_var *envp)
+{
+	const size_t	len = ft_strlen(name);
+	t_env_var		**cur;
+	t_env_var		*tmp;
+
+	cur = &envp;
+	while (*cur != NULL)
+	{
+		if (!ft_strncmp(name, (*cur)->name, len))
+		{
+			tmp = (*cur)->next;
+			free_node(*cur);
+			*cur = tmp;
+			break ;
+		}
+		cur = &(*cur)->next;
+	}
 }

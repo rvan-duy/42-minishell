@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 15:45:21 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/19 14:21:11 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/10/27 14:29:22 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,12 @@ typedef enum e_bool
 	false,
 	true
 }	t_bool;
+
+typedef struct s_env_var
+{
+	char				*name;
+	char				*value;
+	struct s_env_var	*next;
+}	t_env_var;
 
 #endif

@@ -6,39 +6,23 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/15 12:55:04 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/21 13:12:06 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/02 14:12:15 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "libft.h"
-#include <unistd.h>
 #include <stdlib.h>
 
-/*
-	Searches var inside envp, stores result in dst
-*/
-t_status	envp_get_var(char *var, char **envp, char **dst)
+t_env_var	*env_get_var(const char *name, t_env_var *envp)
 {
-	const int	len = ft_strlen(var) + 1;
-	char		*var_equals_sign;
-	int			i;
+	const size_t	len = ft_strlen(name);
 
-	var_equals_sign = ft_strjoin(var, "=");
-	if (var_equals_sign == NULL)
-		return (FAILURE);
-	i = 0;
-	while (envp[i] != NULL)
+	while (envp != NULL)
 	{
-		if (ft_strncmp(var_equals_sign, envp[i], len) == 0)
-		{
-			free(var_equals_sign);
-			*dst = envp[i] + len;
-			return (SUCCESS);
-		}
-		i++;
+		if (!ft_strncmp(name, envp->name, len))
+			return (envp);
+		envp = envp->next;
 	}
-	free(var_equals_sign);
-	*dst = NULL;
-	return (SUCCESS);
+	return (NULL);
 }

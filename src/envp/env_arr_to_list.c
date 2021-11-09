@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   execute.h                                          :+:    :+:            */
+/*   env_arr_to_list.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/06 11:38:22 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/02 13:30:25 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/14 15:04:11 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/11/02 14:20:46 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTE_H
-# define EXECUTE_H
+#include "envp.h"
+#include "libft.h"
 
-# include "structs.h"
+t_env_var	*env_arr_to_list(char **envp)
+{
+	const size_t	envp_len = ft_array_len((void **)envp);
+	t_env_var		*new_envp;
+	size_t			i;
 
-# define CHILD_PROCESS 0
-# define NO_BUILTIN 2
-
-int	execute_line(t_cmd_node *nodes, t_env_var *envp);
-
-#endif
+	i = 0;
+	new_envp = NULL;
+	while (i < envp_len)
+	{
+		env_add(&new_envp, env_new(envp[i]));
+		i++;
+	}
+	return (new_envp);
+}

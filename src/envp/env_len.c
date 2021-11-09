@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   execute.h                                          :+:    :+:            */
+/*   env_len.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/06 11:38:22 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/02 13:30:25 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/11/02 14:24:46 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/11/03 13:47:30 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTE_H
-# define EXECUTE_H
+#include "structs.h"
+#include <stdlib.h>
 
-# include "structs.h"
+size_t	env_len(t_env_var *envp)
+{
+	size_t	count;
 
-# define CHILD_PROCESS 0
-# define NO_BUILTIN 2
-
-int	execute_line(t_cmd_node *nodes, t_env_var *envp);
-
-#endif
+	count = 0;
+	while (envp != NULL)
+	{
+		count++;
+		envp = envp->next;
+	}
+	return (count);
+}
