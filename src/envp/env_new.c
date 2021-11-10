@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/27 14:15:38 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/02 12:50:17 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/09 16:39:10 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 #include <signal.h>
 
 // Either put this in libft or utils..
-static size_t	first_occurrence(const char *env_var, const char c)
+static int	first_occurrence(const char *env_var, const char c)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (env_var[i])
@@ -27,13 +27,13 @@ static size_t	first_occurrence(const char *env_var, const char c)
 			return (i);
 		i++;
 	}
-	return (i);
+	return (-1);
 }
 
 t_env_var	*env_new(const char *env_var)
 {
-	const size_t	split_index = first_occurrence(env_var, '=');
-	t_env_var		*new_envp;
+	const int	split_index = first_occurrence(env_var, '=');
+	t_env_var	*new_envp;
 
 	if (env_var == NULL)
 		kill(0, SIGSEGV);
