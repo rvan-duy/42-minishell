@@ -44,6 +44,7 @@ SOURCES	=	src/execute.c \
 			src/envp/env_new.c \
 			src/envp/env_del.c \
 			src/envp/env_len.c \
+			src/envp/env_dup.c \
 			src/ruben_tests/criterion/criterion_test_tmp.c
 
 TMP_SOURCES = 	src/ruben_tests/criterion/criterion_tests.c
