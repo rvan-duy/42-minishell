@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/27 14:15:38 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/09 16:39:10 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/11 16:48:26 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,52 @@
 #include <signal.h>
 
 // Either put this in libft or utils..
-static int	first_occurrence(const char *env_var, const char c)
+static t_status	first_occurrence(const char *env_var, const char c,
+	size_t *index)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (env_var[i])
 	{
 		if (env_var[i] == c)
-			return (i);
+		{
+			*index = i;
+			return (SUCCESS);
+		}
 		i++;
 	}
-	return (-1);
+	return (FAILURE);
 }
 
 t_env_var	*env_new(const char *env_var)
 {
-	const int	split_index = first_occurrence(env_var, '=');
 	t_env_var	*new_envp;
+	size_t		split_index;
 
 	if (env_var == NULL)
 		kill(0, SIGSEGV);
 	new_envp = malloc(sizeof(t_env_var));
 	if (new_envp == NULL)
 		return (NULL);
-	new_envp->name = ft_strndup(env_var, split_index);
-	if (new_envp->name == NULL)
-		return (NULL);
-	new_envp->value = ft_strdup(env_var + split_index + 1);
-	if (new_envp->value == NULL)
-		return (NULL);
+	if (first_occurrence(env_var, '=', &split_index) == SUCCESS)
+	{
+		new_envp->name = ft_strndup(env_var, split_index);
+		if (new_envp->name == NULL)
+			return (NULL);
+		new_envp->value = ft_strdup(env_var + split_index + 1);
+		if (new_envp->value == NULL)
+			return (NULL);
+	}
+	else
+	{
+		new_envp->name = ft_strdup(env_var);
+		if (new_envp->name == NULL)
+			return (NULL);
+		new_envp->value = ft_strdup("");
+		if (new_envp->value == NULL)
+			return (NULL);
+	}
 	new_envp->next = NULL;
 	return (new_envp);
 }
