@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/20 13:07:18 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/09 14:33:39 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/11 13:52:55 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ void	env_add(t_env_var **head, t_env_var *new)
 		return ;
 	}
 	tmp = env_last(*head);
+	new->next = tmp->next;
 	tmp->next = new;
 }
