@@ -49,7 +49,8 @@ MEM_SRCS =	src/mem/ft_bzero.c				\
 			src/mem/ft_memset.c				\
 			src/mem/ft_free_and_nullify.c	\
 			src/mem/ft_free_arr.c			\
-			src/mem/ft_free_arr_n.c
+			src/mem/ft_free_arr_n.c			\
+			src/mem/ft_realloc.c
 
 NBR_SRCS =	src/nbr/ft_atod.c		\
 			src/nbr/ft_atoi.c		\
@@ -68,11 +69,13 @@ STR_SRCS =	src/str/ft_split.c		\
 			src/str/ft_str_filter.c	\
 			src/str/ft_strchr.c		\
 			src/str/ft_strdup.c		\
+			src/str/ft_strndup.c	\
 			src/str/ft_strjoin.c	\
 			src/str/ft_strlcat.c	\
 			src/str/ft_strlcpy.c	\
 			src/str/ft_strlen.c		\
 			src/str/ft_strmapi.c	\
+			src/str/ft_strcmp.c		\
 			src/str/ft_strncmp.c	\
 			src/str/ft_strnstr.c	\
 			src/str/ft_strrchr.c	\
