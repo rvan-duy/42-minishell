@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   builtin_cd.c                                       :+:    :+:            */
+/*   builtin_unset.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/14 11:14:09 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/02 14:14:21 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/22 13:17:20 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/11/13 12:17:01 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
 #include "envp.h"
-#include "safe.h"
+#include "libft.h"
 
-t_status	builtin_cd(t_cmd_node *nodes, t_env_var *envp)
+t_status	buitlin_unset(t_cmd_node *nodes, t_env_var *envp)
 {
-	t_env_var	*home_node;
+	size_t	i;
 
-	if (nodes->argv[1] == NULL || nodes->argv[1][0] == '~')
+	if (nodes->argv[1] == NULL)
+		return (SUCCESS);
+	i = 1;
+	while (nodes->argv[i] != NULL)
 	{
-		home_node = env_get_var("HOME", envp);
-		if (home_node == NULL)
-			return (FAILURE);
-		safe_chdir(home_node->name);
+		env_del(nodes->argv[i], &envp);
+		i++;
 	}
-	else
-		safe_chdir(nodes->argv[1]);
 	return (SUCCESS);
 }

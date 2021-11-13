@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/20 13:04:28 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/12 16:47:44 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/13 11:09:31 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,7 @@ t_status	builtin_export(t_cmd_node *nodes, t_env_var *envp)
 
 	if (nodes->argv[1] == NULL)
 		return (list_export(envp));
-	i = 0;
-	dprintf(2, "Start..\n");
+	i = 1;
 	while (nodes->argv[i] != NULL)
 	{
 		// check for dups
