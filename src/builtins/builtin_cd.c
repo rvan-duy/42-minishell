@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/14 11:14:09 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/02 14:14:21 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/13 13:01:04 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_status	builtin_cd(t_cmd_node *nodes, t_env_var *envp)
 		home_node = env_get_var("HOME", envp);
 		if (home_node == NULL)
 			return (FAILURE);
-		safe_chdir(home_node->name);
+		safe_chdir(home_node->value);
 	}
 	else
 		safe_chdir(nodes->argv[1]);
