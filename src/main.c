@@ -6,13 +6,14 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 16:51:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/22 13:06:55 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/02 13:29:26 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "execute.h"
 #include "tests.h"
+#include "envp.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
@@ -22,10 +23,12 @@ int	main(int argc, char **argv, char **envp)
 {
 	char		*line;
 	t_cmd_node	nodes;
+	t_env_var	*envp_linked_list;
 
 	(void)line;
 	(void)argc;
 	(void)argv;
+	envp_linked_list = env_dup(envp); // Remember to check if this fails
 	while (1)
 	{
 		line = readline("minishell$> ");
