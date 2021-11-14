@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/20 13:04:28 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/14 14:26:34 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/14 14:35:59 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,6 @@ static void	linked_list_bubble_sort(t_env_var **head)
 	}
 }
 
-// TODO: malloc protect and proper free
-static t_env_var	*dup_list(t_env_var *envp)
-{
-	t_env_var	*dupped_list;
-	t_env_var	*tmp;
-
-	dupped_list = NULL;
-	while (envp)
-	{
-		tmp = env_node_dup(envp);
-		if (tmp == NULL)
-			exit(EXIT_FAILURE);
-		env_node_add(&dupped_list, tmp);
-		envp = envp->next;
-	}
-	return (dupped_list);
-}
-
 // TODO: put in seperate file because prob need to use this more often
 static void	free_list(t_env_var *envp)
 {
@@ -74,7 +56,7 @@ static t_status	list_export(t_env_var *envp)
 {
 	t_env_var	*sorted_envp;
 
-	sorted_envp = dup_list(envp);
+	sorted_envp = env_list_dup(envp);
 	linked_list_bubble_sort(&sorted_envp);
 	while (sorted_envp)
 	{
