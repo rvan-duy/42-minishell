@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/14 15:06:25 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/14 14:33:29 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/14 14:42:36 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
  * List functions 
  */
 
+void		env_list_free(t_env_var *envp);
 char		**env_list_to_arr(t_env_var *envp);
 size_t		env_list_len(t_env_var *envp);
 t_env_var	*env_arr_to_list(char **envp);
