@@ -37,6 +37,7 @@ SOURCES	=	src/execute.c \
 			src/builtins/builtin_export.c \
 			src/builtins/builtin_unset.c \
 			src/builtins/builtin_env.c \
+			src/builtins/builtin_exit.c \
 			src/envp/env_arr_to_list.c \
 			src/envp/env_list_to_arr.c \
 			src/envp/env_get_var.c \
