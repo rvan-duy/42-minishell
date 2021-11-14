@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/07 15:30:01 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/20 13:05:42 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/14 14:56:40 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int	builtin_echo(t_cmd_node *nodes)
+t_status	builtin_echo(t_cmd_node *nodes)
 {
 	int		i;
 	t_bool	n_flag;
@@ -36,5 +36,5 @@ int	builtin_echo(t_cmd_node *nodes)
 	}
 	if (n_flag == false)
 		ft_putchar_fd('\n', STDOUT_FILENO);
-	return (EXIT_SUCCESS);
+	return (SUCCESS);
 }

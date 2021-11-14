@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/20 13:04:28 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/14 14:35:59 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/14 14:49:36 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <stdio.h>
 
-static void	linked_list_bubble_sort(t_env_var **head)
+static void	bubble_sort(t_env_var **head)
 {
 	t_env_var	*current;
 	t_env_var	*tmp;
@@ -40,30 +40,18 @@ static void	linked_list_bubble_sort(t_env_var **head)
 	}
 }
 
-// TODO: put in seperate file because prob need to use this more often
-static void	free_list(t_env_var *envp)
-{
-	while (envp)
-	{
-		free(envp->name);
-		free(envp->value);
-		free(envp);
-		envp = envp->next;
-	}
-}
-
 static t_status	list_export(t_env_var *envp)
 {
 	t_env_var	*sorted_envp;
 
 	sorted_envp = env_list_dup(envp);
-	linked_list_bubble_sort(&sorted_envp);
+	bubble_sort(&sorted_envp);
 	while (sorted_envp)
 	{
 		printf("declare -x %s=\"%s\"\n", sorted_envp->name, sorted_envp->value);
 		sorted_envp = sorted_envp->next;
 	}
-	free_list(sorted_envp);
+	env_list_free(sorted_envp);
 	return (SUCCESS);
 }
 
