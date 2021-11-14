@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/20 13:04:28 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/13 12:26:37 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/14 14:26:34 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ static t_env_var	*dup_list(t_env_var *envp)
 	dupped_list = NULL;
 	while (envp)
 	{
-		tmp = env_dup(envp);
+		tmp = env_node_dup(envp);
 		if (tmp == NULL)
 			exit(EXIT_FAILURE);
-		env_add(&dupped_list, tmp);
+		env_node_add(&dupped_list, tmp);
 		envp = envp->next;
 	}
 	return (dupped_list);
@@ -95,11 +95,11 @@ t_status	builtin_export(t_cmd_node *nodes, t_env_var *envp)
 	i = 1;
 	while (nodes->argv[i] != NULL)
 	{
-		new_env_var = env_new(nodes->argv[i]);
+		new_env_var = env_node_new(nodes->argv[i]);
 		if (new_env_var == NULL)
 			return (FAILURE);
-		env_del(new_env_var->name, &envp);
-		env_add(&envp, new_env_var);
+		env_node_del(new_env_var->name, &envp);
+		env_node_add(&envp, new_env_var);
 		i++;
 	}
 	return (SUCCESS);

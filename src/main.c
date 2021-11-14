@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 16:51:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/02 13:29:26 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/14 14:26:05 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)line;
 	(void)argc;
 	(void)argv;
-	envp_linked_list = env_dup(envp); // Remember to check if this fails
+	envp_linked_list = env_node_dup(envp); // Remember to check if this fails
 	while (1)
 	{
 		line = readline("minishell$> ");

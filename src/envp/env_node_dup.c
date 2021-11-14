@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env_dup.c                                          :+:    :+:            */
+/*   env_node_dup.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "structs.h"
 
-t_env_var	*env_dup(t_env_var *node)
+t_env_var	*env_node_dup(t_env_var *node)
 {
 	t_env_var	*duplicate;
 

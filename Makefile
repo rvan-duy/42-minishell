@@ -39,12 +39,12 @@ SOURCES	=	src/execute.c \
 			src/envp/env_arr_to_list.c \
 			src/envp/env_list_to_arr.c \
 			src/envp/env_get_var.c \
-			src/envp/env_add.c \
-			src/envp/env_last.c \
-			src/envp/env_new.c \
-			src/envp/env_del.c \
-			src/envp/env_len.c \
-			src/envp/env_dup.c \
+			src/envp/env_node_add.c \
+			src/envp/env_node_last.c \
+			src/envp/env_node_new.c \
+			src/envp/env_node_del.c \
+			src/envp/env_list_len.c \
+			src/envp/env_node_dup.c \
 			src/ruben_tests/criterion/criterion_test_tmp.c
 
 TMP_SOURCES = 	src/ruben_tests/criterion/criterion_tests.c

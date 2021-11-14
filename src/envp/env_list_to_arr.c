@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/02 14:20:38 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/09 11:07:40 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/14 14:25:37 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 char	**env_list_to_arr(t_env_var *envp)
 {
-	const size_t	len = env_len(envp);
+	const size_t	len = env_list_len(envp);
 	size_t			i;
 	char			**arr;
 

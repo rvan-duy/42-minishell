@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env_new.c                                          :+:    :+:            */
+/*   env_node_new.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
@@ -34,7 +34,7 @@ static t_status	first_occurrence(const char *env_var, const char c,
 	return (FAILURE);
 }
 
-t_env_var	*env_new(const char *env_var)
+t_env_var	*env_node_new(const char *env_var)
 {
 	t_env_var	*new_envp;
 	size_t		split_index;

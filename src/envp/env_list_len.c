@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env_add.c                                          :+:    :+:            */
+/*   env_list_len.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/20 13:07:18 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/12 17:59:51 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/11/02 14:24:46 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/11/03 13:47:30 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "envp.h"
-#include "libft.h"
-#include <signal.h>
-#include <stdio.h>
+#include "structs.h"
+#include <stdlib.h>
 
-void	env_add(t_env_var **head, t_env_var *new)
+size_t	env_list_len(t_env_var *envp)
 {
-	t_env_var	*tmp;
+	size_t	count;
 
-	if (new == NULL)
-		kill(0, SIGSEGV);
-	if (*head == NULL)
+	count = 0;
+	while (envp != NULL)
 	{
-		*head = new;
-		return ;
+		count++;
+		envp = envp->next;
 	}
-	// env_del(new->name, *head);
-	tmp = env_last(*head);
-	new->next = tmp->next;
-	tmp->next = new;
+	return (count);
 }

@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env_len.c                                          :+:    :+:            */
+/*   env_node_last.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/11/02 14:24:46 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/03 13:47:30 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/27 14:13:58 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/11/02 11:47:45 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include <stdlib.h>
 
-size_t	env_len(t_env_var *envp)
+t_env_var	*env_node_last(t_env_var *head)
 {
-	size_t	count;
-
-	count = 0;
-	while (envp != NULL)
-	{
-		count++;
-		envp = envp->next;
-	}
-	return (count);
+	while (head->next != NULL)
+		head = head->next;
+	return (head);
 }

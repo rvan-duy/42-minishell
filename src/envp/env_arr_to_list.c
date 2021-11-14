@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/14 15:04:11 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/02 14:20:46 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/14 14:26:34 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_env_var	*env_arr_to_list(char **envp)
 	new_envp = NULL;
 	while (i < envp_len)
 	{
-		env_add(&new_envp, env_new(envp[i]));
+		env_node_add(&new_envp, env_node_new(envp[i]));
 		i++;
 	}
 	return (new_envp);

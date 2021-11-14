@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env_del.c                                          :+:    :+:            */
+/*   env_node_del.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
@@ -22,7 +22,7 @@ static void	free_node(t_env_var **node)
 	*node = NULL;
 }
 
-void	env_del(const char *name, t_env_var **head)
+void	env_node_del(const char *name, t_env_var **head)
 {
 	t_env_var	*tmp;
 	t_env_var	*prev;
@@ -46,7 +46,7 @@ void	env_del(const char *name, t_env_var **head)
 	free_node(&tmp);
 }
 
-// void	env_del(const char *name, t_env_var **head)
+// void	env_node_del(const char *name, t_env_var **head)
 // {
 // 	const size_t	len = ft_strlen(name);
 // 	t_env_var		**cur;

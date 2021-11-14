@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env_last.c                                         :+:    :+:            */
+/*   env_node_add.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/27 14:13:58 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/02 11:47:45 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/20 13:07:18 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/11/12 17:59:51 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
-#include <stdlib.h>
+#include "envp.h"
+#include "libft.h"
+#include <signal.h>
+#include <stdio.h>
 
-t_env_var	*env_last(t_env_var *head)
+void	env_node_add(t_env_var **head, t_env_var *new)
 {
-	while (head->next != NULL)
-		head = head->next;
-	return (head);
+	t_env_var	*tmp;
+
+	if (new == NULL)
+		kill(0, SIGSEGV);
+	if (*head == NULL)
+	{
+		*head = new;
+		return ;
+	}
+	// env_node_del(new->name, *head);
+	tmp = env_node_last(*head);
+	new->next = tmp->next;
+	tmp->next = new;
 }
