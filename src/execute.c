@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/14 15:34:54 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/16 15:03:08 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static int	check_builtin(t_cmd_node *nodes, t_env_var *envp)
 	if (!ft_strncmp(nodes->cmd, "env", ft_strlen(nodes->cmd) + 1))
 		return (builtin_env(envp));
 	if (!ft_strncmp(nodes->cmd, "exit", ft_strlen(nodes->cmd) + 1))
-		return (builtin_exit());
+		return (builtin_exit(nodes));
 	return (NO_BUILTIN);
 }
 

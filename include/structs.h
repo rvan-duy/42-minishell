@@ -6,12 +6,16 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 15:45:21 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/27 14:29:22 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/16 14:24:22 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
+
+# define PROGRAM_NAME "minishell"
+
+# define ERROR_CODE_NUMERIC_ARGS 255
 
 /**
  * file_in: file to put on stdin (NULL if no file specified)
