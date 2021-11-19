@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/14 15:32:55 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/18 17:46:11 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/19 13:55:13 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <stdio.h>
-
 static void	check_numeric_arguments(const char *arg)
 {
 	size_t	i;
 
 	i = 0;
+	if (arg[i] == '-' || arg[i] == '+')
+		i++;
 	while (arg[i])
 	{
 		if (ft_isdigit(arg[i]) == false)
@@ -37,35 +37,6 @@ static void	check_numeric_arguments(const char *arg)
 	return ;
 }
 
-#include <stdio.h>
-
-static t_status	my_special_atoi(const char *str, int *result)
-{
-	size_t	offset;
-	int		is_neg;
-
-	if (str == NULL)
-		return (FAILURE);
-	offset = 0;
-	while (str[offset] != '\0' && ft_isspace(str[offset]))
-		offset++;
-	*result = 0;
-	is_neg = (str[offset] == '-');
-	if (is_neg || str[offset] == '+')
-		offset++;
-	while (str[offset])
-	{
-		if (!ft_isdigit(str[offset]))
-			return (FAILURE);
-		*result *= 10;
-		*result -= str[offset] - '0';
-		offset++;
-	}
-	return (SUCCESS);
-}
-
-// TODO: exit with alphabetic args must error DONE?
-// TODO: exit with more then 255 must overfloat
 // TODO: exit with more than 1 arg must error
 // TODO: syntax error is 258 error code
 t_status	builtin_exit(t_cmd_node *nodes)
@@ -76,7 +47,14 @@ t_status	builtin_exit(t_cmd_node *nodes)
 	if (nodes->argv[1] != NULL)
 	{
 		check_numeric_arguments(nodes->argv[1]);
-		// check multiple arguments
+		if (nodes->argv[2] != NULL)
+		{
+			ft_putendl_fd("exit", STDERR_FILENO);
+			ft_putstr_fd(PROGRAM_NAME, STDERR_FILENO);
+			ft_putendl_fd(": exit: too many arguments", STDERR_FILENO);
+			g_exit_status = 1;
+			return (FAILURE);
+		}
 		exit_code = ft_atoi(nodes->argv[1]);
 	}
 	ft_putendl_fd("exit", STDERR_FILENO);

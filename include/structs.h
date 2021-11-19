@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 15:45:21 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/11/16 14:24:22 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/19 13:48:45 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # define PROGRAM_NAME "minishell"
 
 # define ERROR_CODE_NUMERIC_ARGS 255
+
+// Exit to the exit status of the most recently executed foreground pipeline.
+int	g_exit_status;
 
 /**
  * file_in: file to put on stdin (NULL if no file specified)
