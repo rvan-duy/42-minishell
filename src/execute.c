@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/16 15:03:08 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/19 16:04:23 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 #include "envp.h"
 #include <fcntl.h>
 #include <sys/wait.h>
-
-int	g_return_value;
 
 static void	end_chain(t_cmd_node *nodes, int fd_in, t_env_var *envp)
 {
@@ -35,7 +33,7 @@ static void	end_chain(t_cmd_node *nodes, int fd_in, t_env_var *envp)
 		execve(nodes->cmd, nodes->argv, env_list_to_arr(envp));
 	}
 	safe_close(fd_in);
-	waitpid(pid, &g_return_value, 0);
+	waitpid(pid, &g_exit_status, 0);
 }
 
 static void	continue_chain(t_cmd_node *nodes, int fd_in, t_env_var *envp)
@@ -59,7 +57,7 @@ static void	continue_chain(t_cmd_node *nodes, int fd_in, t_env_var *envp)
 		}
 		safe_close(fd_in);
 		safe_close(pipe_fds.write);
-		waitpid(pid, &g_return_value, 0);
+		waitpid(pid, &g_exit_status, 0);
 		fd_in = pipe_fds.read;
 		i++;
 	}
@@ -105,7 +103,7 @@ static void	start_chain(t_cmd_node *nodes, t_env_var *envp)
 		execve(nodes->cmd, nodes->argv, env_list_to_arr(envp));
 	}
 	safe_close(pipe_fds.write);
-	waitpid(pid, &g_return_value, 0);
+	waitpid(pid, &g_exit_status, 0);
 	if (nodes->pipe_to != NULL)
 		continue_chain(nodes, pipe_fds.read, envp);
 }
