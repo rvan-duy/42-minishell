@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_putstr_fd.c                                     :+:    :+:            */
+/*   envp_get_var.c                                     :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
+/*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/27 12:32:15 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/07 12:17:09 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/15 12:55:04 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/11/02 14:12:15 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "structs.h"
 #include "libft.h"
-#include <unistd.h>
+#include <stdlib.h>
 
-void	ft_putstr_fd(const char *s, int fd)
+t_env_var	*env_get_var(const char *name, t_env_var *envp)
 {
-	if (s != NULL)
-		write(fd, s, ft_strlen(s));
+	const size_t	len = ft_strlen(name);
+
+	while (envp != NULL)
+	{
+		if (!ft_strncmp(name, envp->name, len))
+			return (envp);
+		envp = envp->next;
+	}
+	return (NULL);
 }

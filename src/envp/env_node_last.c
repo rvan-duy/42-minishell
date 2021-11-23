@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_putstr_fd.c                                     :+:    :+:            */
+/*   env_node_last.c                                         :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
+/*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/27 12:32:15 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/07 12:17:09 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/27 14:13:58 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/11/02 11:47:45 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <unistd.h>
+#include "structs.h"
+#include <stdlib.h>
 
-void	ft_putstr_fd(const char *s, int fd)
+t_env_var	*env_node_last(t_env_var *head)
 {
-	if (s != NULL)
-		write(fd, s, ft_strlen(s));
+	while (head->next != NULL)
+		head = head->next;
+	return (head);
 }

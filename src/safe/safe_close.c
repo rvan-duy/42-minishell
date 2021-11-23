@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utilities.h                                        :+:    :+:            */
+/*   close.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/06 11:48:54 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/23 14:07:09 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/15 12:39:29 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/10/15 13:42:13 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILITIES_H
-# define UTILITIES_H
+#include "libft.h"
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/errno.h>
 
-# include "structs.h"
-
-t_status	get_env_var(char *var, char *envp[], char **dst);
-t_bool		ms_issep(char c);
-t_bool		ms_isquote(char c);
-t_bool		contains_flag(const char *string, const char *flag);
-
-#endif
+void	safe_close(int fd)
+{
+	if (close(fd) < 0)
+	{
+		ft_putstr_fd(strerror(errno), STDERR_FILENO);
+		ft_putstr_fd(": Close (fd: ", STDERR_FILENO);
+		ft_putnbr_fd(fd, STDERR_FILENO);
+		ft_putendl_fd(")", STDERR_FILENO);
+		exit(EXIT_FAILURE);
+	}
+}

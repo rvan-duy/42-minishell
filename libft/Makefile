@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/10/27 13:16:39 by mvan-wij      #+#    #+#                  #
-#    Updated: 2021/09/22 18:41:08 by mvan-wij      ########   odam.nl          #
+#    Updated: 2021/10/15 16:05:38 by rvan-duy      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME			= libft.a
 
 CC				= gcc
 CFLAGS			= -Wall -Wextra -Werror
-ifndef NO_SANITIZE
+ifdef SANITIZE
 CFLAGS			+= -fsanitize=address
 endif
 ifdef DEBUG

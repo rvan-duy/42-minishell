@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_putstr_fd.c                                     :+:    :+:            */
+/*   dup2.c                                             :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
+/*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/27 12:32:15 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/07 12:17:09 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/15 12:41:54 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/10/15 12:42:31 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-void	ft_putstr_fd(const char *s, int fd)
+void	safe_dup2(int fildes1, int fildes2)
 {
-	if (s != NULL)
-		write(fd, s, ft_strlen(s));
+	if (fildes1 < 0 || fildes2 < 0)
+		return ;
+	if (dup2(fildes1, fildes2) < 0)
+	{
+		perror("dup2");
+		exit(EXIT_FAILURE);
+	}
 }

@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utilities.h                                        :+:    :+:            */
+/*   safe_open.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/06 11:48:54 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/23 14:07:09 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/15 12:41:06 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/10/15 13:45:52 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILITIES_H
-# define UTILITIES_H
+#include "libft.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <fcntl.h>
 
-# include "structs.h"
+int	safe_open(const char *filename, int oflag)
+{
+	int	fd;
 
-t_status	get_env_var(char *var, char *envp[], char **dst);
-t_bool		ms_issep(char c);
-t_bool		ms_isquote(char c);
-t_bool		contains_flag(const char *string, const char *flag);
-
-#endif
+	if (filename == NULL)
+		return (-1);
+	fd = open(filename, oflag, 0644);
+	if (fd < 0)
+	{
+		ft_putstr_fd(filename, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		perror("");
+		exit(EXIT_FAILURE);
+	}
+	return (fd);
+}

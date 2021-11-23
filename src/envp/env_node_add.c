@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utilities.h                                        :+:    :+:            */
+/*   env_node_add.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/06 11:48:54 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/23 14:07:09 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/20 13:07:18 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/11/12 17:59:51 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILITIES_H
-# define UTILITIES_H
+#include "envp.h"
+#include "libft.h"
+#include <signal.h>
+#include <stdio.h>
 
-# include "structs.h"
+void	env_node_add(t_env_var **head, t_env_var *new)
+{
+	t_env_var	*tmp;
 
-t_status	get_env_var(char *var, char *envp[], char **dst);
-t_bool		ms_issep(char c);
-t_bool		ms_isquote(char c);
-t_bool		contains_flag(const char *string, const char *flag);
-
-#endif
+	if (new == NULL)
+		kill(0, SIGSEGV);
+	if (*head == NULL)
+	{
+		*head = new;
+		return ;
+	}
+	// env_node_del(new->name, *head);
+	tmp = env_node_last(*head);
+	new->next = tmp->next;
+	tmp->next = new;
+}

@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_putstr_fd.c                                     :+:    :+:            */
+/*   builtin_unset.c                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
+/*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/27 12:32:15 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/07 12:17:09 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/22 13:17:20 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/11/14 14:25:25 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "envp.h"
 #include "libft.h"
-#include <unistd.h>
 
-void	ft_putstr_fd(const char *s, int fd)
+t_status	buitlin_unset(t_cmd_node *nodes, t_env_var *envp)
 {
-	if (s != NULL)
-		write(fd, s, ft_strlen(s));
+	size_t	i;
+
+	if (nodes->argv[1] == NULL)
+		return (SUCCESS);
+	i = 1;
+	while (nodes->argv[i] != NULL)
+	{
+		env_node_del(nodes->argv[i], &envp);
+		i++;
+	}
+	return (SUCCESS);
 }

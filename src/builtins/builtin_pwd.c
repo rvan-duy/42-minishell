@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_putstr_fd.c                                     :+:    :+:            */
+/*   builtin_pwd.c                                      :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
+/*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/27 12:32:15 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/07 12:17:09 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/13 15:09:25 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/11/14 14:54:56 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "structs.h"
+#include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 
-void	ft_putstr_fd(const char *s, int fd)
+t_status	builtin_pwd(void)
 {
-	if (s != NULL)
-		write(fd, s, ft_strlen(s));
+	char	*buf;
+
+	buf = getcwd(NULL, 0);
+	if (buf == NULL)
+	{
+		perror("getcwd");
+		return (FAILURE);
+	}
+	ft_putendl_fd(buf, STDOUT_FILENO);
+	free(buf);
+	return (SUCCESS);
 }

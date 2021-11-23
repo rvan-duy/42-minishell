@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_putstr_fd.c                                     :+:    :+:            */
+/*   builtin_env.c                                      :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
+/*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/27 12:32:15 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/07 12:17:09 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/11/14 14:52:28 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/11/14 15:15:51 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <unistd.h>
+#include "structs.h"
+#include <stdio.h>
 
-void	ft_putstr_fd(const char *s, int fd)
+t_status	builtin_env(t_env_var *envp)
 {
-	if (s != NULL)
-		write(fd, s, ft_strlen(s));
+	while (envp)
+	{
+		printf("%s=%s\n", envp->name, envp->value);
+		envp = envp->next;
+	}
+	return (SUCCESS);
 }

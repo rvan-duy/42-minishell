@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_putstr_fd.c                                     :+:    :+:            */
+/*   env_list_len.c                                          :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
+/*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/27 12:32:15 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/07 12:17:09 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/11/02 14:24:46 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/11/03 13:47:30 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <unistd.h>
+#include "structs.h"
+#include <stdlib.h>
 
-void	ft_putstr_fd(const char *s, int fd)
+size_t	env_list_len(t_env_var *envp)
 {
-	if (s != NULL)
-		write(fd, s, ft_strlen(s));
+	size_t	count;
+
+	count = 0;
+	while (envp != NULL)
+	{
+		count++;
+		envp = envp->next;
+	}
+	return (count);
 }

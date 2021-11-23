@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_putstr_fd.c                                     :+:    :+:            */
+/*   safe_chdir.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
+/*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/27 12:32:15 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/07 12:17:09 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/15 12:42:55 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/10/19 17:45:40 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-void	ft_putstr_fd(const char *s, int fd)
+void	safe_chdir(const char *dir)
 {
-	if (s != NULL)
-		write(fd, s, ft_strlen(s));
+	if (chdir(dir) < 0)
+	{
+		perror("cd");
+		exit(EXIT_FAILURE);
+	}
 }

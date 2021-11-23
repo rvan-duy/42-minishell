@@ -1,3 +1,5 @@
+ARR_SRCS = 	src/arr/ft_array_len.c
+
 CHAR_SRCS =	src/char/ft_isalnum.c	\
 			src/char/ft_isalpha.c	\
 			src/char/ft_isascii.c	\
@@ -67,11 +69,13 @@ STR_SRCS =	src/str/ft_split.c		\
 			src/str/ft_str_filter.c	\
 			src/str/ft_strchr.c		\
 			src/str/ft_strdup.c		\
+			src/str/ft_strndup.c	\
 			src/str/ft_strjoin.c	\
 			src/str/ft_strlcat.c	\
 			src/str/ft_strlcpy.c	\
 			src/str/ft_strlen.c		\
 			src/str/ft_strmapi.c	\
+			src/str/ft_strcmp.c		\
 			src/str/ft_strncmp.c	\
 			src/str/ft_strnstr.c	\
 			src/str/ft_strrchr.c	\

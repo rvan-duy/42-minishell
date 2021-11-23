@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2021/10/20 17:59:14 by mvan-wij      ########   odam.nl          #
+#    Updated: 2021/11/23 14:05:44 by rvan-duy      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBFT		= libft/libft.a
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
 DATA_FILE	= .make_data.txt
-ifndef NO_SANITIZE
+ifdef SANITIZE
 CFLAGS	+= -fsanitize=address
 endif
 ifdef DEBUG
@@ -26,14 +26,52 @@ CFLAGS	+= -g
 endif
 
 # Common
-LIBS	= -L$(dir $(LIBFT)) -lft -L$(HOME)/.brew/Cellar/criterion/2.3.3/lib -lcriterion
-HEADERS	= libft/libft.h include/structs.h include/utilities.h include/lex.h include/parse.h
-SOURCES	= src/lexing/lex.c src/lexing/utils.c src/lexing/lex_part.c src/lexing/expand.c src/parse.c
+LIBS	= -L$(dir $(LIBFT)) -lft -lreadline -L$(HOME)/.brew/Cellar/criterion/2.3.3/lib -lcriterion
 
-ifdef DO_TESTS
-CFLAGS	+= -DDO_TESTS=1
-SOURCES += $(filter-out src/test/init.c, $(wildcard src/test/*.c)) src/test/init.c
-endif
+HEADERS	=	libft/libft.h \
+			include/structs.h \
+			include/execute.h \
+			include/safe.h \
+			include/utilities.h \
+			src/ruben_tests/tests.h \
+			include/lex.h \
+			include/parse.h
+
+SOURCES	=	src/execute.c \
+			src/lexing/lex.c \
+			src/lexing/utils.c \
+			src/lexing/lex_part.c \
+			src/lexing/expand.c \
+			src/parse.c	\
+			src/safe/safe_chdir.c \
+			src/safe/safe_check_access.c \
+			src/safe/safe_close.c \
+			src/safe/safe_create_pipe.c \
+			src/safe/safe_dup2.c \
+			src/safe/safe_fork.c \
+			src/safe/safe_open.c \
+			src/utils_2.c \
+			src/builtins/builtin_echo.c \
+			src/builtins/builtin_cd.c \
+			src/builtins/builtin_pwd.c \
+			src/builtins/builtin_export.c \
+			src/builtins/builtin_unset.c \
+			src/builtins/builtin_env.c \
+			src/builtins/builtin_exit.c \
+			src/envp/env_arr_to_list.c \
+			src/envp/env_list_to_arr.c \
+			src/envp/env_get_var.c \
+			src/envp/env_node_add.c \
+			src/envp/env_node_last.c \
+			src/envp/env_node_new.c \
+			src/envp/env_node_del.c \
+			src/envp/env_list_len.c \
+			src/envp/env_node_dup.c \
+			src/envp/env_list_dup.c \
+			src/envp/env_list_free.c \
+			src/ruben_tests/criterion/criterion_test_tmp.c
+
+TMP_SOURCES = 	src/ruben_tests/criterion/criterion_tests.c
 
 ifndef BONUS
 # Not Bonus
@@ -71,7 +109,7 @@ all: $(PRE_RULES) $(NAME)
 
 $(NAME): $(LIBFT) $(OBJECTS)
 	@printf "$(CYAN_FG)%-$(PROJECT_SPACING)s$(RESET_COLOR) $(GREEN_FG)%-$(RULE_SPACING)s$(RESET_COLOR) : " "[$(PROJECT)]" "make"
-	$(CC) $(CFLAGS) $(OBJECTS) $(LIBS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJECTS) $(INCLUDES) $(LIBS) -o $(NAME)
 	@printf "$(CYAN_FG)%-$(PROJECT_SPACING)s$(RESET_COLOR) $(GREEN_FG)%-$(RULE_SPACING)s$(RESET_COLOR) : $(BLUE_FG)$(NAME)$(RESET_COLOR) created\n" "[$(PROJECT)]" "make"
 	@echo "$(CFLAGS)" > $(DATA_FILE)
 

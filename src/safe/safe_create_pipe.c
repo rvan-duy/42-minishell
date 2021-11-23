@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utilities.h                                        :+:    :+:            */
+/*   safe_create_pipe.c                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/06 11:48:54 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/23 14:07:09 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/15 12:38:29 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/10/15 13:44:39 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILITIES_H
-# define UTILITIES_H
+#include "structs.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 
-# include "structs.h"
+t_pipefds	safe_create_pipe(void)
+{
+	t_pipefds	result;
+	int			pipefds[2];
 
-t_status	get_env_var(char *var, char *envp[], char **dst);
-t_bool		ms_issep(char c);
-t_bool		ms_isquote(char c);
-t_bool		contains_flag(const char *string, const char *flag);
-
-#endif
+	if (pipe(pipefds) < 0)
+	{
+		perror("pipe");
+		exit(EXIT_FAILURE);
+	}
+	result.read = pipefds[0];
+	result.write = pipefds[1];
+	return (result);
+}

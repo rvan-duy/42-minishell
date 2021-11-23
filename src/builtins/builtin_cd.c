@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utilities.h                                        :+:    :+:            */
+/*   builtin_cd.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/06 11:48:54 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/23 14:07:09 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/14 11:14:09 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/11/13 13:01:04 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILITIES_H
-# define UTILITIES_H
+#include "structs.h"
+#include "envp.h"
+#include "safe.h"
 
-# include "structs.h"
+t_status	builtin_cd(t_cmd_node *nodes, t_env_var *envp)
+{
+	t_env_var	*home_node;
 
-t_status	get_env_var(char *var, char *envp[], char **dst);
-t_bool		ms_issep(char c);
-t_bool		ms_isquote(char c);
-t_bool		contains_flag(const char *string, const char *flag);
-
-#endif
+	if (nodes->argv[1] == NULL || nodes->argv[1][0] == '~')
+	{
+		home_node = env_get_var("HOME", envp);
+		if (home_node == NULL)
+			return (FAILURE);
+		safe_chdir(home_node->value);
+	}
+	else
+		safe_chdir(nodes->argv[1]);
+	return (SUCCESS);
+}

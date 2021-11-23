@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utilities.h                                        :+:    :+:            */
+/*   env_list_dup.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/06 11:48:54 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/23 14:07:09 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/11/14 14:35:02 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/11/14 14:35:47 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILITIES_H
-# define UTILITIES_H
+#include "envp.h"
 
-# include "structs.h"
+t_env_var	*env_list_dup(t_env_var *envp)
+{
+	t_env_var	*dupped_list;
+	t_env_var	*tmp;
 
-t_status	get_env_var(char *var, char *envp[], char **dst);
-t_bool		ms_issep(char c);
-t_bool		ms_isquote(char c);
-t_bool		contains_flag(const char *string, const char *flag);
-
-#endif
+	dupped_list = NULL;
+	while (envp)
+	{
+		tmp = env_node_dup(envp);
+		if (tmp == NULL)
+			exit(EXIT_FAILURE);
+		env_node_add(&dupped_list, tmp);
+		envp = envp->next;
+	}
+	return (dupped_list);
+}

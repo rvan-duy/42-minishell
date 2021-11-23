@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/07/27 14:57:31 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/07/28 13:14:34 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2021/10/07 12:17:20 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ void	ft_putendl_fd(char *s, int fd);
 int		ft_putnbr_base_fd(long long nbr, char *basechars, int fd);
 // Returns number of characters printed
 int		ft_putnbr_fd(int n, int fd);
-void	ft_putstr_fd(char *s, int fd);
+void	ft_putstr_fd(const char *s, int fd);
 
 #endif

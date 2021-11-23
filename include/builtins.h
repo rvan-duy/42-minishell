@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utilities.h                                        :+:    :+:            */
+/*   builtins.h                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/06 11:48:54 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/23 14:07:09 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/10/07 15:46:40 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/11/16 13:50:45 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILITIES_H
-# define UTILITIES_H
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
 # include "structs.h"
 
-t_status	get_env_var(char *var, char *envp[], char **dst);
-t_bool		ms_issep(char c);
-t_bool		ms_isquote(char c);
-t_bool		contains_flag(const char *string, const char *flag);
+t_status	builtin_pwd(void);
+t_status	builtin_env(t_env_var *envp);
+t_status	builtin_echo(t_cmd_node *nodes);
+t_status	builtin_exit(t_cmd_node *nodes);
+t_status	builtin_cd(t_cmd_node *nodes, t_env_var *envp);
+t_status	buitlin_unset(t_cmd_node *nodes, t_env_var *envp);
+t_status	builtin_export(t_cmd_node *nodes, t_env_var *envp);
 
 #endif

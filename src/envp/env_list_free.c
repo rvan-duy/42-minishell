@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_putstr_fd.c                                     :+:    :+:            */
+/*   env_list_free.c                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
+/*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/27 12:32:15 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/07 12:17:09 by rvan-duy      ########   odam.nl         */
+/*   Created: 2021/11/14 14:41:47 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2021/11/14 14:43:12 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <unistd.h>
+#include "structs.h"
+#include <stdlib.h>
 
-void	ft_putstr_fd(const char *s, int fd)
+void	env_list_free(t_env_var *envp)
 {
-	if (s != NULL)
-		write(fd, s, ft_strlen(s));
+	while (envp)
+	{
+		free(envp->name);
+		envp->name = NULL;
+		free(envp->value);
+		envp->value = NULL;
+		free(envp);
+		envp = NULL;
+		envp = envp->next;
+	}
 }
