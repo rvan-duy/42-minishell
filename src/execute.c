@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/19 16:04:23 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/23 15:09:40 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ static void	start_chain(t_cmd_node *nodes, t_env_var *envp)
 
 int	execute_line(t_cmd_node *nodes, t_env_var *envp)
 {
+	if (nodes->cmd == NULL)
+		return (SUCCESS);
 	// this can return -1 1 or 2 .. check that
 	if (check_builtin(nodes, envp) != NO_BUILTIN)
 		return (SUCCESS);

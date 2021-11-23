@@ -58,9 +58,7 @@ t_env_var	*env_node_new(const char *env_var)
 		new_envp->name = ft_strdup(env_var);
 		if (new_envp->name == NULL)
 			return (NULL);
-		new_envp->value = ft_strdup("");
-		if (new_envp->value == NULL)
-			return (NULL);
+		new_envp->value = NULL;
 	}
 	new_envp->next = NULL;
 	return (new_envp);

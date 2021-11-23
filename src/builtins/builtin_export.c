@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/20 13:04:28 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/14 14:49:36 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/23 16:24:26 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ static t_status	list_export(t_env_var *envp)
 	bubble_sort(&sorted_envp);
 	while (sorted_envp)
 	{
-		printf("declare -x %s=\"%s\"\n", sorted_envp->name, sorted_envp->value);
+		if (sorted_envp->value != NULL)
+			printf("declare -x %s=\"%s\"\n", sorted_envp->name, sorted_envp->value);
+		else
+			printf("declare -x %s\n", sorted_envp->name);
 		sorted_envp = sorted_envp->next;
 	}
 	env_list_free(sorted_envp);

@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 15:45:21 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/11/23 14:06:41 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/23 14:11:06 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,6 @@
 
 // Exit to the exit status of the most recently executed foreground pipeline.
 int	g_exit_status;
-
-/**
- * file_in: file to put on stdin (NULL if no file specified)
- * file_out: file to put on stdout (NULL if no file specified)
- */
-typedef struct s_files
-{
-	enum {
-		IN,
-		OUT,
-		HEREDOC_IN,
-		HEREDOC_OUT
-	}	e_type;
-	char	*file_name;
-}	t_files;
 
 /**
  * e_type: type of in-/output

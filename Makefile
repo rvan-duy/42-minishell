@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2021/11/23 14:05:44 by rvan-duy      ########   odam.nl          #
+#    Updated: 2021/11/23 16:29:26 by rvan-duy      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,9 @@ SOURCES	=	src/execute.c \
 			src/envp/env_list_free.c \
 			src/ruben_tests/criterion/criterion_test_tmp.c
 
-TMP_SOURCES = 	src/ruben_tests/criterion/criterion_tests.c
+ifndef DO_TESTS
+SOURCES += 	src/main.c
+endif
 
 ifndef BONUS
 # Not Bonus
