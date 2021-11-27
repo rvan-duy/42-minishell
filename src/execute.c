@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/23 15:09:40 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/27 17:20:22 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,52 +17,6 @@
 #include "envp.h"
 #include <fcntl.h>
 #include <sys/wait.h>
-
-static void	end_chain(t_cmd_node *nodes, int fd_in, t_env_var *envp)
-{
-	int		fd_out;
-	pid_t	pid;
-
-	pid = safe_fork();
-	if (pid == CHILD_PROCESS)
-	{
-		fd_out = safe_open(nodes->files[OUT]->file_name, O_WRONLY | O_CREAT | O_TRUNC);
-		safe_dup2(fd_in, STDIN_FILENO);
-		safe_dup2(fd_out, STDOUT_FILENO);
-		safe_check_access(nodes->cmd, X_OK);
-		execve(nodes->cmd, nodes->argv, env_list_to_arr(envp));
-	}
-	safe_close(fd_in);
-	waitpid(pid, &g_exit_status, 0);
-}
-
-static void	continue_chain(t_cmd_node *nodes, int fd_in, t_env_var *envp)
-{
-	int			i;
-	pid_t		pid;
-	t_pipefds	pipe_fds;
-
-	i = 0;
-	while (nodes->pipe_to != NULL)
-	{
-		pipe_fds = safe_create_pipe();
-		pid = safe_fork();
-		if (pid == CHILD_PROCESS)
-		{
-			safe_close(pipe_fds.read);
-			safe_dup2(fd_in, STDIN_FILENO);
-			safe_dup2(pipe_fds.write, STDOUT_FILENO);
-			safe_check_access(nodes[i].cmd, X_OK);
-			execve(nodes[i].cmd, nodes[i].argv, env_list_to_arr(envp));
-		}
-		safe_close(fd_in);
-		safe_close(pipe_fds.write);
-		waitpid(pid, &g_exit_status, 0);
-		fd_in = pipe_fds.read;
-		i++;
-	}
-	end_chain(nodes, fd_in, envp);
-}
 
 static int	check_builtin(t_cmd_node *nodes, t_env_var *envp)
 {
@@ -83,29 +37,122 @@ static int	check_builtin(t_cmd_node *nodes, t_env_var *envp)
 	return (NO_BUILTIN);
 }
 
-static void	start_chain(t_cmd_node *nodes, t_env_var *envp)
-{
-	int			fd_in;
-	pid_t		pid;
-	t_pipefds	pipe_fds;
+/*
 
-	pipe_fds = safe_create_pipe();
-	pid = safe_fork();
-	if (pid == CHILD_PROCESS)
+	cmd: grep
+	argv: grep exit NULL
+	pipe_to: NULL
+	files:
+		enum: IN
+		file_name: Makefile
+		enum: OUT
+		file_name: grep_result
+
+*/
+
+#include <stdio.h>
+
+static void	redirect_stdout(t_files **files)
+{
+	int		fd;
+	size_t 	i;
+
+	i = 0;
+	while (files[i])
 	{
-		safe_close(pipe_fds.read);
-		fd_in = safe_open(nodes->files[IN]->file_name, O_RDONLY);
-		safe_dup2(fd_in, STDIN_FILENO);
-		if (nodes->pipe_to != NULL)
-			safe_dup2(pipe_fds.write, STDOUT_FILENO);
-		check_builtin(nodes, envp);
-		safe_check_access(nodes->cmd, X_OK);
-		execve(nodes->cmd, nodes->argv, env_list_to_arr(envp));
+		if (files[i]->e_type == REDIRECT_OUTPUT)
+		{
+			fd = safe_open(files[i]->file_name, O_WRONLY | O_TRUNC | O_CREAT);
+			safe_dup2(fd, STDOUT_FILENO);
+			safe_close(fd);
+		}
+		else if (files[i]->e_type == APPENDING_REDIRECT_OUTPUT)
+		{
+			fd = safe_open(files[i]->file_name, O_WRONLY | O_APPEND | O_CREAT);
+			safe_dup2(fd, STDOUT_FILENO);
+			safe_close(fd);
+		}
+		i++;
 	}
-	safe_close(pipe_fds.write);
-	waitpid(pid, &g_exit_status, 0);
-	if (nodes->pipe_to != NULL)
-		continue_chain(nodes, pipe_fds.read, envp);
+}
+
+static void	redirect_stdin(t_files **files)
+{
+	int		fd;
+	size_t	i;
+
+	i = 0;
+	while (files[i])
+	{
+		if (files[i]->e_type == REDIRECT_INPUT)
+		{
+			fd = safe_open(files[i]->file_name, O_RDONLY);
+			safe_dup2(fd, STDIN_FILENO);
+			safe_close(fd);
+		}
+		else if (files[i]->e_type == HERE_DOCUMENT)
+		{
+			// TODO
+			dprintf(2, "HERE_DOC NOT IMPLEMENTED YET\n");
+			exit(EXIT_FAILURE);
+		}
+		i++;
+	}
+}
+
+// Does 2< have to work aswell... ? ask marius or someone else
+static void	execute_child_process(t_cmd_node node, size_t command_index, int write_fd, t_env_var *envp)
+{
+	(void)command_index;
+
+	if (node.pipe_to != NULL)
+	{
+		safe_dup2(write_fd, STDOUT_FILENO);
+		safe_close(write_fd);
+	}
+
+	redirect_stdin(node.files);
+	redirect_stdout(node.files);
+
+	safe_check_access(node.cmd, X_OK);
+	execve(node.cmd, node.argv, env_list_to_arr(envp));
+	
+	perror("execve");
+	exit(EXIT_FAILURE);
+}
+
+static void handle_processes(t_cmd_node *nodes, t_env_var *envp)
+{
+	int				previous_read_pipe;
+	pid_t			pid;
+	t_pipefds		pipe_fds;
+	size_t			command_index;
+
+	command_index = 0;
+	previous_read_pipe = STDIN_FILENO;
+	while (nodes)
+	{
+		pipe_fds = safe_create_pipe();
+		pid = safe_fork();
+		
+		if (pid == CHILD_PROCESS)
+		{
+			safe_dup2(previous_read_pipe, STDIN_FILENO);
+			safe_close(previous_read_pipe);
+			execute_child_process(*nodes, command_index, pipe_fds.write, envp);
+		}
+
+		safe_close(pipe_fds.write);
+		previous_read_pipe = pipe_fds.read;
+		if (nodes->pipe_to == NULL)
+			safe_close(pipe_fds.read);
+		
+		command_index++;
+		nodes = nodes->pipe_to;
+	}
+	waitpid(pid, &g_exit_status, 0); // not sure if wait needs to be here of after the loop
+	// close
+	// wait
 }
 
 int	execute_line(t_cmd_node *nodes, t_env_var *envp)
@@ -115,6 +162,7 @@ int	execute_line(t_cmd_node *nodes, t_env_var *envp)
 	// this can return -1 1 or 2 .. check that
 	if (check_builtin(nodes, envp) != NO_BUILTIN)
 		return (SUCCESS);
-	start_chain(nodes, envp);
+	// start_chain(nodes, envp);
+	handle_processes(nodes, envp);
 	return (SUCCESS);
 }

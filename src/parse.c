@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/14 11:47:06 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/20 17:58:38 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2021/11/27 16:19:46 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,13 +199,13 @@ void	set_redirects(t_cmd_node *node)
 		if (is_redirect(node->argv[i]))
 		{
 			if (node->argv[i][1] == '>')
-				node->files[j]->e_type = HEREDOC_OUT;
+				node->files[j]->e_type = APPENDING_REDIRECT_OUTPUT;
 			else if (node->argv[i][1] == '<')
-				node->files[j]->e_type = HEREDOC_IN;
+				node->files[j]->e_type = HERE_DOCUMENT;
 			else if (node->argv[i][0] == '>')
-				node->files[j]->e_type = OUT;
+				node->files[j]->e_type = REDIRECT_OUTPUT;
 			else if (node->argv[i][0] == '<')
-				node->files[j]->e_type = IN;
+				node->files[j]->e_type = REDIRECT_INPUT;
 			node->files[j]->file_name = node->argv[i + 1];
 			j++;
 			i++;
