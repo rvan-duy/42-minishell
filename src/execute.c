@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/27 17:20:22 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/30 16:10:40 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ static void	redirect_stdout(t_files **files)
 	size_t 	i;
 
 	i = 0;
+	if (files[i] == NULL)
+		dprintf(2, "files is NULL\n");
 	while (files[i])
 	{
 		if (files[i]->e_type == REDIRECT_OUTPUT)
@@ -82,6 +84,8 @@ static void	redirect_stdin(t_files **files)
 	size_t	i;
 
 	i = 0;
+	if (files[i] == NULL)
+		dprintf(2, "files is NULL\n");
 	while (files[i])
 	{
 		if (files[i]->e_type == REDIRECT_INPUT)
@@ -100,7 +104,7 @@ static void	redirect_stdin(t_files **files)
 	}
 }
 
-// Does 2< have to work aswell... ? ask marius or someone else
+// Does 2< have to work aswell... ?
 static void	execute_child_process(t_cmd_node node, size_t command_index, int write_fd, t_env_var *envp)
 {
 	(void)command_index;
@@ -116,7 +120,6 @@ static void	execute_child_process(t_cmd_node node, size_t command_index, int wri
 
 	safe_check_access(node.cmd, X_OK);
 	execve(node.cmd, node.argv, env_list_to_arr(envp));
-	
 	perror("execve");
 	exit(EXIT_FAILURE);
 }
@@ -138,7 +141,8 @@ static void handle_processes(t_cmd_node *nodes, t_env_var *envp)
 		if (pid == CHILD_PROCESS)
 		{
 			safe_dup2(previous_read_pipe, STDIN_FILENO);
-			safe_close(previous_read_pipe);
+			if (previous_read_pipe != 0)
+				safe_close(previous_read_pipe);
 			execute_child_process(*nodes, command_index, pipe_fds.write, envp);
 		}
 
