@@ -32,7 +32,10 @@ LST_SRCS =	src/lst/ft_lstadd_back.c	\
 			src/lst/ft_lstmap.c			\
 			src/lst/ft_lstnew.c			\
 			src/lst/ft_lstsize.c		\
-			src/lst/ft_lstitem.c
+			src/lst/ft_lstitem.c		\
+			src/lst/ft_lstreverse.c		\
+			src/lst/ft_lstnew_front.c	\
+			src/lst/ft_lstnew_back.c
 
 MEM_SRCS =	src/mem/ft_bzero.c				\
 			src/mem/ft_calloc.c				\

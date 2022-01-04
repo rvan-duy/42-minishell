@@ -6,47 +6,98 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/14 11:47:06 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/10/20 17:58:38 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2021/11/22 12:52:01 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
 #include "lex.h"
 #include "utilities.h"
 #include "structs.h"
 #include "libft.h"
 #include <stdlib.h>
 
-int	count_args(char *part)
+// void	handle_count_quotes(char *part, size_t *i)
+// {
+// 	const int	index = *i;
+
+// 	if (ms_isquote(part[index]))
+// 	{
+// 		*i = ft_strchr(part + index + 1, part[index]) - part;
+// 		if (*i == ((char *)0 - part))
+// 			return (-1);
+// 	}
+// }
+
+t_bool	is_word(char *str, char *word)
 {
-	int		j;
-	long	i;
+	unsigned int	i;
 
 	i = 0;
-	j = (part[i] != ' ' && part[i] != '\t');
-	while (part[i] != '\0')
+	while (str[i] != '\0' && word[i] != '\0')
 	{
-		if (part[i] == '\'' || part[i] == '"')
-		{
-			i = ft_strchr(part + i + 1, part[i]) - part;
-			if (i == ((char *)0 - part))
-				return (-1);
-		}
-		if (part[i] == ' ' || part[i] == '\t')
-		{
-			j++;
-			while (part[i + 1] == ' ' || part[i + 1] == '\t')
-				i++;
-			if (part[i + 1] == '\0')
-				j--;
-		}
+		if (str[i] != word[i])
+			return (false);
 		i++;
 	}
-	return (j);
+	if (word[i] != '\0')
+		return (false);
+	if (str[i] == '\0' || ms_issep(str[i]))
+		return (true);
+	return ((str[i] == '|' || str[i] == '<' || str[i] == '>')
+		&& str[i] != word[0]);
+}
+
+void	handle_count_seps(char *part, size_t *i, long *count)
+{
+	if (ms_issep(part[*i]))
+	{
+		(*count)++;
+		while (ms_issep(part[*i + 1]))
+			(*i)++;
+		if (part[*i + 1] == '\0')
+			(*count)--;
+	}
+}
+
+void	handle_count_redirect_and_pipes(char *part, size_t *i, long *count)
+{
+	if (is_word(&part[*i], "<") || is_word(&part[*i], ">")
+		|| is_word(&part[*i], "|"))
+		*count += 1;
+	else if (is_word(&part[*i], "<<") || is_word(&part[*i], ">>"))
+	{
+		(*i)++;
+		*count += 1;
+	}
+}
+
+long	count_args(char *part)
+{
+	// char s[] = "echo $HOME | cat>out_file >> outer_file|< in hello";
+	long	count;
+	size_t	i;
+
+	i = 0;
+	count = !ms_issep(part[0]);
+	while (part[i] != '\0')
+	{
+		if (ms_isquote(part[i]))
+		{
+			i = ft_strchr(&part[i + 1], part[i]) - part;
+			if (i == (size_t)((char *)0 - part))
+				return (-1);
+		}
+		handle_count_seps(part, &i, &count);
+		handle_count_redirect_and_pipes(part, &i, &count);
+		i++;
+	}
+	return (count);
 }
 
 char	**parse_cmd(char *cmd)
 {
-	//TODO: split on pipe and redirect
+	// TODO: split on pipe and redirect
 	int		i;
 	int		count;
 	char	**args;
@@ -91,10 +142,11 @@ t_status	set_node(t_cmd_node **node, char **args, int len)
 	(*node)->pipe_to = NULL;
 	return (SUCCESS);
 }
-
+*/
 /**
  * if FAILURE is returned the list of nodes have to be freed manually
  */
+/*
 t_status	extract_pipes(char **args, t_cmd_node **node)
 {
 	int	i;
@@ -276,10 +328,11 @@ t_status	extract_redirects(t_cmd_node **node)
 	}
 	return (SUCCESS);
 }
-
+*/
 /**
  * @param node use like: `t_cmd_node *node` => `&node`
  */
+/*
 t_status	parse_thing(char *cmd, t_cmd_node **node)
 {
 	char	**args;
@@ -341,13 +394,14 @@ t_status	parse_args(t_cmd_node *node, char *envp[])
 	node->cmd = node->argv[0];
 	return (SUCCESS);
 }
-
+*/
 /**
  * parse_line(cmd, &node, envp);
  * @param cmd line to parse
  * @param node pointer to `t_cmd_node *`
  * @param envp environment
  */
+/*
 t_status	parse_line(char *cmd, t_cmd_node **node, char *envp[])
 {
 	t_cmd_node	*n;
@@ -363,3 +417,12 @@ t_status	parse_line(char *cmd, t_cmd_node **node, char *envp[])
 	}
 	return (SUCCESS);
 }
+
+#ifndef DO_TESTS
+int main(void)
+{
+	count_args("echo $HOME | cat>out_file >> outer_file|< in hello");
+	return (1);
+}
+#endif
+*/

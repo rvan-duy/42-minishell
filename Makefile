@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2021/10/20 17:59:14 by mvan-wij      ########   odam.nl          #
+#    Updated: 2022/01/04 10:36:30 by mvan-wij      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,18 +22,18 @@ ifndef NO_SANITIZE
 CFLAGS	+= -fsanitize=address
 endif
 ifdef DEBUG
-CFLAGS	+= -g
+CFLAGS	+= -g3
 endif
 
 # Common
 LIBS	= -L$(dir $(LIBFT)) -lft -L$(HOME)/.brew/Cellar/criterion/2.3.3/lib -lcriterion
-HEADERS	= libft/libft.h include/structs.h include/utilities.h include/lex.h include/parse.h
-SOURCES	= src/lexing/lex.c src/lexing/utils.c src/lexing/lex_part.c src/lexing/expand.c src/parse.c
+HEADERS	= libft/libft.h include/structs.h include/utilities.h include/lex.h include/parse.h src/lexing/thing/thing.h
+SOURCES	= src/lexing/lex.c src/lexing/utils.c src/lexing/lex_part.c src/lexing/expand.c src/lexing/thing/thing.c src/lexing/thing/finish.c src/lexing/thing/fix.c src/lexing/thing/identify.c src/lexing/thing/expand.c
 
 ifdef DO_TESTS
 CFLAGS	+= -DDO_TESTS=1
-SOURCES += $(filter-out src/test/init.c, $(wildcard src/test/*.c)) src/test/init.c
 endif
+SOURCES += $(filter-out src/test/init.c, $(wildcard src/test/*.c)) src/test/init.c
 
 ifndef BONUS
 # Not Bonus
@@ -62,7 +62,7 @@ INCLUDES = $(addprefix -I,$(dir $(HEADERS))) -I$(HOME)/.brew/Cellar/criterion/2.
 
 PRE_RULES	=
 ifneq ($(shell echo "$(CFLAGS)"), $(shell cat "$(DATA_FILE)" 2> /dev/null))
-PRE_RULES	+= clean
+PRE_RULES	+= fclean
 endif
 
 .PHONY: all clean fclean re debug bonus

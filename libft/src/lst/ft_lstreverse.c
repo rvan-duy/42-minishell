@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_lstadd_front.c                                  :+:    :+:            */
+/*   ft_lstreverse.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/28 12:56:29 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/11/01 11:10:10 by mvan-wij      ########   odam.nl         */
+/*   Created: 2021/11/01 11:01:09 by mvan-wij      #+#    #+#                 */
+/*   Updated: 2021/11/30 15:11:26 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+void	ft_lstreverse(t_list **lst)
 {
-	new->next = *lst;
-	*lst = new;
+	t_list	*cur;
+	t_list	*prev;
+	t_list	*next;
+
+	cur = *lst;
+	prev = NULL;
+	while (cur != NULL)
+	{
+		next = cur->next;
+		cur->next = prev;
+		prev = cur;
+		cur = next;
+	}
+	*lst = prev;
 }
