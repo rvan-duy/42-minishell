@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/30 16:10:40 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/01 16:44:41 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
-static int	check_builtin(t_cmd_node *nodes, t_env_var *envp)
+static int	builtin_check_and_exec(t_cmd_node *nodes, t_env_var *envp)
 {
 	if (!ft_strncmp(nodes->cmd, "echo", ft_strlen(nodes->cmd) + 1))
 		return (builtin_echo(nodes));
@@ -161,12 +161,18 @@ static void handle_processes(t_cmd_node *nodes, t_env_var *envp)
 
 int	execute_line(t_cmd_node *nodes, t_env_var *envp)
 {
-	if (nodes->cmd == NULL)
+	const int is_builtin = builtin_check_and_exec(nodes, envp);
+	
+	if (is_builtin == NO_BUILTIN)
+	{
+		if (nodes->cmd != NULL)
+			handle_processes(nodes, envp);
 		return (SUCCESS);
-	// this can return -1 1 or 2 .. check that
-	if (check_builtin(nodes, envp) != NO_BUILTIN)
-		return (SUCCESS);
-	// start_chain(nodes, envp);
-	handle_processes(nodes, envp);
+	}
+	else if (is_builtin == ERROR)
+	{
+		ft_putendl_fd("error: builtin_check_and_exec returned ERROR", STDERR_FILENO);
+		return (FAILURE);
+	}
 	return (SUCCESS);
 }
