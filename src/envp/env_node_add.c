@@ -26,8 +26,7 @@ void	env_node_add(t_env_var **head, t_env_var *new)
 		*head = new;
 		return ;
 	}
-	// env_node_del(new->name, *head);
 	tmp = env_node_last(*head);
-	new->next = tmp->next;
+	new->next = NULL;
 	tmp->next = new;
 }
