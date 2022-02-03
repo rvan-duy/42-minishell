@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2021/11/23 16:29:26 by rvan-duy      ########   odam.nl          #
+#    Updated: 2022/02/03 16:24:34 by rvan-duy      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,8 @@ PROJECT		= minishell
 NAME		= minishell
 NAME_BONUS	= minishell
 LIBFT		= libft/libft.a
+
+LDFLAGS += "-L$(HOME)/.brew/opt/readline/lib"
 
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
@@ -26,14 +28,16 @@ CFLAGS	+= -g
 endif
 
 # Common
-LIBS	= -L$(dir $(LIBFT)) -lft -lreadline -L$(HOME)/.brew/Cellar/criterion/2.3.3/lib -lcriterion
+LIBS	=	-L$(dir $(LIBFT)) -lft \
+			-L$(HOME)/.brew/opt/criterion/lib \
+			-lcriterion \
+			-lreadline
 
 HEADERS	=	libft/libft.h \
 			include/structs.h \
 			include/execute.h \
 			include/safe.h \
 			include/utilities.h \
-			src/ruben_tests/tests.h \
 			include/lex.h \
 			include/parse.h
 
@@ -98,7 +102,7 @@ SRCDIR = src
 OBJDIR = obj
 
 OBJECTS = $(patsubst $(SRCDIR)/%,$(OBJDIR)/%, $(SOURCES:c=o))
-INCLUDES = $(addprefix -I,$(dir $(HEADERS))) -I$(HOME)/.brew/Cellar/criterion/2.3.3/include
+INCLUDES = $(addprefix -I,$(dir $(HEADERS))) -I$(HOME)/.brew/opt/criterion/include -I$(HOME)/.brew/opt/readline/include
 
 PRE_RULES	=
 ifneq ($(shell echo "$(CFLAGS)"), $(shell cat "$(DATA_FILE)" 2> /dev/null))
@@ -111,7 +115,7 @@ all: $(PRE_RULES) $(NAME)
 
 $(NAME): $(LIBFT) $(OBJECTS)
 	@printf "$(CYAN_FG)%-$(PROJECT_SPACING)s$(RESET_COLOR) $(GREEN_FG)%-$(RULE_SPACING)s$(RESET_COLOR) : " "[$(PROJECT)]" "make"
-	$(CC) $(CFLAGS) $(OBJECTS) $(INCLUDES) $(LIBS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJECTS) $(HOME)/.brew/opt/readline/lib/libreadline.dylib $(INCLUDES) $(LIBS) -o $(NAME)
 	@printf "$(CYAN_FG)%-$(PROJECT_SPACING)s$(RESET_COLOR) $(GREEN_FG)%-$(RULE_SPACING)s$(RESET_COLOR) : $(BLUE_FG)$(NAME)$(RESET_COLOR) created\n" "[$(PROJECT)]" "make"
 	@echo "$(CFLAGS)" > $(DATA_FILE)
 

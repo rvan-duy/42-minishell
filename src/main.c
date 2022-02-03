@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 16:51:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/02 16:55:43 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/03 16:22:43 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@
 #include <unistd.h>
 #include <signal.h>
 #include <string.h>
+#include <stdbool.h>
+
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <stdbool.h>
 
 // https://stackoverflow.com/questions/68003253/error-implicit-declaration-of-function-rl-replace-line-is-invalid-in-c99-we
 // TODO: ctrl-C and ctrl-\ interrupt readline
@@ -41,16 +42,9 @@ void	signal_handler(int sig)
 		// write(STDOUT_FILENO, "\b\b  ", 5);
 		// ft_putstr_fd("\nminishell$> ", STDOUT_FILENO);
 		ft_putstr_fd("\nminishell$> ", STDOUT_FILENO);
-		rl_point = 0;
 		rl_on_new_line();
 		rl_redisplay();
-		rl_point = 0;
-		printf("buffer: %s\n", rl_line_buffer);
-		rl_line_buffer[0] = '\0';
-		// rl_replace_line("", 0);
-		// free(rl_line_buffer);
-		// rl_end = 0;
-		// rl_done = 1;
+		rl_replace_line("", 0);
 	}
 	else if (sig == SIGQUIT)
 	{
@@ -86,7 +80,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			// DEBUG
 			// enter -> returns a line with \0
-			dprintf(2, "line is not NULL [%s]\n", line);
+			// dprintf(2, "line is not NULL [%s]\n", line);
 			if (line[0] != '\0')
 			{
 				parse_line(line, &node, envp);
