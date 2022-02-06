@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 16:51:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/06 16:18:32 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/06 16:56:05 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "parse.h"
 #include "envp.h"
 #include "builtins.h"
+#include "debug.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <signal.h>
@@ -42,7 +43,6 @@ void	signal_handler(int sig)
 		ft_putstr_fd(rl_line_buffer, STDOUT_FILENO);
 		ft_putstr_fd("  \b\b", STDOUT_FILENO);
 	}
-	(void)sig;
 }
 
 static void	init_signals(void)
@@ -71,6 +71,7 @@ int	main(int argc, char **argv, char **envp)
 			if (line[0] != '\0')
 			{
 				parse_line(line, &node, envp);
+				print_nodes(node);
 				execute_line(node, envp_linked);
 				add_history(line);
 				free(line);

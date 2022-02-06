@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2022/02/03 16:24:34 by rvan-duy      ########   odam.nl          #
+#    Updated: 2022/02/06 16:54:49 by rvan-duy      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,8 @@ HEADERS	=	libft/libft.h \
 			include/safe.h \
 			include/utilities.h \
 			include/lex.h \
-			include/parse.h
+			include/parse.h \
+			include/debug.h
 
 SOURCES	=	src/execute.c \
 			src/lexing/lex.c \
@@ -73,6 +74,7 @@ SOURCES	=	src/execute.c \
 			src/envp/env_node_dup.c \
 			src/envp/env_list_dup.c \
 			src/envp/env_list_free.c \
+			src/debug/debug_print_nodes.c \
 			src/ruben_tests/criterion/criterion_test_tmp.c
 
 ifndef DO_TESTS
