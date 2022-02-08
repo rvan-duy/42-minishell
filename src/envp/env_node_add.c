@@ -6,14 +6,13 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/20 13:07:18 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/01 15:05:52 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/08 11:04:40 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "envp.h"
 #include "libft.h"
 #include <signal.h>
-#include <stdio.h>
 
 void	env_node_add(t_env_var **head, t_env_var *new)
 {
