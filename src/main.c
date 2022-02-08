@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 16:51:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/06 16:56:05 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/08 10:45:08 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@
 
 #include <readline/readline.h>
 #include <readline/history.h>
+
+/*
+sigemptyset, sigaddset, stat, lstat, fstat, unlink, opendir, readdir, closedir,
+isatty, ttyname, ttyslot, ioctl,getenv, tcsetattr, tcgetattr, tgetent, tgetflag,
+tgetnum, tgetstr, tgoto, tputs
+*/
 
 // TODO: return value when program gets interrupted by signals!
 void	signal_handler(int sig)
