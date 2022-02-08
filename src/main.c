@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 16:51:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/08 10:45:08 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/08 13:34:33 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@
 #include "envp.h"
 #include "builtins.h"
 #include "debug.h"
+#include "signals.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <signal.h>
-#include <string.h>
-#include <stdbool.h>
 
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -30,26 +29,6 @@ sigemptyset, sigaddset, stat, lstat, fstat, unlink, opendir, readdir, closedir,
 isatty, ttyname, ttyslot, ioctl,getenv, tcsetattr, tcgetattr, tgetent, tgetflag,
 tgetnum, tgetstr, tgoto, tputs
 */
-
-// TODO: return value when program gets interrupted by signals!
-void	signal_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		ft_putstr_fd("minishell$> ", STDOUT_FILENO);
-		ft_putstr_fd(rl_line_buffer, STDOUT_FILENO);
-		ft_putstr_fd("  \n", STDOUT_FILENO);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-	else if (sig == SIGQUIT)
-	{
-		ft_putstr_fd("minishell$> ", STDOUT_FILENO);
-		ft_putstr_fd(rl_line_buffer, STDOUT_FILENO);
-		ft_putstr_fd("  \b\b", STDOUT_FILENO);
-	}
-}
 
 static void	init_signals(void)
 {
