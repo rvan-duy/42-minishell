@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/06 16:45:07 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/06 17:03:54 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/08 14:43:28 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 /**
  * Prints out all the command nodes and its content
  * @param nodes pointer to `t_cmd_node *`
+ * @return nothing
  */
 void	print_nodes(t_cmd_node *nodes)
 {
@@ -31,8 +32,8 @@ void	print_nodes(t_cmd_node *nodes)
 		printf("address: %p\n", nodes);
 		printf("cmd: %s\n", nodes->cmd);
 		printf("argv: ");
-		while (nodes->argv[i++])
-			printf("[%s] ", nodes->argv[i]);
+		while (nodes->argv[i])
+			printf("[%s] ", nodes->argv[i++]);
 		printf("\n");
 		printf("pipe_to: %p\n", nodes->pipe_to);
 		nodes = nodes->pipe_to;
