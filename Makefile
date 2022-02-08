@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2022/02/06 16:54:49 by rvan-duy      ########   odam.nl          #
+#    Updated: 2022/02/08 19:32:36 by rvan-duy      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,12 +34,16 @@ LIBS	=	-L$(dir $(LIBFT)) -lft \
 			-lreadline
 
 HEADERS	=	libft/libft.h \
+			include/builtins.h \
 			include/structs.h \
 			include/execute.h \
 			include/safe.h \
 			include/utilities.h \
 			include/lex.h \
 			include/parse.h \
+			include/signals.h \
+			include/envp.h \
+			include/cmds.h \
 			include/debug.h
 
 SOURCES	=	src/execute.c \
@@ -74,6 +78,9 @@ SOURCES	=	src/execute.c \
 			src/envp/env_node_dup.c \
 			src/envp/env_list_dup.c \
 			src/envp/env_list_free.c \
+			src/signals/signal_handler.c \
+			src/cmds/cmd_get_absolute_path.c \
+			src/cmds/cmd_create_execve_array.c \
 			src/debug/debug_print_nodes.c \
 			src/ruben_tests/criterion/criterion_test_tmp.c
 
