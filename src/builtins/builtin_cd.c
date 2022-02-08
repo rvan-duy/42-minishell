@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/14 11:14:09 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/08 11:07:56 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/08 11:29:20 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 #include "envp.h"
 #include "safe.h"
 #include "libft.h"
-
-// OLDPWD (OLDPrintWorkingDirectory) contains 
-// directory before the last cd command
 
 static void	add_cwd_to_envp(const char *cwd, t_env_var **head)
 {
