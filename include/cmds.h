@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   execute.h                                          :+:    :+:            */
+/*   cmds.h                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/06 11:38:22 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/08 15:00:54 by rvan-duy      ########   odam.nl         */
+/*   Created: 2022/02/08 16:50:30 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2022/02/08 19:32:13 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTE_H
-# define EXECUTE_H
+#ifndef CMDS_H
+# define CMDS_H
 
-# include "structs.h"
-
-# define CHILD_PROCESS 0
-
-# define EXECUTE_SUCCESS 0
-# define EXECUTE_FAILURE 1
-# define NO_BUILTIN 2
-
-t_status	execute_line(t_cmd_node *nodes, t_env_var *envp);
+char	*cmd_get_absolute_path(const char *command);
+char	**cmd_create_execve_array(char *command, char **arguments);
 
 #endif
