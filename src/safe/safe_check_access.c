@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/15 16:36:25 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/15 16:50:11 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/08 14:48:21 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ void	safe_check_access(const char *cmd, int oflag)
 {
 	if (access(cmd, oflag) < 0)
 	{
+		ft_putstr_fd("access: ", STDERR_FILENO);
 		if (cmd == NULL)
-			ft_putstr_fd("(acces) NULL: ", 2);
+			ft_putstr_fd("NULL: ", STDERR_FILENO);
 		perror(cmd);
 		exit(EXIT_FAILURE);
 	}
