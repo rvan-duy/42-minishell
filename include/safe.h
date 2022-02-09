@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/15 12:48:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/15 16:50:16 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/09 15:06:08 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "structs.h"
 # include <unistd.h>
+
+# define CHILD_PROCESS 0
 
 pid_t		safe_fork(void);
 t_pipefds	safe_create_pipe(void);
