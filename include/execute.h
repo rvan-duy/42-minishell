@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:38:22 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/08 15:00:54 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/09 15:06:16 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define EXECUTE_H
 
 # include "structs.h"
-
-# define CHILD_PROCESS 0
 
 # define EXECUTE_SUCCESS 0
 # define EXECUTE_FAILURE 1
