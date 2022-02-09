@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 15:19:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/08 19:16:25 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/09 15:09:47 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static char	**add_command_to_paths(char **split_paths, const char *command)
  * Searches for the absolute path to a command
  * @param command pointer to `char *`
  * @return A pointer to the absolute path allocated with malloc()
- * - NULL if no absolute path can be found
+ * - NULL if no absolute path cannot be found
  */
 char	*cmd_get_absolute_path(const char *command)
 {
