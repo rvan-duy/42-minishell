@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/08 19:41:05 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/09 20:27:15 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ static void	execute_child_process(t_cmd_node *nodes, int write_fd, t_env_var *en
 	}
 }
 
-static void handle_processes(t_cmd_node *nodes, t_env_var *envp)
+static void handle_pipes(t_cmd_node *nodes, t_env_var *envp)
 {
 	int				previous_read_pipe;
 	pid_t			pid;
@@ -191,7 +191,16 @@ static void handle_processes(t_cmd_node *nodes, t_env_var *envp)
 
 t_status	execute_line(t_cmd_node *nodes, t_env_var *envp)
 {
-	handle_processes(nodes, envp);
+	if (nodes->pipe_to == NULL)
+	{
+		if (NO_BUILTIN == builtin_check_and_exec(nodes, envp))
+		{
+			// execute command + creating child
+			return (SUCCESS);
+		}
+	}
+	else
+		handle_pipes(nodes, envp);
 	return (SUCCESS);
 }
 
