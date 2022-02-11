@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2022/02/09 20:29:17 by rvan-duy      ########   odam.nl          #
+#    Updated: 2022/02/11 13:37:15 by rvan-duy      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,6 +82,7 @@ SOURCES	=	src/execute.c \
 			src/cmds/cmd_get_absolute_path.c \
 			src/cmds/cmd_create_execve_array.c \
 			src/cmds/cmd_exec_file.c \
+			src/cmds/cmd_redirect_stdin.c \
 			src/debug/debug_print_nodes.c \
 			src/ruben_tests/criterion/criterion_test_tmp.c
 
