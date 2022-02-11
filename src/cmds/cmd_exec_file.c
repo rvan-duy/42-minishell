@@ -6,12 +6,13 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/09 14:59:10 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/11 12:34:36 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/11 17:41:08 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cmds.h"
 #include "libft.h"
+#include "builtins.h"
 #include "safe.h"
 #include "envp.h"
 #include <string.h>
@@ -22,32 +23,121 @@
 // TODO: redirections if files are not NULL
 // TODO: add pipes
 
+static void	execute_command(t_cmd_node *nodes, t_env_var *envp)
+{
+	char	*absolute_path;
+	char	*tmp;
+
+	absolute_path = cmd_get_absolute_path(nodes->cmd);
+	safe_check_access(absolute_path, nodes->cmd, X_OK);
+	tmp = nodes->cmd;
+	nodes->cmd = absolute_path;
+	free(tmp);
+	execve(nodes->cmd, nodes->argv, env_list_to_arr(envp));
+	perror("execve");
+	exit(EXIT_FAILURE);
+}
+
 /**
- * Creates a child process, then executes a file
+ * Executes a single file or builtin, in case of a file
+ * it will create a child process
  * @param nodes pointer to `t_cmd_node *`
  * @param envp pointer to `t_env_var *`
  * @return 0 if success - 1 in case of error
  */
-t_status	cmd_exec_file(t_cmd_node *nodes, t_env_var *envp)
+t_status	cmd_exec_single_file(t_cmd_node *nodes, t_env_var *envp, int write_fd)
 {
-	char		*absolute_path;
-	char		*tmp;
 	int			stat;
+	int			ret;
 	pid_t		pid;
 
-	pid = safe_fork();
-	if (pid == CHILD_PROCESS)
+	if (nodes->pipe_to)
 	{
-		absolute_path = cmd_get_absolute_path(nodes->cmd);
-		safe_check_access(absolute_path, nodes->cmd, X_OK);
-		tmp = nodes->cmd;
-		nodes->cmd = absolute_path;
-		free(tmp);
-		execve(nodes->cmd, nodes->argv, env_list_to_arr(envp));
-		perror("execve");
-		exit(EXIT_FAILURE);
+		safe_dup2(write_fd, STDOUT_FILENO);
+		safe_close(write_fd);
 	}
-	wait(&stat);
-	g_exit_status = WEXITSTATUS(stat);
-	return (SUCCESS);
+	cmd_redirect_stdin(nodes->files);
+	cmd_redirect_stdout(nodes->files);
+	ret = builtin_check_and_exec(nodes, envp);
+	if (ret == SUCCESFULLY_EXECUTED_BUILTIN)
+	{
+		g_exit_status = SUCCESS;
+		return (SUCCESS);
+	}
+	else if (ret == NO_BUILTIN)
+	{
+		pid = safe_fork();
+		if (pid == CHILD_PROCESS)
+			execute_command(nodes, envp);
+		wait(&stat);
+		g_exit_status = WEXITSTATUS(stat);
+		return (SUCCESS);
+	}
+	ft_putendl_fd("Error: builtin_check_and_exec == 1", STDERR_FILENO);
+	g_exit_status = FAILURE;
+	return (FAILURE);
 }
+
+/**
+ * Executes all files or builtins stored in nodes
+ * @param nodes pointer to `t_cmd_node *`
+ * @param envp pointer to `t_env_var *`
+ * @return Nothing, calls exit() on error
+ */
+void	cmd_exec_multiple_files(t_cmd_node *nodes, t_env_var *envp)
+{
+	int				previous_read_pipe;
+	pid_t			pid;
+	t_pipefds		pipe_fds;
+	size_t			command_index;
+
+	command_index = 0;
+	previous_read_pipe = STDIN_FILENO;
+	while (nodes)
+	{
+		pipe_fds = safe_create_pipe();
+		pid = safe_fork();
+		if (pid == CHILD_PROCESS)
+		{
+			safe_dup2(previous_read_pipe, STDIN_FILENO);
+			if (previous_read_pipe != 0)
+				safe_close(previous_read_pipe);
+			cmd_exec_single_file(nodes, envp, pipe_fds.write);
+		}
+		safe_close(pipe_fds.write);
+		previous_read_pipe = pipe_fds.read;
+		if (nodes->pipe_to == NULL)
+			safe_close(pipe_fds.read);
+		command_index++;
+		nodes = nodes->pipe_to;
+	}
+	waitpid(pid, &g_exit_status, 0); // not sure if wait needs to be here of after the loop
+	// close
+	// wait
+}
+
+// void	cmd_exec_multiple_files(t_cmd_node *nodes, t_env_var *envp)
+// {
+// 	int			ret;
+
+// 	safe_dup2(prev_fd, STDIN_FILENO);
+// 	if (prev_fd != 0)
+// 		safe_close(prev_fd);
+// 	if (nodes->pipe_to != NULL)
+// 	{
+// 		safe_dup2(next_fd, STDOUT_FILENO);
+// 		safe_close(next_fd);
+// 	}
+// 	cmd_redirect_stdin(nodes->files);
+// 	cmd_redirect_stdout(nodes->files);
+// 	ret = builtin_check_and_exec(nodes, envp);
+// 	if (ret == SUCCESFULLY_EXECUTED_BUILTIN)
+// 		exit(EXIT_SUCCESS);
+// 	else if (ret == NO_BUILTIN)
+// 		execute_command(nodes, envp);
+// 	else if (ret == FAILURE)
+// 	{
+// 		ft_putendl_fd("Error: builtin_check_and_exec == 1", STDERR_FILENO);
+// 		exit(EXIT_FAILURE);
+// 	}
+// }
