@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/09 14:59:10 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/09 20:33:24 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/11 12:34:36 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,7 @@ t_status	cmd_exec_file(t_cmd_node *nodes, t_env_var *envp)
 	if (pid == CHILD_PROCESS)
 	{
 		absolute_path = cmd_get_absolute_path(nodes->cmd);
-		if (absolute_path == NULL)
-		{
-			ft_putstr_fd(nodes->cmd, STDERR_FILENO);
-			ft_putendl_fd(": command not found", STDERR_FILENO);
-			exit(127);
-		}
-		if (access(absolute_path, X_OK) < 0)
-		{
-			ft_putstr_fd(nodes->cmd, STDERR_FILENO);
-			ft_putstr_fd(": ", STDERR_FILENO);
-			ft_putendl_fd(strerror(errno), STDERR_FILENO);
-			free(absolute_path);
-			exit(EXIT_SUCCESS);
-		}
+		safe_check_access(absolute_path, nodes->cmd, X_OK);
 		tmp = nodes->cmd;
 		nodes->cmd = absolute_path;
 		free(tmp);

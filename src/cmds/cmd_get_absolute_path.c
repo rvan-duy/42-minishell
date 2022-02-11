@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 15:19:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/09 15:09:47 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/11 12:35:58 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,25 @@ static char	**add_command_to_paths(char **split_paths, const char *command)
  * Searches for the absolute path to a command
  * @param command pointer to `char *`
  * @return A pointer to the absolute path allocated with malloc()
- * - NULL if no absolute path cannot be found
+ * - if no absolute path can be found, exit() is called 
+ * with the appropriate error message
  */
 char	*cmd_get_absolute_path(const char *command)
 {
 	const char	*paths = getenv("PATH");
 	char		**splitted_paths;
+	char		*valid_path;
 
 	splitted_paths = ft_split(paths, ':');
 	if (splitted_paths == NULL)
 		exit(EXIT_FAILURE);
 	splitted_paths = add_command_to_paths(splitted_paths, command);
-	return (find_valid_path(splitted_paths));
+	valid_path = find_valid_path(splitted_paths);
+	if (valid_path == NULL)
+	{
+		ft_putstr_fd(command, STDERR_FILENO);
+		ft_putendl_fd(": command not found", STDERR_FILENO);
+		exit(127);
+	}
+	return (valid_path);
 }
