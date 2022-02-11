@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/15 16:36:25 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/11 12:19:53 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/11 12:46:19 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/errno.h>
+#include <string.h>
 
 void	safe_check_access(char *absolute_path, const char *cmd, int oflag)
 {
