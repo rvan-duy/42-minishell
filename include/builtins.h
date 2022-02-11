@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/07 15:46:40 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/16 13:50:45 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/11 16:21:15 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include "structs.h"
 
+# define NO_BUILTIN 2
+
+int			builtin_check_and_exec(t_cmd_node *nodes, t_env_var *envp);
 t_status	builtin_pwd(void);
 t_status	builtin_env(t_env_var *envp);
 t_status	builtin_echo(t_cmd_node *nodes);
