@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 13:39:59 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/11 13:44:35 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/11 15:14:10 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	cmd_redirect_stdout(t_files **files)
 	size_t	i;
 
 	i = 0;
-	if (files[i] == NULL)
-		dprintf(2, "files is NULL\n");
 	while (files[i])
 	{
 		if (files[i]->e_type == REDIRECT_OUTPUT)
