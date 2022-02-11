@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/15 16:36:25 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/09 15:22:01 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/11 12:19:53 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <sys/errno.h>
 
-// Probably redundant
-void	safe_check_access(const char *cmd, int oflag)
+void	safe_check_access(char *absolute_path, const char *cmd, int oflag)
 {
-	if (access(cmd, oflag) < 0)
+	if (access(absolute_path, oflag) < 0)
 	{
-		ft_putstr_fd("access: ", STDERR_FILENO);
-		if (cmd == NULL)
-			ft_putstr_fd("NULL: ", STDERR_FILENO);
-		perror(cmd);
-		exit(EXIT_FAILURE);
+		ft_putstr_fd(cmd, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+		free(absolute_path);
+		exit(EXIT_SUCCESS);
 	}
 }
