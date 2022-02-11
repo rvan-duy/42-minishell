@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/11 16:21:41 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/11 17:43:30 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,19 +103,13 @@ static void handle_pipes(t_cmd_node *nodes, t_env_var *envp)
  */
 t_status	execute_line(t_cmd_node *nodes, t_env_var *envp)
 {
-	t_status return_status;
-
 	if (nodes->pipe_to == NULL)
 	{
-		return_status = builtin_check_and_exec(nodes, envp);
-		if (return_status == NO_BUILTIN)
-			cmd_exec_file_with_child(nodes, envp);
-		else if (return_status == FAILURE)
-			return (FAILURE);
+		cmd_exec_single_file(nodes, envp, STDOUT_FILENO);
 	}
 	else
 	{
-		handle_pipes(nodes, envp);
+		handle_pipes(nodes, envp); // change to new refactored function
 	}
 	return (SUCCESS);
 }

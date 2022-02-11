@@ -6,12 +6,13 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 16:19:24 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/11 16:20:02 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/11 16:42:34 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "builtins.h"
+#include "libft.h"
 
 /**
  * Checks if the node is a builtin command, if so: executes it
