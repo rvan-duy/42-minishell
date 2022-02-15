@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/09 14:59:10 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/15 15:23:56 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/15 16:10:43 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 
 // TODO: add error msg if executable is doens't have right permissions
 // TODO: redirections if files are not NULL
-// TODO: add pipes
 
 static void	execute_command(t_cmd_node *nodes, t_env_var *envp)
 {
@@ -45,7 +44,7 @@ static void	execute_command(t_cmd_node *nodes, t_env_var *envp)
  * @param envp pointer to `t_env_var *`
  * @return 0 if success - 1 in case of error
  */
-t_status	cmd_exec_single_file(t_cmd_node *nodes, t_env_var *envp,
+void	cmd_exec_single_file(t_cmd_node *nodes, t_env_var *envp,
 									int write_fd)
 {
 	int			ret;
@@ -61,10 +60,7 @@ t_status	cmd_exec_single_file(t_cmd_node *nodes, t_env_var *envp,
 	if (ret == SUCCESFULLY_EXECUTED_BUILTIN)
 		exit(EXIT_SUCCESS);
 	else if (ret == NO_BUILTIN)
-	{
 		execute_command(nodes, envp);
-		return (SUCCESS);
-	}
 	ft_putendl_fd("Error: builtin_check_and_exec == 1", STDERR_FILENO);
 	g_exit_status = FAILURE;
 	return (FAILURE);
@@ -72,7 +68,7 @@ t_status	cmd_exec_single_file(t_cmd_node *nodes, t_env_var *envp,
 
 static size_t	node_len(t_cmd_node *nodes)
 {
-	size_t len;
+	size_t	len;
 
 	len = 0;
 	while (nodes)
@@ -81,6 +77,18 @@ static size_t	node_len(t_cmd_node *nodes)
 		nodes = nodes->pipe_to;
 	}
 	return (len);
+}
+
+static void	wait_for_all_processes(size_t node_amount)
+{
+	int	i;
+
+	i = 0;
+	while (i < node_amount)
+	{
+		wait(&g_exit_status);
+		i++;
+	}
 }
 
 /**
@@ -99,7 +107,6 @@ void	cmd_exec_multiple_files(t_cmd_node *nodes, t_env_var *envp)
 
 	command_index = 0;
 	previous_read_pipe = STDIN_FILENO;
-	dprintf(STDERR_FILENO, "(%d) <- MAIN PROCESS\n", getpid());
 	while (nodes)
 	{
 		pipe_fds = safe_create_pipe();
@@ -118,16 +125,7 @@ void	cmd_exec_multiple_files(t_cmd_node *nodes, t_env_var *envp)
 		command_index++;
 		nodes = nodes->pipe_to;
 	}
-
-	size_t i = 0;
-	while (i < node_amount)
-	{
-		wait(&g_exit_status);
-		i++;
-	}
-
-	// close
-	// wait
+	wait_for_all_processes(node_amount);
 }
 
 // void	cmd_exec_multiple_files(t_cmd_node *nodes, t_env_var *envp)
