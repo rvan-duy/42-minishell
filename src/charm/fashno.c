@@ -6,11 +6,12 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/14 12:29:27 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/14 16:48:21 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/02/15 17:22:59 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "structs.h"
 #include <stdlib.h>
 #include <stdbool.h>
 
@@ -89,13 +90,14 @@ void	error(t_error_code err)
 
 t_error_code	get_whitespace(char *str, int *i, t_token *token)
 {
-	const int	start = *i;
+	// const int	start = *i;
 
 	while (str[*i] != '\0' && ft_strchr(" \t", str[*i]) != NULL)
 		(*i)++;
-	token->value = ft_substr(str, start, *i - start); // ± 1
-	if (token->value == NULL)
-		return (MALLOC_FAIL);
+	token->value = NULL;
+	// token->value = ft_substr(str, start, *i - start); // ± 1
+	// if (token->value == NULL)
+	// 	return (MALLOC_FAIL);
 	return (NO_ERROR);
 }
 
@@ -332,8 +334,8 @@ void	expand_vars(t_list *tokens)
 	{
 		if (is_type(((t_token *)tokens->content)->type, DLESS))
 			heredoc_state = WILL;
-		else if ((is_type(((t_token *)tokens->content)->type, UNQUOTED)
-			|| is_type(((t_token *)tokens->content)->type, DOUBLE_QUOTED))
+		else if ((is_type(((t_token *)tokens->content)->type, UNQUOTED) \
+			|| is_type(((t_token *)tokens->content)->type, DOUBLE_QUOTED)) \
 			&& heredoc_state == NOT)
 		{
 			tmp = replace_vars(((t_token *)tokens->content)->value);
@@ -356,9 +358,9 @@ bool	is_valid_redirect_name(t_list *tokens)
 		tokens = tokens->next;
 	while (tokens != NULL && is_type(((t_token *)tokens->content)->type, WORD))
 	{
-		if (is_type(((t_token *)tokens->content)->type, UNQUOTED)
-			&& (ft_strchr(((t_token *)tokens->content)->value, ' ') != NULL
-			|| ft_strchr(((t_token *)tokens->content)->value, '\t') != NULL))
+		if (is_type(((t_token *)tokens->content)->type, UNQUOTED) \
+		&& (ft_strchr(((t_token *)tokens->content)->value, ' ') != NULL \
+		|| ft_strchr(((t_token *)tokens->content)->value, '\t') != NULL))
 			return (false);
 		tokens = tokens->next;
 	}
@@ -386,7 +388,7 @@ void	free_token(void *_token)
 	free(token);
 }
 
-void	split_unquoted_token(t_list **token) // do with ptr
+void	split_unquoted_token(t_list **token)
 {
 	char	**splitted;
 	t_list	*next;
@@ -417,7 +419,7 @@ void	split_unquoted(t_list **tokens)
 		if (is_type(((t_token *)(*tokens)->content)->type, UNQUOTED)
 			&& ft_strchr(((t_token *)(*tokens)->content)->value, ' ') != NULL)
 		{
-			split_unquoted_token(tokens); // do with ptr
+			split_unquoted_token(tokens);
 		}
 		tokens = &(*tokens)->next;
 	}
@@ -455,11 +457,118 @@ void	join_words(t_list **tokens)
 	}
 }
 
-#include <stdio.h>
-void	parse_line(char *line)
+void	remove_whitespace(t_list **tokens)
 {
-	t_list	*tokens;
+	t_list	*next;
 
+	while (*tokens != NULL)
+	{
+		if (is_type(((t_token *)(*tokens)->content)->type, WHITESPACE))
+		{
+			next = (*tokens)->next;
+			ft_lstdelone(*tokens, free_token);
+			*tokens = next;
+		}
+		else
+			tokens = &(*tokens)->next;
+	}
+}
+
+t_files	*extract_redirect(t_list **tokens)
+{
+	t_files			*file;
+	t_token_type	type;
+	t_list			*next;
+
+	file = malloc(sizeof(t_files));
+	if (file == NULL)
+		return (NULL);
+	file->file_name = ((t_token *)(*tokens)->next->content)->value;
+	((t_token *)(*tokens)->next->content)->value = NULL;
+	type = ((t_token *)(*tokens)->content)->type;
+	if (is_type(type, LESS))
+		file->e_type = IN;
+	else if (is_type(type, GREAT))
+		file->e_type = OUT;
+	else if (is_type(type, DLESS))
+		file->e_type = HEREDOC_IN;
+	else if (is_type(type, DGREAT))
+		file->e_type = HEREDOC_OUT;
+	next = (*tokens)->next->next;
+	ft_lstdelone((*tokens)->next, &free_token);
+	ft_lstdelone(*tokens, &free_token);
+	*tokens = next;
+	return (file);
+}
+
+t_list	*extract_redirects(t_list **tokens)
+{
+	t_list	*files;
+
+	files = NULL;
+	while (*tokens != NULL
+		&& !is_type(((t_token *)(*tokens)->content)->type, PIPE))
+	{
+		if (is_type(((t_token *)(*tokens)->content)->type, REDIRECT))
+			ft_lstnew_front(extract_redirect(tokens), &files);
+		else
+			tokens = &(*tokens)->next;
+	}
+	return (ft_lstreverse(&files));
+}
+
+char	**create_argv(t_list *tokens)
+{
+	t_list	*files;
+	size_t	i;
+	char	**argv;
+	t_list	*tmp;
+
+	i = 0;
+	files = NULL;
+	tmp = tokens;
+	while (tmp != NULL && !is_type(((t_token *)tmp->content)->type, PIPE))
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	argv = malloc((i + 1) * sizeof(char *));
+	argv[i] = NULL;
+	i = 0;
+	while (tokens != NULL && !is_type(((t_token *)tokens->content)->type, PIPE))
+	{
+		argv[i] = ((t_token *)tokens->content)->value;
+		((t_token *)tokens->content)->value = NULL;
+		tokens = tokens->next;
+		i++;
+	}
+	return (argv);
+}
+
+void	create_nodes(t_list **tokens, t_cmd_node **node)
+{
+	while (*tokens != NULL)
+	{
+		*node = malloc(sizeof(t_cmd_node));
+		(*node)->files = extract_redirects(tokens);
+		(*node)->argv = create_argv(*tokens);
+		(*node)->cmd = (*node)->argv[0];
+		(*node)->pipe_to = NULL;
+		node = &(*node)->pipe_to;
+		while (*tokens != NULL
+			&& !is_type(((t_token *)(*tokens)->content)->type, PIPE))
+			tokens = &(*tokens)->next;
+		if (*tokens != NULL)
+			tokens = &(*tokens)->next;
+	}
+}
+
+t_list	*parse_line_into_tokens(char *line)
+{
+	t_list		*tokens;
+	t_cmd_node	*node;
+
+	node = NULL;
 	tokens = get_tokens(line);
 	if (!is_valid(tokens))
 		error(INVALID_SEQUENCE);
@@ -467,19 +576,86 @@ void	parse_line(char *line)
 	check_redirects(tokens);
 	split_unquoted(&tokens);
 	join_words(&tokens);
+	remove_whitespace(&tokens);
+	create_nodes(&tokens, &node);
+	ft_lstclear(&tokens, &free_token);
+	return (tokens);
+}
+
+
+
+
+
+
+
+
+
+#include <stdio.h>
+char *token_type_as_str(int type)
+{
+	switch (type)
+	{
+		case WHITESPACE: return "WHITESPACE";
+		case OPERATOR: return "OPERATOR";
+		case PIPE: return "PIPE";
+		case REDIRECT: return "REDIRECT";
+		case LESS: return "LESS";
+		case GREAT: return "GREAT";
+		case DLESS: return "DLESS";
+		case DGREAT: return "DGREAT";
+		case WORD: return "WORD";
+		case UNQUOTED: return "UNQUOTED";
+		case QUOTED: return "QUOTED";
+		case SINGLE_QUOTED: return "SINGLE_QUOTED";
+		case DOUBLE_QUOTED: return "DOUBLE_QUOTED";
+	}
+	return "";
+}
+
+char *all_types(int type)
+{
+	static t_token_type types[] = {
+		WHITESPACE,
+		OPERATOR,
+		PIPE,
+		REDIRECT,
+		LESS,
+		GREAT,
+		DLESS,
+		DGREAT,
+		WORD,
+		UNQUOTED,
+		QUOTED,
+		SINGLE_QUOTED,
+		DOUBLE_QUOTED
+	};
+	char *type_str = ft_strdup("");
+	for (int i = 0; i < sizeof(types) / sizeof(t_token_type); i++)
+	{
+		if (is_type(type, types[i]))
+		{
+			if (type_str[0] != '\0')
+				type_str = ft_strjoin(type_str, ", ");
+			type_str = ft_strjoin(type_str, token_type_as_str(types[i]));
+		}
+	}
+	return (type_str);
+}
+
+int	main(void)
+{
+	t_list	*tokens = parse_line_into_tokens(" echo < q hello      |<hello|<<hello cat $TEST << $HEYA$hoi\"s\"'r'$h $TE\"s$ $hello\" '$heyo' > \"$iuef\" ");
 
 	t_token *token;
+	size_t	i = 0;
+	printf("-----------------------------------------------------------------------------------------------------\n| %7s | %33s | %10s | %10s | %25s |\n-----------------------------------------------------------------------------------------------------\n", "(index)", "value", "type_name", "type_value", "expanded_types");
 	while (tokens != NULL)
 	{
 		token = (t_token *)tokens->content;
-		printf("token value: {%s}\n", token->value);
-		printf("token type: %i\n\n", token->type);
+		printf("| %7zu | %33s | %10s | %10i | %25s |\n", i, token->value, token_type_as_str(token->type), token->type, all_types(token->type));
 		tokens = tokens->next;
+		i++;
 	}
-}
-
-int main(void)
-{
-	parse_line(" echo hello      |<hello|<<hello cat $TEST << $HEYA$hoi\"s\"'r'$h $TE\"s$ $hello\" '$heyo' > \"$iuef\" ");
+	printf("-----------------------------------------------------------------------------------------------------\n");
 	return (0);
 }
