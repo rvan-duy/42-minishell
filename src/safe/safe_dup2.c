@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   dup2.c                                             :+:    :+:            */
+/*   safe_dup2.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/15 12:41:54 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/15 12:42:31 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/15 16:03:45 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	safe_dup2(int fildes1, int fildes2)
 {
-	if (fildes1 < 0 || fildes2 < 0)
+	if (fildes1 < 0 || fildes2 < 0 || fildes1 == fildes2)
 		return ;
 	if (dup2(fildes1, fildes2) < 0)
 	{
