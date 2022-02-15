@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/09 14:59:10 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/11 17:41:08 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/15 11:26:20 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ t_status	cmd_exec_single_file(t_cmd_node *nodes, t_env_var *envp, int write_fd)
 	cmd_redirect_stdout(nodes->files);
 	ret = builtin_check_and_exec(nodes, envp);
 	if (ret == SUCCESFULLY_EXECUTED_BUILTIN)
-	{
-		g_exit_status = SUCCESS;
 		return (SUCCESS);
-	}
 	else if (ret == NO_BUILTIN)
 	{
 		pid = safe_fork();

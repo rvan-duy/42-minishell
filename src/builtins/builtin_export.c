@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/20 13:04:28 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/01 14:52:39 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/15 11:28:32 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ t_status	builtin_export(t_cmd_node *nodes, t_env_var *envp)
 		env_node_add(&envp, new_env_var);
 		i++;
 	}
+	g_exit_status = SUCCESS;
 	return (SUCCESS);
 }

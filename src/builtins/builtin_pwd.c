@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/13 15:09:25 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/14 14:54:56 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/15 11:26:46 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ t_status	builtin_pwd(void)
 	if (buf == NULL)
 	{
 		perror("getcwd");
+		g_exit_status = FAILURE;
 		return (FAILURE);
 	}
 	ft_putendl_fd(buf, STDOUT_FILENO);
 	free(buf);
+	g_exit_status = SUCCESS;
 	return (SUCCESS);
 }

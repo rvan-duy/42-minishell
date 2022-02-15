@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/14 14:52:28 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/14 15:15:51 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/15 11:29:17 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ t_status	builtin_env(t_env_var *envp)
 		printf("%s=%s\n", envp->name, envp->value);
 		envp = envp->next;
 	}
+	g_exit_status = SUCCESS;
 	return (SUCCESS);
 }
