@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/09 14:59:10 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/15 11:26:20 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/15 15:23:56 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,10 @@ static void	execute_command(t_cmd_node *nodes, t_env_var *envp)
  * @param envp pointer to `t_env_var *`
  * @return 0 if success - 1 in case of error
  */
-t_status	cmd_exec_single_file(t_cmd_node *nodes, t_env_var *envp, int write_fd)
+t_status	cmd_exec_single_file(t_cmd_node *nodes, t_env_var *envp,
+									int write_fd)
 {
-	int			stat;
 	int			ret;
-	pid_t		pid;
 
 	if (nodes->pipe_to)
 	{
@@ -60,19 +59,28 @@ t_status	cmd_exec_single_file(t_cmd_node *nodes, t_env_var *envp, int write_fd)
 	cmd_redirect_stdout(nodes->files);
 	ret = builtin_check_and_exec(nodes, envp);
 	if (ret == SUCCESFULLY_EXECUTED_BUILTIN)
-		return (SUCCESS);
+		exit(EXIT_SUCCESS);
 	else if (ret == NO_BUILTIN)
 	{
-		pid = safe_fork();
-		if (pid == CHILD_PROCESS)
-			execute_command(nodes, envp);
-		wait(&stat);
-		g_exit_status = WEXITSTATUS(stat);
+		execute_command(nodes, envp);
 		return (SUCCESS);
 	}
 	ft_putendl_fd("Error: builtin_check_and_exec == 1", STDERR_FILENO);
 	g_exit_status = FAILURE;
 	return (FAILURE);
+}
+
+static size_t	node_len(t_cmd_node *nodes)
+{
+	size_t len;
+
+	len = 0;
+	while (nodes)
+	{
+		len++;
+		nodes = nodes->pipe_to;
+	}
+	return (len);
 }
 
 /**
@@ -83,6 +91,7 @@ t_status	cmd_exec_single_file(t_cmd_node *nodes, t_env_var *envp, int write_fd)
  */
 void	cmd_exec_multiple_files(t_cmd_node *nodes, t_env_var *envp)
 {
+	const size_t	node_amount = node_len(nodes);
 	int				previous_read_pipe;
 	pid_t			pid;
 	t_pipefds		pipe_fds;
@@ -90,6 +99,7 @@ void	cmd_exec_multiple_files(t_cmd_node *nodes, t_env_var *envp)
 
 	command_index = 0;
 	previous_read_pipe = STDIN_FILENO;
+	dprintf(STDERR_FILENO, "(%d) <- MAIN PROCESS\n", getpid());
 	while (nodes)
 	{
 		pipe_fds = safe_create_pipe();
@@ -97,7 +107,7 @@ void	cmd_exec_multiple_files(t_cmd_node *nodes, t_env_var *envp)
 		if (pid == CHILD_PROCESS)
 		{
 			safe_dup2(previous_read_pipe, STDIN_FILENO);
-			if (previous_read_pipe != 0)
+			if (previous_read_pipe != STDIN_FILENO)
 				safe_close(previous_read_pipe);
 			cmd_exec_single_file(nodes, envp, pipe_fds.write);
 		}
@@ -108,7 +118,14 @@ void	cmd_exec_multiple_files(t_cmd_node *nodes, t_env_var *envp)
 		command_index++;
 		nodes = nodes->pipe_to;
 	}
-	waitpid(pid, &g_exit_status, 0); // not sure if wait needs to be here of after the loop
+
+	size_t i = 0;
+	while (i < node_amount)
+	{
+		wait(&g_exit_status);
+		i++;
+	}
+
 	// close
 	// wait
 }
