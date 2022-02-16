@@ -6,14 +6,14 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 15:19:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/11 12:35:58 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/16 14:47:29 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <unistd.h>
 
-static char	*find_valid_path(char **all_absolute_paths)
+static char	*find_valid_path(char **all_absolute_paths, const char *command)
 {
 	size_t	i;
 	char	*path;
@@ -30,6 +30,12 @@ static char	*find_valid_path(char **all_absolute_paths)
 			break ;
 		}
 		i++;
+	}
+	if (access(command, X_OK) > -1)
+	{
+		path = ft_strdup(command);
+		if (path == NULL)
+			exit(EXIT_FAILURE);
 	}
 	ft_free_arr((void ***)&all_absolute_paths);
 	return (path);
@@ -73,7 +79,7 @@ char	*cmd_get_absolute_path(const char *command)
 	if (splitted_paths == NULL)
 		exit(EXIT_FAILURE);
 	splitted_paths = add_command_to_paths(splitted_paths, command);
-	valid_path = find_valid_path(splitted_paths);
+	valid_path = find_valid_path(splitted_paths, command);
 	if (valid_path == NULL)
 	{
 		ft_putstr_fd(command, STDERR_FILENO);
