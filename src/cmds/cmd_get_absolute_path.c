@@ -6,13 +6,14 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 15:19:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/16 14:47:29 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/16 14:49:41 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <unistd.h>
 
+// TODO: cleanup this function
 static char	*find_valid_path(char **all_absolute_paths, const char *command)
 {
 	size_t	i;
