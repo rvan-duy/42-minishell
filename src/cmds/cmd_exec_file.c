@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/09 14:59:10 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/15 16:10:43 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/16 12:35:20 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	execute_command(t_cmd_node *nodes, t_env_var *envp)
  * it will create a child process
  * @param nodes pointer to `t_cmd_node *`
  * @param envp pointer to `t_env_var *`
- * @return 0 if success - 1 in case of error
+ * @return nothing, if file is executed the process is replaced
  */
 void	cmd_exec_single_file(t_cmd_node *nodes, t_env_var *envp,
 									int write_fd)
@@ -58,12 +58,11 @@ void	cmd_exec_single_file(t_cmd_node *nodes, t_env_var *envp,
 	cmd_redirect_stdout(nodes->files);
 	ret = builtin_check_and_exec(nodes, envp);
 	if (ret == SUCCESFULLY_EXECUTED_BUILTIN)
-		exit(EXIT_SUCCESS);
+		return ;
 	else if (ret == NO_BUILTIN)
 		execute_command(nodes, envp);
 	ft_putendl_fd("Error: builtin_check_and_exec == 1", STDERR_FILENO);
 	g_exit_status = FAILURE;
-	return (FAILURE);
 }
 
 static size_t	node_len(t_cmd_node *nodes)
@@ -81,7 +80,7 @@ static size_t	node_len(t_cmd_node *nodes)
 
 static void	wait_for_all_processes(size_t node_amount)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (i < node_amount)
@@ -117,6 +116,7 @@ void	cmd_exec_multiple_files(t_cmd_node *nodes, t_env_var *envp)
 			if (previous_read_pipe != STDIN_FILENO)
 				safe_close(previous_read_pipe);
 			cmd_exec_single_file(nodes, envp, pipe_fds.write);
+			exit(EXIT_SUCCESS);
 		}
 		safe_close(pipe_fds.write);
 		previous_read_pipe = pipe_fds.read;
