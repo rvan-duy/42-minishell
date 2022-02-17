@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2022/02/11 16:22:43 by rvan-duy      ########   odam.nl          #
+#    Updated: 2022/02/17 14:56:33 by rvan-duy      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,6 +86,7 @@ SOURCES	=	src/execute.c \
 			src/cmds/cmd_redirect_stdin.c \
 			src/cmds/cmd_redirect_stdout.c \
 			src/debug/debug_print_nodes.c \
+			src/errors/error_is_dir.c \
 			src/ruben_tests/criterion/criterion_test_tmp.c
 
 ifndef DO_TESTS
