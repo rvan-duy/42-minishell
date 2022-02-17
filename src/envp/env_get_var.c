@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   envp_get_var.c                                     :+:    :+:            */
+/*   env_get_var.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/15 12:55:04 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/02 14:12:15 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/17 16:49:38 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_env_var	*env_get_var(const char *name, t_env_var *envp)
 
 	while (envp != NULL)
 	{
-		if (!ft_strncmp(name, envp->name, len))
+		if (!ft_strncmp(name, envp->name, len + 1))
 			return (envp);
 		envp = envp->next;
 	}
