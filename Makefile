@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2022/02/17 14:56:33 by rvan-duy      ########   odam.nl          #
+#    Updated: 2022/02/19 12:47:18 by rvan-duy      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,7 +80,7 @@ SOURCES	=	src/execute.c \
 			src/envp/env_list_dup.c \
 			src/envp/env_list_free.c \
 			src/signals/signal_handler.c \
-			src/cmds/cmd_get_absolute_path.c \
+			src/cmds/cmd_get_valid_path.c \
 			src/cmds/cmd_create_execve_array.c \
 			src/cmds/cmd_exec_file.c \
 			src/cmds/cmd_redirect_stdin.c \
