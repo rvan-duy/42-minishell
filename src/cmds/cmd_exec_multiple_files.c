@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/09 14:59:10 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/19 13:25:34 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/19 13:39:13 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,21 @@ static void	wait_for_all_processes(size_t node_amount)
 	}
 }
 
+static void	exec_child(int read_pipe, int write_pipe,
+						t_cmd_node *nodes, t_env_var *envp)
+{
+	safe_dup2(read_pipe, STDIN_FILENO);
+	if (read_pipe != STDIN_FILENO)
+		safe_close(read_pipe);
+	cmd_exec_single_file(nodes, envp, write_pipe);
+	exit(EXIT_SUCCESS);
+}
+
 /**
  * Executes all files or builtins stored in nodes
  * @param nodes pointer to `t_cmd_node *`
  * @param envp pointer to `t_env_var *`
- * @return Nothing, calls exit() on error
+ * @return nothing
  */
 void	cmd_exec_multiple_files(t_cmd_node *nodes, t_env_var *envp)
 {
@@ -62,13 +72,7 @@ void	cmd_exec_multiple_files(t_cmd_node *nodes, t_env_var *envp)
 		pipe_fds = safe_create_pipe();
 		pid = safe_fork();
 		if (pid == CHILD_PROCESS)
-		{
-			safe_dup2(previous_read_pipe, STDIN_FILENO);
-			if (previous_read_pipe != STDIN_FILENO)
-				safe_close(previous_read_pipe);
-			cmd_exec_single_file(nodes, envp, pipe_fds.write);
-			exit(EXIT_SUCCESS);
-		}
+			exec_child(previous_read_pipe, pipe_fds.write, nodes, envp);
 		safe_close(pipe_fds.write);
 		previous_read_pipe = pipe_fds.read;
 		if (nodes->pipe_to == NULL)
