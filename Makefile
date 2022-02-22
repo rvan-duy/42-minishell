@@ -6,13 +6,12 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2021/11/23 14:05:44 by rvan-duy      ########   odam.nl          #
+#    Updated: 2022/02/22 11:51:40 by mvan-wij      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 PROJECT		= minishell
 NAME		= minishell
-NAME_BONUS	= minishell
 LIBFT		= libft/libft.a
 
 CC			= gcc
@@ -22,7 +21,7 @@ ifdef SANITIZE
 CFLAGS	+= -fsanitize=address
 endif
 ifdef DEBUG
-CFLAGS	+= -g
+CFLAGS	+= -g3
 endif
 
 # Common
@@ -34,58 +33,52 @@ HEADERS	=	libft/libft.h \
 			include/safe.h \
 			include/utilities.h \
 			src/ruben_tests/tests.h \
-			include/lex.h \
-			include/parse.h
+			src/lex/lex.h
 
-SOURCES	=	src/execute.c \
-			src/lexing/lex.c \
-			src/lexing/utils.c \
-			src/lexing/lex_part.c \
-			src/lexing/expand.c \
-			src/parse.c	\
-			src/safe/safe_chdir.c \
-			src/safe/safe_check_access.c \
-			src/safe/safe_close.c \
-			src/safe/safe_create_pipe.c \
-			src/safe/safe_dup2.c \
-			src/safe/safe_fork.c \
-			src/safe/safe_open.c \
-			src/utils_2.c \
-			src/builtins/builtin_echo.c \
-			src/builtins/builtin_cd.c \
-			src/builtins/builtin_pwd.c \
-			src/builtins/builtin_export.c \
-			src/builtins/builtin_unset.c \
-			src/builtins/builtin_env.c \
-			src/builtins/builtin_exit.c \
-			src/envp/env_arr_to_list.c \
-			src/envp/env_list_to_arr.c \
-			src/envp/env_get_var.c \
-			src/envp/env_node_add.c \
-			src/envp/env_node_last.c \
-			src/envp/env_node_new.c \
-			src/envp/env_node_del.c \
-			src/envp/env_list_len.c \
-			src/envp/env_node_dup.c \
-			src/envp/env_list_dup.c \
-			src/envp/env_list_free.c \
-			src/ruben_tests/criterion/criterion_test_tmp.c
+SOURCES	=							\
+	src/execute.c					\
+	src/safe/safe_chdir.c 			\
+	src/safe/safe_check_access.c 	\
+	src/safe/safe_close.c 			\
+	src/safe/safe_create_pipe.c 	\
+	src/safe/safe_dup2.c 			\
+	src/safe/safe_fork.c 			\
+	src/safe/safe_open.c 			\
+	src/utils_2.c 					\
+	src/builtins/builtin_echo.c 	\
+	src/builtins/builtin_cd.c 		\
+	src/builtins/builtin_pwd.c 		\
+	src/builtins/builtin_export.c 	\
+	src/builtins/builtin_unset.c 	\
+	src/builtins/builtin_env.c 		\
+	src/builtins/builtin_exit.c 	\
+	src/envp/env_arr_to_list.c 		\
+	src/envp/env_list_to_arr.c 		\
+	src/envp/env_get_var.c 			\
+	src/envp/env_node_add.c 		\
+	src/envp/env_node_last.c 		\
+	src/envp/env_node_new.c 		\
+	src/envp/env_node_del.c 		\
+	src/envp/env_list_len.c 		\
+	src/envp/env_node_dup.c 		\
+	src/envp/env_list_dup.c 		\
+	src/envp/env_list_free.c 		\
+	src/lex/0_utils.c				\
+	src/lex/1_get_tokens.c			\
+	src/lex/1a_token_completion.c	\
+	src/lex/2_validity.c			\
+	src/lex/3_expand_vars.c			\
+	src/lex/4_redirect_names.c		\
+	src/lex/5_split_unquoted.c		\
+	src/lex/6_join_words.c			\
+	src/lex/7_remove_whitespace.c	\
+	src/lex/8_create_nodes.c		\
+	src/parse_line.c
 
-TMP_SOURCES = 	src/ruben_tests/criterion/criterion_tests.c
+TMP_SOURCES = 	src/ruben_tests/criterion/criterion_tests.c src/ruben_tests/criterion/criterion_test_tmp.c $(filter-out src/test/init.c, $(wildcard src/test/*.c)) src/test/init.c
 
-ifndef BONUS
-# Not Bonus
-SOURCES	+=
-HEADERS	+=
-CFLAGS	+=
-LIBS	+=
-else
-# Bonus
-NAME	= $(NAME_BONUS)
-SOURCES	+=
-HEADERS	+=
-CFLAGS	+=
-LIBS	+=
+ifdef DO_TESTS
+CFLAGS	+= -DDO_TESTS=1
 endif
 
 include $(dir $(LIBFT))/colours.mk
@@ -100,7 +93,7 @@ INCLUDES = $(addprefix -I,$(dir $(HEADERS))) -I$(HOME)/.brew/Cellar/criterion/2.
 
 PRE_RULES	=
 ifneq ($(shell echo "$(CFLAGS)"), $(shell cat "$(DATA_FILE)" 2> /dev/null))
-PRE_RULES	+= clean
+PRE_RULES	+= fclean
 endif
 
 .PHONY: all clean fclean re debug bonus

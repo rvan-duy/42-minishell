@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_treenew.c                                       :+:    :+:            */
+/*   ft_lst_from_arr.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/05/15 13:22:05 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/05/15 13:29:36 by mvan-wij      ########   odam.nl         */
+/*   Created: 2022/02/01 15:16:16 by mvan-wij      #+#    #+#                 */
+/*   Updated: 2022/02/01 15:28:35 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
-t_tree	*ft_treenew(void *content, t_tree *left, t_tree *right)
+t_list	*ft_lst_from_arr(void **arr)
 {
-	t_tree	*tree;
+	t_list	*lst;
+	size_t	i;
 
-	tree = malloc(sizeof(t_tree));
-	if (tree == NULL)
-		return (NULL);
-	tree->content = content;
-	tree->left = left;
-	tree->right = right;
-	return (tree);
+	lst = NULL;
+	i = 0;
+	while (arr[i] != NULL)
+	{
+		if (ft_lstnew_front(arr[i], &lst) == NULL)
+		{
+			ft_lstclear(&lst, NULL);
+			return (NULL);
+		}
+		i++;
+	}
+	ft_lstreverse(&lst);
+	return (lst);
 }

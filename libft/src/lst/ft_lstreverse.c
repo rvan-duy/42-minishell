@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   libft_tree.h                                       :+:    :+:            */
+/*   ft_lstreverse.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/07/27 14:50:40 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/07/27 14:57:10 by mvan-wij      ########   odam.nl         */
+/*   Created: 2021/11/01 11:01:09 by mvan-wij      #+#    #+#                 */
+/*   Updated: 2022/02/14 16:22:34 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_TREE_H
-# define LIBFT_TREE_H
+#include "libft.h"
 
-typedef struct s_tree
+t_list	*ft_lstreverse(t_list **lst)
 {
-	void			*content;
-	struct s_tree	*left;
-	struct s_tree	*right;
-}	t_tree;
+	t_list	*cur;
+	t_list	*prev;
+	t_list	*next;
 
-t_tree	*ft_treenew(void *content, t_tree *left, t_tree *right);
-
-#endif
+	cur = *lst;
+	prev = NULL;
+	while (cur != NULL)
+	{
+		next = cur->next;
+		cur->next = prev;
+		prev = cur;
+		cur = next;
+	}
+	*lst = prev;
+	return (*lst);
+}

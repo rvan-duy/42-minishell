@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_lstsize.c                                       :+:    :+:            */
+/*   parse_line.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/28 12:59:50 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/01/24 17:31:23 by mvan-wij      ########   odam.nl         */
+/*   Created: 2022/02/16 15:14:52 by mvan-wij      #+#    #+#                 */
+/*   Updated: 2022/02/16 15:16:15 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "lex/lex.h"
+#include "structs.h"
 #include "libft.h"
-#include <stdlib.h>
 
-size_t	ft_lstsize(t_list *lst)
+t_cmd_node	*parse_line(char *line)
 {
-	size_t	len;
+	t_list		*tokens;
+	t_cmd_node	*node;
 
-	if (lst == NULL)
-		return (0);
-	len = 1;
-	while (lst->next != NULL)
-	{
-		lst = lst->next;
-		len++;
-	}
-	return (len);
+	node = NULL;
+	tokens = get_tokens(line);
+	if (!is_valid(tokens))
+		error(INVALID_SEQUENCE);
+	expand_vars(tokens);
+	check_redirects(tokens);
+	split_unquoted(&tokens);
+	join_words(&tokens);
+	remove_whitespace(&tokens);
+	create_nodes(&tokens, &node);
+	ft_lstclear(&tokens, &free_token);
+	return (node);
 }

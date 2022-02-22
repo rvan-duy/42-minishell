@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/27 10:45:08 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/11/23 14:07:20 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/22 11:41:48 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,5 @@
 # include "src/mem/libft_mem.h"
 # include "src/nbr/libft_nbr.h"
 # include "src/str/libft_str.h"
-# include "src/tree/libft_tree.h"
 
 #endif

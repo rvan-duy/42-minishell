@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_lstsize.c                                       :+:    :+:            */
+/*   ft_lst_to_arr.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/28 12:59:50 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/01/24 17:31:23 by mvan-wij      ########   odam.nl         */
+/*   Created: 2022/02/01 13:00:50 by mvan-wij      #+#    #+#                 */
+/*   Updated: 2022/02/14 16:19:55 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-size_t	ft_lstsize(t_list *lst)
+void	**ft_lst_to_arr(t_list *lst, void *end_indicator)
 {
-	size_t	len;
+	const size_t	len = ft_lstsize(lst);
+	void			**arr;
+	t_list			*next;
+	size_t			i;
 
-	if (lst == NULL)
-		return (0);
-	len = 1;
-	while (lst->next != NULL)
+	arr = malloc((len + 1) * sizeof(void *));
+	if (arr == NULL)
+		return (NULL);
+	arr[len] = end_indicator;
+	i = 0;
+	while (lst != NULL)
 	{
-		lst = lst->next;
-		len++;
+		arr[i] = lst->content;
+		next = lst->next;
+		free(lst);
+		lst = next;
+		i++;
 	}
-	return (len);
+	return (arr);
 }

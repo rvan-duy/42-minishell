@@ -1,4 +1,14 @@
-ARR_SRCS = 	src/arr/ft_array_len.c
+# **************************************************************************** #
+#                                                                              #
+#                                                         ::::::::             #
+#    sources.mk                                         :+:    :+:             #
+#                                                      +:+                     #
+#    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
+#                                                    +#+                       #
+#    Created: 2022/02/22 11:35:08 by mvan-wij      #+#    #+#                  #
+#    Updated: 2022/02/22 11:42:05 by mvan-wij      ########   odam.nl          #
+#                                                                              #
+# **************************************************************************** #
 
 CHAR_SRCS =	src/char/ft_isalnum.c	\
 			src/char/ft_isalpha.c	\
@@ -24,7 +34,9 @@ IO_SRCS =	src/io/ft_putchar_fd.c		\
 			src/io/ft_putnbr_fd.c		\
 			src/io/ft_putstr_fd.c
 
-LST_SRCS =	src/lst/ft_lstadd_back.c	\
+LST_SRCS =	src/lst/ft_lst_from_arr.c	\
+			src/lst/ft_lst_to_arr.c		\
+			src/lst/ft_lstadd_back.c	\
 			src/lst/ft_lstadd_front.c	\
 			src/lst/ft_lstclear.c		\
 			src/lst/ft_lstdelone.c		\
@@ -34,7 +46,10 @@ LST_SRCS =	src/lst/ft_lstadd_back.c	\
 			src/lst/ft_lstmap.c			\
 			src/lst/ft_lstnew.c			\
 			src/lst/ft_lstsize.c		\
-			src/lst/ft_lstitem.c
+			src/lst/ft_lstitem.c		\
+			src/lst/ft_lstreverse.c		\
+			src/lst/ft_lstnew_front.c	\
+			src/lst/ft_lstnew_back.c
 
 MEM_SRCS =	src/mem/ft_bzero.c				\
 			src/mem/ft_calloc.c				\
@@ -50,7 +65,8 @@ MEM_SRCS =	src/mem/ft_bzero.c				\
 			src/mem/ft_free_and_nullify.c	\
 			src/mem/ft_free_arr.c			\
 			src/mem/ft_free_arr_n.c			\
-			src/mem/ft_free_arr_dim.c
+			src/mem/ft_free_arr_dim.c		\
+			src/mem/ft_protect.c
 
 NBR_SRCS =	src/nbr/ft_atod.c		\
 			src/nbr/ft_atoi.c		\
@@ -84,6 +100,4 @@ STR_SRCS =	src/str/ft_split.c		\
 			src/str/ft_strtrim.c	\
 			src/str/ft_substr.c
 
-TREE_SRCS =	src/tree/ft_treenew.c
-
-SOURCES = $(ARR_SRCS) $(CHAR_SRCS) $(GNL_SRCS) $(IO_SRCS) $(LST_SRCS) $(MEM_SRCS) $(NBR_SRCS) $(STR_SRCS) $(TREE_SRCS)
+SOURCES = $(CHAR_SRCS) $(GNL_SRCS) $(IO_SRCS) $(LST_SRCS) $(MEM_SRCS) $(NBR_SRCS) $(STR_SRCS)
