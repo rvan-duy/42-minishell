@@ -1,32 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_lstreverse.c                                    :+:    :+:            */
+/*   ft_lst_to_arr.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/11/01 11:01:09 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/14 16:22:34 by mvan-wij      ########   odam.nl         */
+/*   Created: 2022/02/01 13:00:50 by mvan-wij      #+#    #+#                 */
+/*   Updated: 2022/02/14 16:19:55 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-t_list	*ft_lstreverse(t_list **lst)
+void	**ft_lst_to_arr(t_list *lst, void *end_indicator)
 {
-	t_list	*cur;
-	t_list	*prev;
-	t_list	*next;
+	const size_t	len = ft_lstsize(lst);
+	void			**arr;
+	t_list			*next;
+	size_t			i;
 
-	cur = *lst;
-	prev = NULL;
-	while (cur != NULL)
+	arr = malloc((len + 1) * sizeof(void *));
+	if (arr == NULL)
+		return (NULL);
+	arr[len] = end_indicator;
+	i = 0;
+	while (lst != NULL)
 	{
-		next = cur->next;
-		cur->next = prev;
-		prev = cur;
-		cur = next;
+		arr[i] = lst->content;
+		next = lst->next;
+		free(lst);
+		lst = next;
+		i++;
 	}
-	*lst = prev;
-	return (*lst);
+	return (arr);
 }

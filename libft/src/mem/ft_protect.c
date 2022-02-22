@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   libft_tree.h                                       :+:    :+:            */
+/*   ft_protect.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/07/27 14:50:40 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/07/27 14:57:10 by mvan-wij      ########   odam.nl         */
+/*   Created: 2022/02/16 13:56:20 by mvan-wij      #+#    #+#                 */
+/*   Updated: 2022/02/22 11:26:53 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_TREE_H
-# define LIBFT_TREE_H
+#include <stdlib.h>
+#include "libft.h"
 
-typedef struct s_tree
+void	*ft_protect(void *ptr)
 {
-	void			*content;
-	struct s_tree	*left;
-	struct s_tree	*right;
-}	t_tree;
-
-t_tree	*ft_treenew(void *content, t_tree *left, t_tree *right);
-
-#endif
+	if (ptr != NULL)
+		return (ptr);
+	ft_putstr_fd("Malloc failed\n", STDERR_FILENO);
+	exit(EXIT_FAILURE);
+	return (NULL);
+}
