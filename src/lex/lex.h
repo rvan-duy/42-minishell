@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:32:44 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/16 15:18:51 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/02/22 12:00:26 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_token_type	get_token_type(char initial);
 
 t_list			*get_tokens(char *str);
 bool			is_valid(t_list *tokens);
-void			expand_vars(t_list *tokens);
+void			expand_vars(t_list *tokens, t_env_var *envp);
 void			check_redirects(t_list	*tokens);
 void			split_unquoted(t_list **tokens);
 void			join_words(t_list **tokens);

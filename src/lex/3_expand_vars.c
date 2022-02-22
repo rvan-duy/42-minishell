@@ -6,22 +6,22 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:47:07 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/22 11:24:14 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/02/22 12:02:44 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lex.h"
+#include "envp.h"
 #include <stdlib.h>
 
-char	*lookup_var(char *var_name) // TMP
+char	*lookup_var(char *var_name, t_env_var *envp)
 {
-	if (var_name == NULL)
-		return (NULL);
-	return (ft_protect(ft_strjoin(\
-		ft_protect(ft_strjoin("THIS_IS_A_ VAR=>", var_name)), "<")));
+	if (ft_strcmp(var_name, "?") == 0)
+		return (ft_itoa(g_exit_status));
+	return (ft_protect(ft_strdup(env_get_var(var_name, envp)->name)));
 }
 
-char	*get_var_value(char *str, int *var_name_start)
+char	*get_var_value(char *str, int *var_name_start, t_env_var *envp)
 {
 	const int	start = *var_name_start + 1;
 
@@ -32,10 +32,10 @@ char	*get_var_value(char *str, int *var_name_start)
 	if (start == *var_name_start)
 		return (ft_protect(ft_strdup("$")));
 	return (lookup_var(\
-		ft_protect(ft_substr(str, start, *var_name_start - start))));
+		ft_protect(ft_substr(str, start, *var_name_start - start)), envp));
 }
 
-t_list	*get_replace_vars_parts(char *str)
+t_list	*get_replace_vars_parts(char *str, t_env_var *envp)
 {
 	t_list	*lst;
 	int		i;
@@ -50,7 +50,7 @@ t_list	*get_replace_vars_parts(char *str)
 		{
 			ft_protect(ft_lstnew_front(\
 				ft_protect(ft_substr(str, start, i - start)), &lst));
-			ft_protect(ft_lstnew_front(get_var_value(str, &i), &lst));
+			ft_protect(ft_lstnew_front(get_var_value(str, &i, envp), &lst));
 			start = i;
 		}
 		else
@@ -61,14 +61,14 @@ t_list	*get_replace_vars_parts(char *str)
 	return (ft_lstreverse(&lst));
 }
 
-char	*replace_vars(char *str)
+char	*replace_vars(char *str, t_env_var *envp)
 {
 	t_list	*lst;
 	t_list	*copy;
 	int		len;
 	char	*out;
 
-	lst = get_replace_vars_parts(str);
+	lst = get_replace_vars_parts(str, envp);
 	copy = lst;
 	len = 0;
 	while (copy != NULL)
@@ -86,7 +86,7 @@ char	*replace_vars(char *str)
 	return (out);
 }
 
-void	expand_vars(t_list *tokens)
+void	expand_vars(t_list *tokens, t_env_var *envp)
 {
 	char			*tmp;
 	t_heredoc_state	heredoc_state;
@@ -100,7 +100,7 @@ void	expand_vars(t_list *tokens)
 			|| is_type(((t_token *)tokens->content)->type, DOUBLE_QUOTED)) \
 			&& heredoc_state == NOT_HEREDOC)
 		{
-			tmp = replace_vars(((t_token *)tokens->content)->value);
+			tmp = replace_vars(((t_token *)tokens->content)->value, envp);
 			free(((t_token *)tokens->content)->value);
 			((t_token *)tokens->content)->value = tmp;
 		}

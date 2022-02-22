@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 15:14:52 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/16 15:16:15 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/02/22 12:00:13 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "structs.h"
 #include "libft.h"
 
-t_cmd_node	*parse_line(char *line)
+t_cmd_node	*parse_line(char *line, t_env_var *envp)
 {
 	t_list		*tokens;
 	t_cmd_node	*node;
@@ -23,7 +23,7 @@ t_cmd_node	*parse_line(char *line)
 	tokens = get_tokens(line);
 	if (!is_valid(tokens))
 		error(INVALID_SEQUENCE);
-	expand_vars(tokens);
+	expand_vars(tokens, envp);
 	check_redirects(tokens);
 	split_unquoted(&tokens);
 	join_words(&tokens);
