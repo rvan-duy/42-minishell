@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/22 11:35:08 by mvan-wij      #+#    #+#                  #
-#    Updated: 2022/02/22 11:42:05 by mvan-wij      ########   odam.nl          #
+#    Updated: 2022/02/23 16:58:28 by rvan-duy      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,9 @@ LST_SRCS =	src/lst/ft_lst_from_arr.c	\
 			src/lst/ft_lstitem.c		\
 			src/lst/ft_lstreverse.c		\
 			src/lst/ft_lstnew_front.c	\
-			src/lst/ft_lstnew_back.c
+			src/lst/ft_lstnew_back.c	\
+			src/lst/ft_lst_from_arr.c	\
+			src/lst/ft_lst_to_arr.c
 
 MEM_SRCS =	src/mem/ft_bzero.c				\
 			src/mem/ft_calloc.c				\

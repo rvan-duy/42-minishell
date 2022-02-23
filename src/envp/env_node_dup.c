@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env_node_dup.c                                          :+:    :+:            */
+/*   env_node_dup.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/10 15:51:17 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/10 15:56:48 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2021/11/23 16:27:52 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,23 @@ t_env_var	*env_node_dup(t_env_var *node)
 	if (duplicate == NULL)
 		return (NULL);
 	duplicate->name = ft_strdup(node->name);
-	duplicate->value = ft_strdup(node->value);
-	duplicate->next = NULL;
-	if (duplicate->name == NULL || duplicate->value == NULL)
+	if (duplicate->name == NULL)
+	{
+		free(duplicate);
 		return (NULL);
+	}
+	if (node->value != NULL)
+	{
+		duplicate->value = ft_strdup(node->value);
+		if (duplicate->value == NULL)
+		{
+			free(duplicate);
+			free(duplicate->name);
+			return (NULL);
+		}
+	}
+	else
+		duplicate->value = NULL;
+	duplicate->next = NULL;
 	return (duplicate);
 }

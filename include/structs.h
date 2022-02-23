@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 15:45:21 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/22 11:47:04 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/02/23 16:57:50 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,31 +23,16 @@
 int g_exit_status;
 
 /**
- * file_in: file to put on stdin (NULL if no file specified)
- * file_out: file to put on stdout (NULL if no file specified)
- */
-typedef struct s_files
-{
-	enum {
-		IN,
-		OUT,
-		HEREDOC_IN,
-		HEREDOC_OUT
-	}	e_type;
-	char	*file_name;
-}	t_files;
-
-/**
  * @param e_type type of in-/output
  * @param file_name file name
  */
 typedef struct s_files
 {
 	enum {
-		IN,
-		OUT,
-		HEREDOC_IN,
-		HEREDOC_OUT
+		REDIRECT_INPUT,
+		REDIRECT_OUTPUT,
+		HERE_DOCUMENT,
+		APPENDING_REDIRECT_OUTPUT
 	}	e_type;
 	char	*file_name;
 }	t_files;

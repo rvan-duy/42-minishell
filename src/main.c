@@ -6,44 +6,69 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 16:51:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/19 13:37:27 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/08 13:34:33 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "execute.h"
-#include "tests.h"
+#include "parse.h"
 #include "envp.h"
+#include "builtins.h"
+#include "debug.h"
+#include "signals.h"
 #include <stdio.h>
 #include <unistd.h>
-#include <string.h>
+#include <signal.h>
+
 #include <readline/readline.h>
+#include <readline/history.h>
+
+/*
+sigemptyset, sigaddset, stat, lstat, fstat, unlink, opendir, readdir, closedir,
+isatty, ttyname, ttyslot, ioctl,getenv, tcsetattr, tcgetattr, tgetent, tgetflag,
+tgetnum, tgetstr, tgoto, tputs
+*/
+
+static void	init_signals(void)
+{
+	struct sigaction	action;
+
+	action.sa_handler = signal_handler;
+	sigaction(SIGINT, &action, NULL);
+	sigaction(SIGQUIT, &action, NULL);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
 	char		*line;
-	t_cmd_node	nodes;
-	t_env_var	*envp_linked_list;
+	t_env_var	*envp_linked;
+	t_cmd_node	*node;
 
-	(void)line;
-	(void)argc;
-	(void)argv;
-	envp_linked_list = env_node_dup(envp); // Remember to check if this fails
+	init_signals();
+	envp_linked = env_arr_to_list(envp);
 	while (1)
 	{
 		line = readline("minishell$> ");
-		// ft_putstr_fd("minishell$> ", 1);
-		// parse_line(line, &nodes, &files);
-		// init_echo_plus_n_flag(&nodes);
-		// init_echo_without_n_flag(&nodes);
-		nodes.argv = calloc(3, sizeof(char *));
-		nodes.argv[0] = strdup("cd");
-		nodes.argv[1] = strdup("./libft/../include");
-		nodes.cmd = nodes.argv[0];
-		// if (!ft_strncmp(line, "test", 4))
-		// 	start_tests_echo(&nodes);
-		execute_line(&nodes, &envp);
-		printf("current dir: %s\n", getcwd(NULL, 0));
+		node = NULL;
+		if (line != NULL)
+		{
+			if (line[0] != '\0')
+			{
+				parse_line(line, &node, envp);
+				print_nodes(node);
+				execute_line(node, envp_linked);
+				add_history(line);
+				free(line);
+			}
+		}
+		else
+		{
+			ft_putendl_fd("exit", STDOUT_FILENO);
+			return (EXIT_SUCCESS);
+		}
 	}
-	return (0);
+	(void)argc;
+	(void)argv;
+	return (EXIT_SUCCESS);
 }

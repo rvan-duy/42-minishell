@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/20 13:04:28 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/14 14:49:36 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/15 11:28:32 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,27 @@
 static void	bubble_sort(t_env_var **head)
 {
 	t_env_var	*current;
-	t_env_var	*tmp;
-	char		*tmp_name;
+	t_env_var	*next;
+	char		*tmp[2];
 
 	current = *head;
 	if (current == NULL)
 		return ;
 	while (current != NULL)
 	{
-		tmp = current->next;
-		while (tmp != NULL)
+		next = current->next;
+		while (next != NULL)
 		{
-			if (ft_strcmp(current->name, tmp->name) > 0)
+			if (ft_strcmp(current->name, next->name) > 0)
 			{
-				tmp_name = current->name;
-				current->name = tmp->name;
-				tmp->name = tmp_name;
+				tmp[0] = current->name;
+				tmp[1] = current->value;
+				current->name = next->name;
+				current->value = next->value;
+				next->name = tmp[0];
+				next->value = tmp[1];
 			}
-			tmp = tmp->next;
+			next = next->next;
 		}
 		current = current->next;
 	}
@@ -42,16 +45,19 @@ static void	bubble_sort(t_env_var **head)
 
 static t_status	list_export(t_env_var *envp)
 {
-	t_env_var	*sorted_envp;
+	t_env_var	*sorted_env;
 
-	sorted_envp = env_list_dup(envp);
-	bubble_sort(&sorted_envp);
-	while (sorted_envp)
+	sorted_env = env_list_dup(envp);
+	bubble_sort(&sorted_env);
+	while (sorted_env)
 	{
-		printf("declare -x %s=\"%s\"\n", sorted_envp->name, sorted_envp->value);
-		sorted_envp = sorted_envp->next;
+		if (sorted_env->value != NULL)
+			printf("declare -x %s=\"%s\"\n", sorted_env->name, sorted_env->value);
+		else
+			printf("declare -x %s\n", sorted_env->name);
+		sorted_env = sorted_env->next;
 	}
-	env_list_free(sorted_envp);
+	env_list_free(sorted_env);
 	return (SUCCESS);
 }
 
@@ -72,5 +78,6 @@ t_status	builtin_export(t_cmd_node *nodes, t_env_var *envp)
 		env_node_add(&envp, new_env_var);
 		i++;
 	}
+	g_exit_status = SUCCESS;
 	return (SUCCESS);
 }
