@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/16 12:51:50 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/23 15:45:18 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
  * on whether the command has pipes or not
  * @param nodes pointer to `t_cmd_node *`
  * @param envp pointer to `t_env_var *`
- * @return 0 if bash command has succesfully been executed - 1 in case of an error
+ * @return 0 if bash command has succesfully been executed 
+ * - 1 in case of an error
  */
 t_status	execute_line(t_cmd_node *nodes, t_env_var *envp)
 {
