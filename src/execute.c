@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/19 16:04:23 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/23 15:45:18 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,104 +15,43 @@
 #include "libft.h"
 #include "builtins.h"
 #include "envp.h"
+#include "cmds.h"
 #include <fcntl.h>
 #include <sys/wait.h>
+#include <stdio.h>
 
-static void	end_chain(t_cmd_node *nodes, int fd_in, t_env_var *envp)
+/**
+ * Reproduces the behavior of bash, the algorithm works slightly different based
+ * on whether the command has pipes or not
+ * @param nodes pointer to `t_cmd_node *`
+ * @param envp pointer to `t_env_var *`
+ * @return 0 if bash command has succesfully been executed 
+ * - 1 in case of an error
+ */
+t_status	execute_line(t_cmd_node *nodes, t_env_var *envp)
 {
-	int		fd_out;
-	pid_t	pid;
+	int	ret;
+	int	pid;
 
-	pid = safe_fork();
-	if (pid == CHILD_PROCESS)
+	if (nodes->pipe_to == NULL)
 	{
-		fd_out = safe_open(nodes->files[OUT]->file_name, O_WRONLY | O_CREAT | O_TRUNC);
-		safe_dup2(fd_in, STDIN_FILENO);
-		safe_dup2(fd_out, STDOUT_FILENO);
-		safe_check_access(nodes->cmd, X_OK);
-		execve(nodes->cmd, nodes->argv, env_list_to_arr(envp));
-	}
-	safe_close(fd_in);
-	waitpid(pid, &g_exit_status, 0);
-}
-
-static void	continue_chain(t_cmd_node *nodes, int fd_in, t_env_var *envp)
-{
-	int			i;
-	pid_t		pid;
-	t_pipefds	pipe_fds;
-
-	i = 0;
-	while (nodes->pipe_to != NULL)
-	{
-		pipe_fds = safe_create_pipe();
-		pid = safe_fork();
-		if (pid == CHILD_PROCESS)
+		ret = builtin_check_and_exec(nodes, envp);
+		if (ret == SUCCESFULLY_EXECUTED_BUILTIN)
+			return (SUCCESS);
+		else if (ret == NO_BUILTIN)
 		{
-			safe_close(pipe_fds.read);
-			safe_dup2(fd_in, STDIN_FILENO);
-			safe_dup2(pipe_fds.write, STDOUT_FILENO);
-			safe_check_access(nodes[i].cmd, X_OK);
-			execve(nodes[i].cmd, nodes[i].argv, env_list_to_arr(envp));
+			pid = safe_fork();
+			if (pid == CHILD_PROCESS)
+				cmd_exec_single_file(nodes, envp, STDOUT_FILENO);
+			wait(&g_exit_status);
+			return (SUCCESS);
 		}
-		safe_close(fd_in);
-		safe_close(pipe_fds.write);
-		waitpid(pid, &g_exit_status, 0);
-		fd_in = pipe_fds.read;
-		i++;
+		ft_putendl_fd("Error: builtin_check_and_exec == 1", STDERR_FILENO);
+		g_exit_status = FAILURE;
 	}
-	end_chain(nodes, fd_in, envp);
-}
-
-static int	check_builtin(t_cmd_node *nodes, t_env_var *envp)
-{
-	if (!ft_strncmp(nodes->cmd, "echo", ft_strlen(nodes->cmd) + 1))
-		return (builtin_echo(nodes));
-	if (!ft_strncmp(nodes->cmd, "pwd", ft_strlen(nodes->cmd) + 1))
-		return (builtin_pwd());
-	if (!ft_strncmp(nodes->cmd, "cd", ft_strlen(nodes->cmd) + 1))
-		return (builtin_cd(nodes, envp));
-	if (!ft_strncmp(nodes->cmd, "export", ft_strlen(nodes->cmd) + 1))
-		return (builtin_export(nodes, envp));
-	if (!ft_strncmp(nodes->cmd, "unset", ft_strlen(nodes->cmd) + 1))
-		return (buitlin_unset(nodes, envp));
-	if (!ft_strncmp(nodes->cmd, "env", ft_strlen(nodes->cmd) + 1))
-		return (builtin_env(envp));
-	if (!ft_strncmp(nodes->cmd, "exit", ft_strlen(nodes->cmd) + 1))
-		return (builtin_exit(nodes));
-	return (NO_BUILTIN);
-}
-
-static void	start_chain(t_cmd_node *nodes, t_env_var *envp)
-{
-	int			fd_in;
-	pid_t		pid;
-	t_pipefds	pipe_fds;
-
-	pipe_fds = safe_create_pipe();
-	pid = safe_fork();
-	if (pid == CHILD_PROCESS)
+	else
 	{
-		safe_close(pipe_fds.read);
-		fd_in = safe_open(nodes->files[IN]->file_name, O_RDONLY);
-		safe_dup2(fd_in, STDIN_FILENO);
-		if (nodes->pipe_to != NULL)
-			safe_dup2(pipe_fds.write, STDOUT_FILENO);
-		check_builtin(nodes, envp);
-		safe_check_access(nodes->cmd, X_OK);
-		execve(nodes->cmd, nodes->argv, env_list_to_arr(envp));
+		cmd_exec_multiple_files(nodes, envp);
 	}
-	safe_close(pipe_fds.write);
-	waitpid(pid, &g_exit_status, 0);
-	if (nodes->pipe_to != NULL)
-		continue_chain(nodes, pipe_fds.read, envp);
-}
-
-int	execute_line(t_cmd_node *nodes, t_env_var *envp)
-{
-	// this can return -1 1 or 2 .. check that
-	if (check_builtin(nodes, envp) != NO_BUILTIN)
-		return (SUCCESS);
-	start_chain(nodes, envp);
 	return (SUCCESS);
 }

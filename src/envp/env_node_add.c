@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env_node_add.c                                          :+:    :+:            */
+/*   env_node_add.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/20 13:07:18 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/12 17:59:51 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/08 11:04:40 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "envp.h"
 #include "libft.h"
 #include <signal.h>
-#include <stdio.h>
 
 void	env_node_add(t_env_var **head, t_env_var *new)
 {
@@ -26,8 +25,7 @@ void	env_node_add(t_env_var **head, t_env_var *new)
 		*head = new;
 		return ;
 	}
-	// env_node_del(new->name, *head);
 	tmp = env_node_last(*head);
-	new->next = tmp->next;
+	new->next = NULL;
 	tmp->next = new;
 }

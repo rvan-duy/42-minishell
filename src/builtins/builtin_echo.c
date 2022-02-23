@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/07 15:30:01 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/14 14:56:40 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/15 11:26:15 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ t_status	builtin_echo(t_cmd_node *nodes)
 	}
 	if (n_flag == false)
 		ft_putchar_fd('\n', STDOUT_FILENO);
+	g_exit_status = SUCCESS;
 	return (SUCCESS);
 }

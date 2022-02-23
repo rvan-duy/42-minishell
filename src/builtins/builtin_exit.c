@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/14 15:32:55 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/19 13:55:13 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/01 15:02:20 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ static void	check_numeric_arguments(const char *arg)
 	return ;
 }
 
-// TODO: exit with more than 1 arg must error
-// TODO: syntax error is 258 error code
 t_status	builtin_exit(t_cmd_node *nodes)
 {
 	int	exit_code;

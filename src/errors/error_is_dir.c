@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   safe_check_access.c                                :+:    :+:            */
+/*   error_is_dir.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/15 16:36:25 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/19 12:39:03 by rvan-duy      ########   odam.nl         */
+/*   Created: 2022/02/17 14:40:49 by rvan-duy      #+#    #+#                 */
+/*   Updated: 2022/02/19 12:37:48 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <string.h>
-#include <sys/errno.h>
+#include "error.h"
+#include <sys/stat.h>
 #include <unistd.h>
 
-void	safe_check_access(char *absolute_path, const char *cmd, int oflag)
+/**
+ * Checks if path is a directory, is so exits the process with exit code 127
+ * @param path pointer to `char *`
+ * @return nothing
+ */
+void	error_is_dir(const char *path)
 {
-	if (access(absolute_path, oflag) < 0)
+	struct stat	path_stat;
+
+	stat(path, &path_stat);
+	if (S_ISDIR(path_stat.st_mode))
 	{
-		ft_putstr_fd(cmd, STDERR_FILENO);
-		ft_putstr_fd(": ", STDERR_FILENO);
-		ft_putendl_fd(strerror(errno), STDERR_FILENO);
-		free(absolute_path);
-		exit(127);
+		ft_putstr_fd(path, STDERR_FILENO);
+		ft_putendl_fd(": is a directory", STDERR_FILENO);
+		exit(EXIT_CODE_IS_DIRECTORY);
 	}
 }
