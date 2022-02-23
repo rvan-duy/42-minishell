@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 13:39:59 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/11 15:14:10 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/19 15:45:17 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 /**
  * Loops over the file array and redirects the standard output
  * @param t_files pointer to `t_cmd_node *`
- * @return Nothing, calls exit() on error
+ * @return nothing, calls exit() on error
  */
 void	cmd_redirect_stdout(t_files **files)
 {
