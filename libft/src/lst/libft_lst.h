@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/07/27 14:55:06 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/23 16:59:52 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/23 17:01:17 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,3 +37,5 @@ t_list	*ft_lstnew_front(void *content, t_list **lst);
 t_list	*ft_lstnew_back(void *content, t_list **lst);
 void	**ft_lst_to_arr(t_list *lst, void *end_indicator);
 t_list	*ft_lst_from_arr(void **arr);
+
+#endif

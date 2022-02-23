@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:52:55 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/22 11:25:14 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/02/23 16:56:48 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ t_files	*extract_redirect(t_list **tokens)
 	((t_token *)(*tokens)->next->content)->value = NULL;
 	type = ((t_token *)(*tokens)->content)->type;
 	if (is_type(type, LESS))
-		file->e_type = IN;
+		file->e_type = REDIRECT_INPUT;
 	else if (is_type(type, GREAT))
-		file->e_type = OUT;
+		file->e_type = REDIRECT_OUTPUT;
 	else if (is_type(type, DLESS))
-		file->e_type = HEREDOC_IN;
+		file->e_type = HERE_DOCUMENT;
 	else if (is_type(type, DGREAT))
-		file->e_type = HEREDOC_OUT;
+		file->e_type = APPENDING_REDIRECT_OUTPUT;
 	next = (*tokens)->next->next;
 	ft_lstdelone((*tokens)->next, &free_token);
 	ft_lstdelone(*tokens, &free_token);
