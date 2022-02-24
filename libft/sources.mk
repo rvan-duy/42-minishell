@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/02/22 11:35:08 by mvan-wij      #+#    #+#                  #
-#    Updated: 2022/02/23 16:58:28 by rvan-duy      ########   odam.nl          #
+#    Updated: 2022/02/24 15:38:26 by rvan-duy      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,8 @@ LST_SRCS =	src/lst/ft_lst_from_arr.c	\
 			src/lst/ft_lst_from_arr.c	\
 			src/lst/ft_lst_to_arr.c
 
-MEM_SRCS =	src/mem/ft_bzero.c				\
+MEM_SRCS =	src/mem/ft_array_len.c			\
+			src/mem/ft_bzero.c				\
 			src/mem/ft_calloc.c				\
 			src/mem/ft_malloc.c				\
 			src/mem/ft_memccpy.c			\

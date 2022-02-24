@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/07/27 14:53:00 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/16 14:21:51 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/02/24 15:37:57 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stddef.h>
 
+size_t	ft_array_len(void *array);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 void	*ft_malloc(size_t size);
