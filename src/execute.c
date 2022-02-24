@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/23 15:45:18 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/24 20:13:44 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_status	execute_line(t_cmd_node *nodes, t_env_var *envp)
 {
 	int	ret;
 	int	pid;
+	int	exit_status;
 
 	if (nodes->pipe_to == NULL)
 	{
@@ -43,7 +44,8 @@ t_status	execute_line(t_cmd_node *nodes, t_env_var *envp)
 			pid = safe_fork();
 			if (pid == CHILD_PROCESS)
 				cmd_exec_single_file(nodes, envp, STDOUT_FILENO);
-			wait(&g_exit_status);
+			wait(&exit_status);
+			g_exit_status = WEXITSTATUS(exit_status);
 			return (SUCCESS);
 		}
 		ft_putendl_fd("Error: builtin_check_and_exec == 1", STDERR_FILENO);

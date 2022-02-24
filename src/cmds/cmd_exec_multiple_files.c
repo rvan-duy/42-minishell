@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/09 14:59:10 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/19 13:39:13 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/24 20:14:46 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ static size_t	node_len(t_cmd_node *nodes)
 static void	wait_for_all_processes(size_t node_amount)
 {
 	size_t	i;
+	int		exit_status;
 
 	i = 0;
 	while (i < node_amount)
 	{
-		wait(&g_exit_status);
+		wait(&exit_status);
+		g_exit_status = WEXITSTATUS(exit_status);
 		i++;
 	}
 }
