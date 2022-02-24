@@ -6,12 +6,13 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/10 15:51:17 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/23 16:27:52 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/24 15:41:26 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "structs.h"
+#include <stdlib.h>
 
 t_env_var	*env_node_dup(t_env_var *node)
 {

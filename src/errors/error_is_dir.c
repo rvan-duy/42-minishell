@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/17 14:40:49 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/19 12:37:48 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/24 15:43:25 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "error.h"
 #include <sys/stat.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 /**
  * Checks if path is a directory, is so exits the process with exit code 127

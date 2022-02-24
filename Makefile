@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2022/02/23 16:54:45 by rvan-duy      ########   odam.nl          #
+#    Updated: 2022/02/24 15:28:32 by rvan-duy      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,8 +93,7 @@ SOURCES	=									\
 	src/cmds/cmd_redirect_stdin.c			\
 	src/cmds/cmd_redirect_stdout.c			\
 	src/errors/error_is_dir.c				\
-	src/debug/debug_print_nodes.c			\
-	src/ruben_tests/criterion/criterion_test_tmp.c
+	src/debug/debug_print_nodes.c			
 
 TMP_SOURCES = 	src/ruben_tests/criterion/criterion_tests.c src/ruben_tests/criterion/criterion_test_tmp.c $(filter-out src/test/init.c, $(wildcard src/test/*.c)) src/test/init.c
 

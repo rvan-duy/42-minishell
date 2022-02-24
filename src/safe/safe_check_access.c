@@ -6,12 +6,13 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/15 16:36:25 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/19 12:39:03 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/24 15:39:35 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <string.h>
+#include <stdlib.h>
 #include <sys/errno.h>
 #include <unistd.h>
 

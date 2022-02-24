@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/07 10:35:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/16 16:01:33 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/23 17:09:52 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
-t_bool	contains_flag(const char *string, const char *flag)
+bool	contains_flag(const char *string, const char *flag)
 {
 	const unsigned char	flag_type = flag[1];
 

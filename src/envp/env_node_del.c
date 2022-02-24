@@ -6,13 +6,14 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/21 11:38:15 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/01 15:04:12 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/24 15:41:04 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "libft.h"
 #include <signal.h>
+#include <stdlib.h>
 
 static void	free_node(t_env_var **node)
 {
@@ -45,23 +46,3 @@ void	env_node_del(const char *name, t_env_var **head)
 	prev->next = tmp->next;
 	free_node(&tmp);
 }
-
-// void	env_node_del(const char *name, t_env_var **head)
-// {
-// 	const size_t	len = ft_strlen(name);
-// 	t_env_var		**cur;
-// 	t_env_var		*tmp;
-
-// 	cur = &envp;
-// 	while (*cur != NULL)
-// 	{
-// 		if (!ft_strncmp(name, (*cur)->name, len))
-// 		{
-// 			tmp = (*cur)->next;
-// 			free_node(*cur);
-// 			*cur = tmp;
-// 			break ;
-// 		}
-// 		cur = &(*cur)->next;
-// 	}
-// }
