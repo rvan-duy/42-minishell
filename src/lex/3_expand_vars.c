@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:47:07 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/24 16:02:13 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/24 16:14:27 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,16 @@ char	*get_var_value(char *str, int *var_name_start, t_env_var *envp)
 	const int	start = *var_name_start + 1;
 
 	(*var_name_start)++;
-	while (str[*var_name_start] != '\0'
-		&& (ft_isalnum(str[*var_name_start]) || str[*var_name_start] == '_'))
+	if (str[*var_name_start] == '?')
 		(*var_name_start)++;
-	if (start == *var_name_start)
-		return (ft_protect(ft_strdup("$")));
+	else
+	{
+		while (str[*var_name_start] != '\0' \
+		&& (ft_isalnum(str[*var_name_start]) || str[*var_name_start] == '_'))
+			(*var_name_start)++;
+		if (start == *var_name_start)
+			return (ft_protect(ft_strdup("$")));
+	}
 	return (lookup_var(\
 		ft_protect(ft_substr(str, start, *var_name_start - start)), envp));
 }
