@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 13:39:59 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/19 15:45:17 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/24 15:25:22 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,31 @@
 
 /**
  * Loops over the file array and redirects the standard output
- * @param t_files pointer to `t_cmd_node *`
+ * @param t_files pointer to `t_files *`
  * @return nothing, calls exit() on error
  */
-void	cmd_redirect_stdout(t_files **files)
+void	cmd_redirect_stdout(t_list *files)
 {
 	int		fd;
 	size_t	i;
+	t_files	*content;
 
 	i = 0;
-	while (files[i])
+	while (files)
 	{
-		if (files[i]->e_type == REDIRECT_OUTPUT)
+		content = files->content;
+		if (content->e_type == REDIRECT_OUTPUT)
 		{
-			fd = safe_open(files[i]->file_name, O_WRONLY | O_TRUNC | O_CREAT);
+			fd = safe_open(content->file_name, O_WRONLY | O_TRUNC | O_CREAT);
 			safe_dup2(fd, STDOUT_FILENO);
 			safe_close(fd);
 		}
-		else if (files[i]->e_type == APPENDING_REDIRECT_OUTPUT)
+		else if (content->e_type == APPENDING_REDIRECT_OUTPUT)
 		{
-			fd = safe_open(files[i]->file_name, O_WRONLY | O_APPEND | O_CREAT);
+			fd = safe_open(content->file_name, O_WRONLY | O_APPEND | O_CREAT);
 			safe_dup2(fd, STDOUT_FILENO);
 			safe_close(fd);
 		}
-		i++;
+		files = files->next;
 	}
 }

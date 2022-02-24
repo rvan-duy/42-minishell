@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 13:32:28 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/23 15:12:20 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/24 15:21:37 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,32 +44,34 @@ static void	start_heredoc(char *limiter, int fd)
 
 /**
  * Loops over the file array and redirects the standard input
- * @param t_files pointer to `t_cmd_node *`
+ * @param t_files pointer to `t_files *`
  * @return Nothing, calls exit() on error
  */
-void	cmd_redirect_stdin(t_files **files)
+void	cmd_redirect_stdin(t_list *files)
 {
 	int		fd;
 	size_t	i;
+	t_files	*content;
 
 	i = 0;
-	while (files[i])
+	while (files)
 	{
-		if (files[i]->e_type == REDIRECT_INPUT)
+		content = files->content;
+		if (content->e_type == REDIRECT_INPUT)
 		{
-			fd = safe_open(files[i]->file_name, O_RDONLY);
+			fd = safe_open(content->file_name, O_RDONLY);
 			safe_dup2(fd, STDIN_FILENO);
 			safe_close(fd);
 		}
-		else if (files[i]->e_type == HERE_DOCUMENT)
+		else if (content->e_type == HERE_DOCUMENT)
 		{
 			fd = safe_open("/tmp/8734583475634", O_WRONLY | O_TRUNC | O_CREAT);
-			start_heredoc(files[i]->file_name, fd);
+			start_heredoc(content->file_name, fd);
 			safe_close(fd);
 			fd = safe_open("/tmp/8734583475634", O_RDONLY);
 			safe_dup2(fd, STDIN_FILENO);
 			safe_close(fd);
 		}
-		i++;
+		files = files->next;
 	}
 }

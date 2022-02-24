@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/07 15:30:01 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/15 11:26:15 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/23 17:11:11 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 t_status	builtin_echo(t_cmd_node *nodes)
 {
 	int		i;
-	t_bool	n_flag;
+	bool	n_flag;
 
 	i = 1;
 	n_flag = false;

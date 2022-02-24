@@ -6,11 +6,12 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 19:19:24 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/08 19:31:33 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/24 15:43:08 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
 /**
  * Combines command and arguments into one array, terminal by NULL

@@ -6,12 +6,13 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 15:19:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/19 12:46:55 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/24 15:42:41 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <unistd.h>
+#include <stdlib.h>
 
 static char	*find_valid_path(char **all_absolute_paths)
 {

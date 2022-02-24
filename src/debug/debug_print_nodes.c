@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/06 16:45:07 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/11 13:43:12 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/24 15:27:38 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static void	print_files(t_files **files)
+static void	print_files(t_list *files)
 {
 	size_t	i;
+	t_files	*content;
 
 	i = 0;
 	printf("files:   ");
-	if (files[i] == NULL)
+	if (files == NULL)
 	{
 		printf("NULL\n");
 		return ;
 	}
-	while (files[i])
+	while (files)
 	{
-		printf("[%s - %u] ", files[i]->file_name, files[i]->e_type);
-		i++;
+		content = files->content;
+		printf("[%s - %u] ", content->file_name, content->e_type);
+		files = files->next;
 	}
 	printf("\n");
 }

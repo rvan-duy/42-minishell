@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/14 15:32:55 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/01 15:02:20 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/23 17:11:44 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdbool.h>
 
 static void	check_numeric_arguments(const char *arg)
 {
