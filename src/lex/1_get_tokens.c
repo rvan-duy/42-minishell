@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:40:27 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/22 11:25:29 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/02/25 14:41:30 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,11 @@ t_token	*get_token(t_token_type type, char *str, int *i)
 
 	token = create_token(NULL, type);
 	err = get_token_of_type[type](str, i, token);
-	if (err)
-		error(err);
+	if (err != NO_ERROR)
+	{
+		warn_or_error(err);
+		return (NULL);
+	}
 	return (token);
 }
 
@@ -46,6 +49,8 @@ t_list	*get_tokens(char *str)
 	{
 		type = get_token_type(str[i]);
 		token = get_token(type, str, &i);
+		if (token == NULL)
+			return (ft_lstclear(&lst, &free_token));
 		ft_protect(ft_lstnew_front(token, &lst));
 	}
 	return (ft_lstreverse(&lst));

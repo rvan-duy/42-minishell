@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/07/27 14:55:06 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/23 17:01:17 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/25 14:27:36 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_list
 
 void	ft_lstadd_back(t_list **lst, t_list *new);
 void	ft_lstadd_front(t_list **lst, t_list *new);
-void	ft_lstclear(t_list **lst, void (*del)(void *));
+void	*ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstdelone(t_list *lst, void (*del)(void *));
 int		ft_lstinsert(t_list **lst, t_list *new, unsigned int i);
 void	ft_lstiter(t_list *lst, void (*f)(void *));
