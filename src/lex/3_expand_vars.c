@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:47:07 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/24 16:14:27 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/25 14:31:40 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,14 @@
 
 char	*lookup_var(char *var_name, t_env_var *envp)
 {
+	t_env_var	*env_var;
+
 	if (ft_strcmp(var_name, "?") == 0)
 		return (ft_itoa(g_exit_status));
-	return (ft_protect(ft_strdup(env_get_var(var_name, envp)->value)));
+	env_var = env_get_var(var_name, envp);
+	if (env_var == NULL)
+		return (ft_protect(ft_strdup("")));
+	return (ft_protect(ft_strdup(env_var->value)));
 }
 
 char	*get_var_value(char *str, int *var_name_start, t_env_var *envp)

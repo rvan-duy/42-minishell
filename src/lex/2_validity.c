@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:45:16 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/22 11:24:11 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/02/25 14:23:23 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,17 @@ bool	is_valid_pipe(t_list *tokens)
 	return (false);
 }
 
-bool	is_valid(t_list *tokens)
+t_error_code	is_valid(t_list *tokens) // TODO: Better errors
 {
 	while (tokens != NULL)
 	{
 		if (is_type(((t_token *)tokens->content)->type, REDIRECT)
 			&& !is_valid_redirect(tokens))
-			return (false);
+			return (INVALID_SEQUENCE);
 		else if (is_type(((t_token *)tokens->content)->type, PIPE)
 			&& !is_valid_pipe(tokens))
-			return (false);
+			return (INVALID_SEQUENCE);
 		tokens = tokens->next;
 	}
-	return (true);
+	return (NO_ERROR);
 }

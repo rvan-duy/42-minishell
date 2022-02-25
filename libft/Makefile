@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/10/27 13:16:39 by mvan-wij      #+#    #+#                  #
-#    Updated: 2021/10/15 16:05:38 by rvan-duy      ########   odam.nl          #
+#    Updated: 2022/02/25 13:12:38 by mvan-wij      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ CFLAGS 			+= -g
 endif
 LIBS			=
 HEADERS			= libft.h
-INCLUDES		= $(addprefix -I,$(dir $(HEADERS)))
+INCLUDES		= $(sort $(addprefix -I,$(dir $(HEADERS))))
 
 include			sources.mk
 include			colours.mk
