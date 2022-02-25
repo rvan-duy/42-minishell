@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 16:51:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/24 20:14:56 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/25 16:17:04 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,20 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line = readline("minishell$> ");
-		node = NULL;
-		if (line != NULL)
-		{
-			if (line[0] != '\0')
-			{
-				node = parse_line(line, envp_linked);
-				// print_nodes(node);
-				execute_line(node, envp_linked);
-				add_history(line);
-				free(line);
-			}
-		}
-		else
+		if (line == NULL)
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);
 			return (EXIT_SUCCESS);
+		}
+		if (line[0] == '\0')
+			continue ;
+		node = parse_line(line, envp_linked);
+		if (node != NULL)
+		{
+			// print_nodes(node);
+			execute_line(node, envp_linked);
+			add_history(line);
+			free(line);
 		}
 	}
 	(void)argc;

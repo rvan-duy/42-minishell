@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 15:14:52 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/22 12:00:13 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/02/25 14:42:02 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,25 @@
 
 t_cmd_node	*parse_line(char *line, t_env_var *envp)
 {
-	t_list		*tokens;
-	t_cmd_node	*node;
+	t_list			*tokens;
+	t_cmd_node		*node;
+	t_error_code	error_code;
 
 	node = NULL;
 	tokens = get_tokens(line);
-	if (!is_valid(tokens))
-		error(INVALID_SEQUENCE);
-	expand_vars(tokens, envp);
-	check_redirects(tokens);
+	if (tokens == NULL)
+		return (NULL);
+	error_code = is_valid(tokens);
+	if (error_code == NO_ERROR)
+	{
+		expand_vars(tokens, envp);
+		error_code = check_redirects(tokens);
+	}
+	if (error_code != NO_ERROR)
+	{
+		warn_or_error(error_code);
+		return (ft_lstclear(&tokens, &free_token));
+	}
 	split_unquoted(&tokens);
 	join_words(&tokens);
 	remove_whitespace(&tokens);

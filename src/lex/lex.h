@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:32:44 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/22 12:00:26 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/02/25 14:46:07 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,16 @@ typedef t_error_code	(*t_get_token)(char *str, int *i, t_token *token);
 
 bool			is_type(t_token_type value, t_token_type type);
 void			free_token(void *token);
-void			error(t_error_code err);
 t_token_type	get_token_type(char initial);
 
+void			warn(t_error_code err);
+void			error(t_error_code err) __attribute__((noreturn));
+void			warn_or_error(t_error_code err);
+
 t_list			*get_tokens(char *str);
-bool			is_valid(t_list *tokens);
+t_error_code	is_valid(t_list *tokens);
 void			expand_vars(t_list *tokens, t_env_var *envp);
-void			check_redirects(t_list	*tokens);
+t_error_code	check_redirects(t_list	*tokens);
 void			split_unquoted(t_list **tokens);
 void			join_words(t_list **tokens);
 void			remove_whitespace(t_list **tokens);

@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:48:24 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/22 11:24:17 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/02/25 14:25:30 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,15 @@ bool	is_valid_redirect_name(t_list *tokens)
 	return (true);
 }
 
-void	check_redirects(t_list	*tokens)
+t_error_code	check_redirects(t_list	*tokens)
 {
 	while (tokens != NULL)
 	{
 		if (is_type(((t_token *)tokens->content)->type, REDIRECT)
 			&& !is_type(((t_token *)tokens->content)->type, DGREAT)
 			&& !is_valid_redirect_name(tokens))
-			error(AMBIGUOUS_REDIRECT);
+			return (AMBIGUOUS_REDIRECT);
 		tokens = tokens->next;
 	}
+	return (NO_ERROR);
 }

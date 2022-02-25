@@ -6,15 +6,15 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2022/02/24 15:28:32 by rvan-duy      ########   odam.nl          #
+#    Updated: 2022/02/25 14:54:35 by mvan-wij      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-PROJECT		= minishell
-NAME		= minishell
-LIBFT		= libft/libft.a
-
-LDFLAGS += "-L$(HOME)/.brew/opt/readline/lib"
+PROJECT			= minishell
+NAME			= minishell
+LIBFT			= libft/libft.a
+LIBREADLINE		= $(HOME)/.brew/opt/readline/lib/libreadline
+LIBCRITERION	= $(HOME)/.brew/opt/criterion/lib/libcriterion
 
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
@@ -27,23 +27,25 @@ CFLAGS	+= -g3
 endif
 
 # Common
-LIBS	=	-L$(dir $(LIBFT)) -lft \
-			-L$(HOME)/.brew/opt/criterion/lib \
-			-lcriterion \
-			-lreadline
+LIBS = $(LIBFT) $(LIBREADLINE) $(LIBCRITERION)
 
-HEADERS	=	libft/libft.h \
-			include/builtins.h \
-			include/structs.h \
-			include/execute.h \
-			include/safe.h \
-			include/utilities.h \
-			include/signals.h \
-			include/envp.h \
-			include/cmds.h \
-			include/debug.h \
-			src/ruben_tests/tests.h \
-			src/lex/lex.h
+HEADERS	=					\
+	libft/libft.h			\
+	include/builtins.h		\
+	include/structs.h		\
+	include/execute.h		\
+	include/safe.h			\
+	include/utilities.h		\
+	include/signals.h		\
+	include/envp.h			\
+	include/cmds.h			\
+	include/debug.h			\
+	src/lex/lex.h			\
+	src/ruben_tests/tests.h	\
+
+HEADER_DIRS =							\
+	$(HOME)/.brew/opt/readline/include	\
+	$(HOME)/.brew/opt/criterion/include
 
 SOURCES	=									\
 	src/execute.c							\
@@ -74,7 +76,8 @@ SOURCES	=									\
 	src/envp/env_node_dup.c 				\
 	src/envp/env_list_dup.c 				\
 	src/envp/env_list_free.c 				\
-	src/lex/0_utils.c						\
+	src/lex/0a_utils.c						\
+	src/lex/0b_utils.c						\
 	src/lex/1_get_tokens.c					\
 	src/lex/1a_token_completion.c			\
 	src/lex/2_validity.c					\
@@ -93,9 +96,9 @@ SOURCES	=									\
 	src/cmds/cmd_redirect_stdin.c			\
 	src/cmds/cmd_redirect_stdout.c			\
 	src/errors/error_is_dir.c				\
-	src/debug/debug_print_nodes.c			
+	src/debug/debug_print_nodes.c
 
-TMP_SOURCES = 	src/ruben_tests/criterion/criterion_tests.c src/ruben_tests/criterion/criterion_test_tmp.c $(filter-out src/test/init.c, $(wildcard src/test/*.c)) src/test/init.c
+TMP_SOURCES = src/ruben_tests/criterion/criterion_tests.c src/ruben_tests/criterion/criterion_test_tmp.c $(filter-out src/test/init.c, $(wildcard src/test/*.c)) src/test/init.c
 
 ifndef DO_TESTS
 SOURCES += 	src/main.c
@@ -109,7 +112,8 @@ SRCDIR = src
 OBJDIR = obj
 
 OBJECTS = $(patsubst $(SRCDIR)/%,$(OBJDIR)/%, $(SOURCES:c=o))
-INCLUDES = $(addprefix -I,$(dir $(HEADERS))) -I$(HOME)/.brew/opt/criterion/include -I$(HOME)/.brew/opt/readline/include
+INCLUDES = $(sort $(addprefix -I,$(dir $(HEADERS))) $(addprefix -I,$(HEADER_DIRS)))
+LIB_FLAGS = $(sort $(addprefix -L,$(dir $(LIBS)))) $(sort $(addprefix -l,$(patsubst lib%,%,$(basename $(notdir $(LIBS))))))
 
 PRE_RULES	=
 ifneq ($(shell echo "$(CFLAGS)"), $(shell cat "$(DATA_FILE)" 2> /dev/null))
@@ -122,7 +126,7 @@ all: $(PRE_RULES) $(NAME)
 
 $(NAME): $(LIBFT) $(OBJECTS)
 	@printf "$(CYAN_FG)%-$(PROJECT_SPACING)s$(RESET_COLOR) $(GREEN_FG)%-$(RULE_SPACING)s$(RESET_COLOR) : " "[$(PROJECT)]" "make"
-	$(CC) $(CFLAGS) $(OBJECTS) $(HOME)/.brew/opt/readline/lib/libreadline.dylib $(INCLUDES) $(LIBS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJECTS) $(HOME)/.brew/opt/readline/lib/libreadline.dylib $(INCLUDES) $(LIB_FLAGS) -o $(NAME)
 	@printf "$(CYAN_FG)%-$(PROJECT_SPACING)s$(RESET_COLOR) $(GREEN_FG)%-$(RULE_SPACING)s$(RESET_COLOR) : $(BLUE_FG)$(NAME)$(RESET_COLOR) created\n" "[$(PROJECT)]" "make"
 	@echo "$(CFLAGS)" > $(DATA_FILE)
 
