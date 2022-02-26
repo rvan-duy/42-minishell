@@ -6,13 +6,37 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 16:19:24 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/11 16:42:34 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/25 17:28:52 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "builtins.h"
 #include "libft.h"
+
+/**
+ * Checks if the cmd is a builtin command available in the project
+ * @param cmd pointer to `const char *`
+ * @return true or false
+ */
+bool	builtin_check(const char *cmd)
+{
+	if (!ft_strncmp(cmd, "echo", ft_strlen(cmd) + 1))
+		return (true);
+	if (!ft_strncmp(cmd, "pwd", ft_strlen(cmd) + 1))
+		return (true);
+	if (!ft_strncmp(cmd, "cd", ft_strlen(cmd) + 1))
+		return (true);
+	if (!ft_strncmp(cmd, "export", ft_strlen(cmd) + 1))
+		return (true);
+	if (!ft_strncmp(cmd, "unset", ft_strlen(cmd) + 1))
+		return (true);
+	if (!ft_strncmp(cmd, "env", ft_strlen(cmd) + 1))
+		return (true);
+	if (!ft_strncmp(cmd, "exit", ft_strlen(cmd) + 1))
+		return (true);
+	return (false);
+}
 
 /**
  * Checks if the node is a builtin command, if so: executes it
