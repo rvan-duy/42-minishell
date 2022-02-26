@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/26 17:47:00 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/26 20:34:00 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	get_backup(int *backup)
 	safe_close(STDOUT_FILENO);
 	safe_dup2(backup[0], STDIN_FILENO);
 	safe_dup2(backup[1], STDOUT_FILENO);
+	free(backup);
 }
 
 static t_status	exec_builtin(t_cmd_node *nodes, t_env_var *envp)
