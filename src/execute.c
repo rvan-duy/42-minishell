@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/26 17:36:21 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/26 17:47:00 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	*create_backup(void)
 {
 	int	*io_cpy;
 
-	io_cpy = malloc(sizeof(int) * 2);
+	io_cpy = ft_protect(malloc(sizeof(int) * 2));
 	io_cpy[0] = dup(STDIN_FILENO);
 	io_cpy[1] = dup(STDOUT_FILENO);
 	return (io_cpy);
