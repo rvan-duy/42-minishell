@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/23 15:45:18 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/26 17:36:21 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,36 @@
 #include <sys/wait.h>
 #include <stdio.h>
 
+static int	*create_backup(void)
+{
+	int	*io_cpy;
+
+	io_cpy = malloc(sizeof(int) * 2);
+	io_cpy[0] = dup(STDIN_FILENO);
+	io_cpy[1] = dup(STDOUT_FILENO);
+	return (io_cpy);
+}
+
+static void	get_backup(int *backup)
+{
+	safe_close(STDIN_FILENO);
+	safe_close(STDOUT_FILENO);
+	safe_dup2(backup[0], STDIN_FILENO);
+	safe_dup2(backup[1], STDOUT_FILENO);
+}
+
+static t_status	exec_builtin(t_cmd_node *nodes, t_env_var *envp)
+{
+	int	*filestreams_backup;
+
+	filestreams_backup = create_backup();
+	cmd_redirect_stdin(nodes->files);
+	cmd_redirect_stdout(nodes->files);
+	builtin_check_and_exec(nodes, envp);
+	get_backup(filestreams_backup);
+	return (SUCCESS);
+}
+
 /**
  * Reproduces the behavior of bash, the algorithm works slightly different based
  * on whether the command has pipes or not
@@ -30,15 +60,15 @@
  */
 t_status	execute_line(t_cmd_node *nodes, t_env_var *envp)
 {
-	int	ret;
 	int	pid;
 
 	if (nodes->pipe_to == NULL)
 	{
-		ret = builtin_check_and_exec(nodes, envp);
-		if (ret == SUCCESFULLY_EXECUTED_BUILTIN)
-			return (SUCCESS);
-		else if (ret == NO_BUILTIN)
+		if (builtin_check(nodes->cmd))
+		{
+			return (exec_builtin(nodes, envp));
+		}
+		else
 		{
 			pid = safe_fork();
 			if (pid == CHILD_PROCESS)
@@ -46,8 +76,6 @@ t_status	execute_line(t_cmd_node *nodes, t_env_var *envp)
 			wait(&g_exit_status);
 			return (SUCCESS);
 		}
-		ft_putendl_fd("Error: builtin_check_and_exec == 1", STDERR_FILENO);
-		g_exit_status = FAILURE;
 	}
 	else
 	{
