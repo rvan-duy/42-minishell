@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2022/02/25 14:54:35 by mvan-wij      ########   odam.nl          #
+#    Updated: 2022/03/06 14:27:33 by rvan-duy      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ HEADER_DIRS =							\
 	$(HOME)/.brew/opt/criterion/include
 
 SOURCES	=									\
-	src/execute.c							\
+	src/execute_line.c						\
 	src/safe/safe_chdir.c 					\
 	src/safe/safe_check_access.c 			\
 	src/safe/safe_close.c 					\
