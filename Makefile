@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2022/03/06 14:27:33 by rvan-duy      ########   odam.nl          #
+#    Updated: 2022/03/06 16:42:53 by rvan-duy      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ SOURCES	=									\
 	src/safe/safe_dup2.c 					\
 	src/safe/safe_fork.c 					\
 	src/safe/safe_open.c 					\
+	src/safe/safe_wait.c					\
 	src/utils_2.c 							\
 	src/builtins/builtin_cd.c 				\
 	src/builtins/builtin_check_and_exec.c	\
