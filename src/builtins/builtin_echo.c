@@ -6,14 +6,37 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/07 15:30:01 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/23 17:11:11 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/07 12:52:38 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utilities.h"
 #include "libft.h"
+#include "structs.h"
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdbool.h>
+
+static bool	contains_flag(const char *string, const char *flag)
+{
+	const unsigned char	flag_type = flag[1];
+
+	if (string == NULL || ft_strlen(string) < 2)
+		return (false);
+	while (*flag && *string)
+	{
+		if (*flag != *string)
+			return (false);
+		string++;
+		flag++;
+	}
+	while (*string)
+	{
+		if (*string != flag_type)
+			return (false);
+		string++;
+	}
+	return (true);
+}
 
 t_status	builtin_echo(t_cmd_node *nodes)
 {
