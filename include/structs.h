@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 15:45:21 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/23 16:57:50 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/02/24 20:03:00 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define ERROR_CODE_NUMERIC_ARGS 255
 
 // Exit to the exit status of the most recently executed foreground pipeline.
-int g_exit_status;
+unsigned char g_exit_status;
 
 /**
  * @param e_type type of in-/output
