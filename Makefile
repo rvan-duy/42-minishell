@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2022/03/06 16:42:53 by rvan-duy      ########   odam.nl          #
+#    Updated: 2022/03/09 12:30:47 by rvan-duy      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,13 +35,11 @@ HEADERS	=					\
 	include/structs.h		\
 	include/execute.h		\
 	include/safe.h			\
-	include/utilities.h		\
 	include/signals.h		\
 	include/envp.h			\
 	include/cmds.h			\
 	include/debug.h			\
-	src/lex/lex.h			\
-	src/ruben_tests/tests.h	\
+	src/lex/lex.h			
 
 HEADER_DIRS =							\
 	$(HOME)/.brew/opt/readline/include	\
@@ -57,7 +55,6 @@ SOURCES	=									\
 	src/safe/safe_fork.c 					\
 	src/safe/safe_open.c 					\
 	src/safe/safe_wait.c					\
-	src/utils_2.c 							\
 	src/builtins/builtin_cd.c 				\
 	src/builtins/builtin_check_and_exec.c	\
 	src/builtins/builtin_echo.c 			\
@@ -89,7 +86,7 @@ SOURCES	=									\
 	src/lex/7_remove_whitespace.c			\
 	src/lex/8_create_nodes.c				\
 	src/parse_line.c						\
-	src/signals/signal_handler.c			\
+	src/signals/signal_handlers.c			\
 	src/cmds/cmd_get_valid_path.c			\
 	src/cmds/cmd_create_execve_array.c		\
 	src/cmds/cmd_exec_single_file.c			\

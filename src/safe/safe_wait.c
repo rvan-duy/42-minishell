@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/06 16:32:26 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/06 16:43:07 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/11 15:06:03 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 pid_t	safe_wait(int *arg)
 {
-	const pid_t pid = wait(arg);
+	const pid_t	pid = wait(arg);
 
 	if (pid == -1)
 	{
