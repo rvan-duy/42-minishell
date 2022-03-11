@@ -6,18 +6,19 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/19 13:14:29 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/19 13:21:40 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/11 12:38:32 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cmds.h"// cmd funcs
-#include "builtins.h" // builtin funcs
-#include "safe.h" // safe funcs
-#include "libft.h" // putendl
-#include "envp.h" // env funcs
-#include "error.h" // error funcs
-#include <unistd.h> // defines
-#include <stdio.h> // perror
+#include "cmds.h"
+#include "builtins.h"
+#include "safe.h"
+#include "libft.h"
+#include "envp.h"
+#include "error.h"
+#include "signals.h"
+#include <unistd.h>
+#include <stdio.h>
 
 static void	execute_command(t_cmd_node *nodes, t_env_var *envp)
 {
@@ -32,6 +33,7 @@ static void	execute_command(t_cmd_node *nodes, t_env_var *envp)
 	tmp = nodes->cmd;
 	nodes->cmd = valid_path;
 	free(tmp);
+	change_signals(SIG_DFL, SIG_DFL);
 	execve(nodes->cmd, nodes->argv, env_list_to_arr(envp));
 	perror("execve");
 	exit(EXIT_FAILURE);

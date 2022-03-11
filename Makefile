@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2022/03/07 12:56:51 by rvan-duy      ########   odam.nl          #
+#    Updated: 2022/03/09 12:30:47 by rvan-duy      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,7 +86,7 @@ SOURCES	=									\
 	src/lex/7_remove_whitespace.c			\
 	src/lex/8_create_nodes.c				\
 	src/parse_line.c						\
-	src/signals/signal_handler.c			\
+	src/signals/signal_handlers.c			\
 	src/cmds/cmd_get_valid_path.c			\
 	src/cmds/cmd_create_execve_array.c		\
 	src/cmds/cmd_exec_single_file.c			\

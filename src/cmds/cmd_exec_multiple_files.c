@@ -6,12 +6,13 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/09 14:59:10 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/06 16:55:53 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/11 12:37:25 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cmds.h"
 #include "safe.h"
+#include "signals.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/errno.h>
@@ -51,6 +52,7 @@ static void	exec_child(int read_pipe, int write_pipe,
 	safe_dup2(read_pipe, STDIN_FILENO);
 	if (read_pipe != STDIN_FILENO)
 		safe_close(read_pipe);
+	change_signals(SIG_DFL, SIG_DFL);
 	cmd_exec_single_file(nodes, envp, write_pipe);
 	exit(EXIT_SUCCESS);
 }
