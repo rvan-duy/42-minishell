@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 16:50:30 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/24 15:25:29 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/15 12:25:40 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	*cmd_get_valid_path(const char *command);
 char	**cmd_create_execve_array(char *command, char **arguments);
 void	cmd_exec_single_file(t_cmd_node *nodes, t_env_var *envp, int write_fd);
 void	cmd_exec_multiple_files(t_cmd_node *nodes, t_env_var *envp);
+void	cmd_expand_heredoc(t_cmd_node *nodes);
 void	cmd_redirect_stdin(t_list *files);
 void	cmd_redirect_stdout(t_list *files);
 

@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/09 14:59:10 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/11 12:37:25 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/15 12:25:47 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	cmd_exec_multiple_files(t_cmd_node *nodes, t_env_var *envp)
 	const size_t	node_amount = node_len(nodes);
 
 	previous_read_pipe = STDIN_FILENO;
+	cmd_expand_heredoc(nodes);
 	while (nodes)
 	{
 		pipe_fds = safe_create_pipe();
