@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/06 16:45:07 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/24 15:27:38 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/15 14:55:10 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static void	print_files(t_list *files)
 {
 	size_t	i;
-	t_files	*content;
+	t_file	*content;
 
 	i = 0;
 	printf("files:   ");
