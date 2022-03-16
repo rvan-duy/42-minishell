@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 16:19:24 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/25 17:28:52 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/15 15:47:58 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
  */
 bool	builtin_check(const char *cmd)
 {
+	if (cmd == NULL)
+		return (true);
 	if (!ft_strncmp(cmd, "echo", ft_strlen(cmd) + 1))
 		return (true);
 	if (!ft_strncmp(cmd, "pwd", ft_strlen(cmd) + 1))
@@ -46,6 +48,8 @@ bool	builtin_check(const char *cmd)
  */
 int	builtin_check_and_exec(t_cmd_node *nodes, t_env_var *envp)
 {
+	if (nodes->cmd == NULL)
+		return (SUCCESS);
 	if (!ft_strncmp(nodes->cmd, "echo", ft_strlen(nodes->cmd) + 1))
 		return (builtin_echo(nodes));
 	if (!ft_strncmp(nodes->cmd, "pwd", ft_strlen(nodes->cmd) + 1))
