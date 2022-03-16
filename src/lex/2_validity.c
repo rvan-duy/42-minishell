@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:45:16 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/03/16 18:12:35 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/16 18:21:08 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_error_code	is_valid_pipe(t_list *tokens)
 	return (EMPTY_PIPE);
 }
 
-t_error_code	is_valid(t_list *tokens) // TODO: Better errors
+t_error_code	is_valid(t_list *tokens)
 {
 	t_error_code	err;
 
