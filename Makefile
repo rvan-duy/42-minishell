@@ -39,7 +39,7 @@ HEADERS	=					\
 	include/envp.h			\
 	include/cmds.h			\
 	include/debug.h			\
-	src/lex/lex.h			
+	src/lex/lex.h
 
 HEADER_DIRS =							\
 	$(HOME)/.brew/opt/readline/include	\

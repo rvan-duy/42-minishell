@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:32:44 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/25 14:46:07 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/16 18:04:04 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ typedef enum e_error_code
 	MISSING_SINGLE_QUOTE,
 	MISSING_DOUBLE_QUOTE,
 	AMBIGUOUS_REDIRECT,
-	INVALID_SEQUENCE
+	UNFINISHED_REDIRECT,
+	EXPECTED_REDIRECT_FILENAME,
+	EMPTY_PIPE
 }	t_error_code;
 
 typedef enum e_heredoc_state
