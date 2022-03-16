@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:52:55 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/23 16:56:48 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/15 14:55:10 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 #include "structs.h"
 #include <stdlib.h>
 
-t_files	*extract_redirect(t_list **tokens)
+t_file	*extract_redirect(t_list **tokens)
 {
-	t_files			*file;
+	t_file			*file;
 	t_token_type	type;
 	t_list			*next;
 
-	file = ft_protect(malloc(sizeof(t_files)));
+	file = ft_protect(malloc(sizeof(t_file)));
 	file->file_name = ((t_token *)(*tokens)->next->content)->value;
 	((t_token *)(*tokens)->next->content)->value = NULL;
 	type = ((t_token *)(*tokens)->content)->type;

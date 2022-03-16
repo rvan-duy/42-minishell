@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/06 14:52:41 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/16 11:58:04 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,25 @@ static t_status	exec_builtin(t_cmd_node *nodes, t_env_var *envp)
 	return (SUCCESS);
 }
 
+static void	remove_tmp_files(t_cmd_node *nodes)
+{
+	t_list	*files;
+	t_file	*content;
+
+	while (nodes)
+	{
+		files = nodes->files;
+		while (files)
+		{
+			content = files->content;
+			if (content->e_type == HERE_DOCUMENT)
+				unlink(content->file_name);
+			files = files->next;
+		}
+		nodes = nodes->pipe_to;
+	}
+}
+
 /**
  * Reproduces the behavior of bash, the algorithm works slightly different based
  * on whether the command has pipes or not
@@ -61,15 +80,15 @@ static t_status	exec_builtin(t_cmd_node *nodes, t_env_var *envp)
  */
 t_status	execute_line(t_cmd_node *nodes, t_env_var *envp)
 {
-	int	pid;
-	int	exit_status;
+	int		pid;
+	int		exit_status;
 
+	if (cmd_expand_heredoc(nodes) == FAILURE)
+		return (FAILURE);
 	if (nodes->pipe_to == NULL)
 	{
 		if (builtin_check(nodes->cmd))
-		{
 			return (exec_builtin(nodes, envp));
-		}
 		else
 		{
 			pid = safe_fork();
@@ -81,8 +100,7 @@ t_status	execute_line(t_cmd_node *nodes, t_env_var *envp)
 		}
 	}
 	else
-	{
 		cmd_exec_multiple_files(nodes, envp);
-	}
+	remove_tmp_files(nodes);
 	return (SUCCESS);
 }

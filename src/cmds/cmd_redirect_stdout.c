@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 13:39:59 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/24 15:25:22 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/15 14:55:10 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 
 /**
  * Loops over the file array and redirects the standard output
- * @param t_files pointer to `t_files *`
+ * @param t_file pointer to `t_file *`
  * @return nothing, calls exit() on error
  */
 void	cmd_redirect_stdout(t_list *files)
 {
 	int		fd;
 	size_t	i;
-	t_files	*content;
+	t_file	*content;
 
 	i = 0;
 	while (files)

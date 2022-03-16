@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 15:45:21 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/24 20:03:00 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/15 14:55:18 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ unsigned char g_exit_status;
  * @param e_type type of in-/output
  * @param file_name file name
  */
-typedef struct s_files
+typedef struct s_file
 {
 	enum {
 		REDIRECT_INPUT,
@@ -35,13 +35,13 @@ typedef struct s_files
 		APPENDING_REDIRECT_OUTPUT
 	}	e_type;
 	char	*file_name;
-}	t_files;
+}	t_file;
 
 /**
  * @param cmd command/file to execute
  * @param argv { argv0, argv1, ... }
  * @param pipe_to next command in series, NULL if final
- * @param files list of in / out files (t_files)
+ * @param files list of in / out files (t_file)
  */
 typedef struct s_cmd_node
 {

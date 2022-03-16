@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2022/03/09 12:30:47 by rvan-duy      ########   odam.nl          #
+#    Updated: 2022/03/15 15:38:54 by rvan-duy      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
 DATA_FILE	= .make_data.txt
 ifdef SANITIZE
-CFLAGS	+= -fsanitize=address
+CFLAGS	+= -fsanitize=address -g3
 endif
 ifdef DEBUG
 CFLAGS	+= -g3
@@ -93,6 +93,7 @@ SOURCES	=									\
 	src/cmds/cmd_exec_multiple_files.c		\
 	src/cmds/cmd_redirect_stdin.c			\
 	src/cmds/cmd_redirect_stdout.c			\
+	src/cmds/cmd_expand_heredoc.c			\
 	src/errors/error_is_dir.c				\
 	src/debug/debug_print_nodes.c
 
