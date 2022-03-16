@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 12:25:57 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/15 15:06:15 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/16 14:08:46 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,38 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+
+
 static void	do_heredoc(char *limiter, int fd)
 {
 	char	*line;
+	pid_t	pid;
+	int		exit_status;
 
-	while (1)
+	pid = safe_fork();
+	if (pid == 0)
 	{
-		line = readline("> ");
-		if (line == NULL)
+		signal(SIGINT, signal_handler_heredoc);
+		while (1)
 		{
+			line = readline("> ");
+			if (line == NULL)
+			{
+				free(line);
+				exit(EXIT_SUCCESS);
+			}
+			else if (ft_strncmp(line, limiter, ft_strlen(limiter) + 1) != 0)
+				ft_putendl_fd(line, fd);
+			else
+			{
+				free(line);
+				exit(EXIT_SUCCESS);
+			}
 			free(line);
-			break ;
 		}
-		else if (ft_strncmp(line, limiter, ft_strlen(limiter) + 1) != 0)
-			ft_putendl_fd(line, fd);
-		else
-		{
-			free(line);
-			break ;
-		}
-		free(line);
 	}
+	safe_wait(&exit_status);
+	g_exit_status = WEXITSTATUS(exit_status);
 }
 
 static void	handle_heredoc(t_file *content)
@@ -53,24 +64,26 @@ static void	handle_heredoc(t_file *content)
 				ft_protect(ft_itoa(number))));
 	fd = safe_open(file_name, O_WRONLY | O_TRUNC | O_CREAT);
 	number++;
-	signal(SIGINT, signal_handler_heredoc);
 	do_heredoc(content->file_name, fd);
-	signal(SIGINT, SIG_IGN);
 	safe_close(fd);
+	if (g_exit_status == EXIT_FAILURE)
+		return ;
 	free(content->file_name);
 	content->file_name = file_name;
 }
 
-void	expand_files(t_list *files)
+static void	expand_files(t_list *files)
 {
 	t_file	*content;
-	
+
 	while (files)
 	{
 		content = files->content;
 		if (content->e_type == HERE_DOCUMENT)
 		{
 			handle_heredoc(files->content);
+			if (g_exit_status == EXIT_FAILURE)
+				return ;
 		}
 		files = files->next;
 	}
@@ -80,11 +93,15 @@ void	expand_files(t_list *files)
  * Expands all heredocs to files
  * @param nodes pointer to `t_cmd_node *`
  */
-void	cmd_expand_heredoc(t_cmd_node *nodes)
+t_status	cmd_expand_heredoc(t_cmd_node *nodes)
 {
+	g_exit_status = EXIT_SUCCESS;
 	while (nodes)
 	{
 		expand_files(nodes->files);
+		if (g_exit_status == EXIT_FAILURE)
+			return (FAILURE);
 		nodes = nodes->pipe_to;
 	}
+	return (SUCCESS);
 }
