@@ -6,16 +6,13 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 16:51:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/11 15:06:33 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/17 14:09:18 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "execute.h"
 #include "parse.h"
 #include "envp.h"
-#include "builtins.h"
-#include "debug.h"
 #include "signals.h"
 #include <stdio.h>
 #include <unistd.h>
