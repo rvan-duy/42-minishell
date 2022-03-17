@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 12:25:57 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/16 14:08:46 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/17 14:21:43 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-
+static void exit_heredoc(char *line)
+{
+	free(line);
+	exit(EXIT_SUCCESS);
+}
 
 static void	do_heredoc(char *limiter, int fd)
 {
@@ -36,17 +40,11 @@ static void	do_heredoc(char *limiter, int fd)
 		{
 			line = readline("> ");
 			if (line == NULL)
-			{
-				free(line);
-				exit(EXIT_SUCCESS);
-			}
+				exit_heredoc(line);
 			else if (ft_strncmp(line, limiter, ft_strlen(limiter) + 1) != 0)
 				ft_putendl_fd(line, fd);
 			else
-			{
-				free(line);
-				exit(EXIT_SUCCESS);
-			}
+				exit_heredoc(line);
 			free(line);
 		}
 	}
