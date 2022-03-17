@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 16:51:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/17 15:09:23 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/17 16:44:03 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,26 @@ static int	exit_shell(void)
 	return (EXIT_SUCCESS);
 }
 
+static void	free_node_file(void *_file)
+{
+	t_file	*file;
+
+	file = _file;
+	free(file->file_name);
+	free(file);
+}
+
 static void	free_nodes(t_cmd_node *node)
 {
 	t_cmd_node	*tmp;
 
-	while (node)
+	while (node != NULL)
 	{
-		tmp = node;
-		node = node->pipe_to;
-		ft_free_arr((void ***)&tmp->argv);
-		free(tmp);
+		tmp = node->pipe_to;
+		ft_lstclear(&node->files, &free_node_file);
+		ft_free_arr_dim(&node->argv, 2);
+		free(node);
+		node = tmp;
 	}
 }
 
@@ -56,14 +66,12 @@ int	main(int argc, char **argv, char **envp)
 		if (line[0] == '\0')
 			continue ;
 		node = parse_line(line, envp_linked);
-		if (node != NULL)
-		{
-			execute_line(node, envp_linked);
-			add_history(line);
-			free(line);
-		}
+		if (node == NULL)
+			continue ;
+		execute_line(node, envp_linked);
+		add_history(line);
+		free(line);
 		free_nodes(node);
-		system("leaks minishell");
 	}
 	(void)argc;
 	(void)argv;
