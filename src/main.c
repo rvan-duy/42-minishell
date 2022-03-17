@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 16:51:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/17 14:09:18 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/17 14:13:58 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 #include <signal.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+
+static int	exit_shell(void)
+{
+	ft_putendl_fd("exit", STDOUT_FILENO);
+	return (EXIT_SUCCESS);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -33,10 +39,7 @@ int	main(int argc, char **argv, char **envp)
 		line = readline("minishell$> ");
 		signal(SIGINT, SIG_IGN);
 		if (line == NULL)
-		{
-			ft_putendl_fd("exit", STDOUT_FILENO);
-			return (EXIT_SUCCESS);
-		}
+			return (exit_shell());
 		if (line[0] == '\0')
 			continue ;
 		node = parse_line(line, envp_linked);
