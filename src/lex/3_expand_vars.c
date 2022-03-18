@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:47:07 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/25 16:19:01 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/17 16:39:53 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,12 @@ char	*lookup_var(char *var_name, t_env_var *envp)
 	t_env_var	*env_var;
 
 	if (ft_strcmp(var_name, "?") == 0)
-		return (ft_itoa(g_exit_status));
+	{
+		free(var_name);
+		return (ft_protect(ft_itoa(g_exit_status)));
+	}
 	env_var = env_get_var(var_name, envp);
+	free(var_name);
 	if (env_var == NULL)
 		return (ft_protect(ft_strdup("")));
 	return (ft_protect(ft_strdup(env_var->value)));
@@ -93,6 +97,7 @@ char	*replace_vars(char *str, t_env_var *envp)
 		ft_strlcat(out, copy->content, (len + 1) * sizeof(char));
 		copy = copy->next;
 	}
+	ft_lstclear(&lst, &free);
 	return (out);
 }
 
