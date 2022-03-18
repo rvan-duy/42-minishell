@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 12:25:57 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/17 16:37:26 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/18 11:54:20 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-static void exit_heredoc(char *line)
+static void	exit_heredoc(char *line)
 {
 	free(line);
 	exit(EXIT_SUCCESS);
