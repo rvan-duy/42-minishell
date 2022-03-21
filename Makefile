@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2022/03/15 15:38:54 by rvan-duy      ########   odam.nl          #
+#    Updated: 2022/03/21 17:20:24 by mvan-wij      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ CFLAGS	+= -g3
 endif
 
 # Common
-LIBS = $(LIBFT) $(LIBREADLINE) $(LIBCRITERION)
+LIBS = $(LIBFT) $(LIBREADLINE) # $(LIBCRITERION)
 
 HEADERS	=					\
 	libft/libft.h			\
@@ -43,7 +43,7 @@ HEADERS	=					\
 
 HEADER_DIRS =							\
 	$(HOME)/.brew/opt/readline/include	\
-	$(HOME)/.brew/opt/criterion/include
+	# $(HOME)/.brew/opt/criterion/include
 
 SOURCES	=									\
 	src/execute_line.c						\
@@ -81,7 +81,7 @@ SOURCES	=									\
 	src/lex/2_validity.c					\
 	src/lex/3_expand_vars.c					\
 	src/lex/4_redirect_names.c				\
-	src/lex/5_split_unquoted.c				\
+	src/lex/5_fix_unquoted.c				\
 	src/lex/6_join_words.c					\
 	src/lex/7_remove_whitespace.c			\
 	src/lex/8_create_nodes.c				\
