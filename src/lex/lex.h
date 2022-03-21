@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:32:44 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/03/16 18:04:04 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/21 17:13:32 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef t_error_code	(*t_get_token)(char *str, int *i, t_token *token);
 bool			is_type(t_token_type value, t_token_type type);
 void			free_token(void *token);
 t_token_type	get_token_type(char initial);
+t_token			*create_token(char *value, t_token_type type);
 
 void			warn(t_error_code err);
 void			error(t_error_code err) __attribute__((noreturn));
@@ -77,7 +78,7 @@ t_list			*get_tokens(char *str);
 t_error_code	is_valid(t_list *tokens);
 void			expand_vars(t_list *tokens, t_env_var *envp);
 t_error_code	check_redirects(t_list	*tokens);
-void			split_unquoted(t_list **tokens);
+void			fix_unquoted(t_list **tokens);
 void			join_words(t_list **tokens);
 void			remove_whitespace(t_list **tokens);
 void			create_nodes(t_list **tokens, t_cmd_node **node);
@@ -87,8 +88,6 @@ t_error_code	get_redirect(char *str, int *i, t_token *token);
 t_error_code	get_pipe(char *str, int *i, t_token *token);
 t_error_code	get_quoted(char *str, int *i, t_token *token);
 t_error_code	get_unquoted(char *str, int *i, t_token *token);
-
-t_token			*create_token(char *value, t_token_type type);
 
 // -----------------------------------------------------------------------------
 

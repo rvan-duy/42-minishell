@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 15:14:52 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/25 14:42:02 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/21 17:13:36 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_cmd_node	*parse_line(char *line, t_env_var *envp)
 		warn_or_error(error_code);
 		return (ft_lstclear(&tokens, &free_token));
 	}
-	split_unquoted(&tokens);
+	fix_unquoted(&tokens);
 	join_words(&tokens);
 	remove_whitespace(&tokens);
 	create_nodes(&tokens, &node);

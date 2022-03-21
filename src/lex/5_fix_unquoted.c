@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 14:49:53 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/02/22 11:24:20 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/21 17:13:23 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,20 @@ void	split_unquoted_token(t_list **token)
 	*token = next;
 }
 
-void	split_unquoted(t_list **tokens)
+void	fix_unquoted(t_list **tokens)
 {
+	t_list	*next;
+
 	while (*tokens != NULL)
 	{
+		if (is_type(((t_token *)(*tokens)->content)->type, UNQUOTED) \
+		&& ((t_token *)(*tokens)->content)->value[0] == '\0')
+		{
+			next = (*tokens)->next;
+			free_token(*tokens);
+			*tokens = next;
+			continue ;
+		}
 		if (is_type(((t_token *)(*tokens)->content)->type, UNQUOTED)
 			&& ft_strchr(((t_token *)(*tokens)->content)->value, ' ') != NULL)
 		{
