@@ -6,13 +6,15 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/20 13:04:28 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/15 11:28:32 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/22 12:12:49 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "envp.h"
 #include "libft.h"
+#include "builtins.h"
 #include <stdio.h>
+#include <unistd.h>
 
 static void	bubble_sort(t_env_var **head)
 {
@@ -61,11 +63,38 @@ static t_status	list_export(t_env_var *envp)
 	return (SUCCESS);
 }
 
+static int	check_valid_identifier(char *identifier)
+{
+	size_t	i;
+
+	if (ft_isalpha(identifier[0]) == 0)
+		return (UNVALID);
+	i = 0;
+	while (identifier[i])
+	{
+		if (ft_isalnum(identifier[i]) == 0 && identifier[i] != '_')
+			return (UNVALID);
+		i++;
+	}
+	return (VALID);
+}
+
+static void	print_identifier_error(t_env_var *var)
+{
+	ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+	ft_putstr_fd(var->name, STDERR_FILENO);
+	ft_putstr_fd("=", STDERR_FILENO);
+	ft_putstr_fd(var->value, STDERR_FILENO);
+	ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
+	g_exit_status = FAILURE;
+}
+
 t_status	builtin_export(t_cmd_node *nodes, t_env_var *envp)
 {
 	t_env_var	*new_env_var;
 	size_t		i;
 
+	g_exit_status = SUCCESS;
 	if (nodes->argv[1] == NULL)
 		return (list_export(envp));
 	i = 1;
@@ -74,10 +103,17 @@ t_status	builtin_export(t_cmd_node *nodes, t_env_var *envp)
 		new_env_var = env_node_new(nodes->argv[i]);
 		if (new_env_var == NULL)
 			return (FAILURE);
-		env_node_del(new_env_var->name, &envp);
-		env_node_add(&envp, new_env_var);
+		if (check_valid_identifier(new_env_var->name) == UNVALID)
+		{
+			print_identifier_error(new_env_var);
+			free(new_env_var);
+		}
+		else
+		{
+			env_node_del(new_env_var->name, &envp);
+			env_node_add(&envp, new_env_var);
+		}
 		i++;
 	}
-	g_exit_status = SUCCESS;
 	return (SUCCESS);
 }
