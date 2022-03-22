@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/19 13:14:29 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/22 16:04:29 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/22 20:19:31 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ void	cmd_exec_single_file(t_cmd_node *nodes, t_env_var *envp,
 		safe_dup2(write_fd, STDOUT_FILENO);
 		safe_close(write_fd);
 	}
-	cmd_redirect_stdin(nodes->files);
-	cmd_redirect_stdout(nodes->files);
+	cmd_io_redirections(nodes->files, true);
 	ret = builtin_check_and_exec(nodes, envp);
 	if (ret == SUCCESFULLY_EXECUTED_BUILTIN)
 		return ;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   close.c                                            :+:    :+:            */
+/*   safe_close.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/15 12:39:29 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/10/15 13:42:13 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/22 19:38:44 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 void	safe_close(int fd)
 {
+	if (fd < 0)
+		return ;
 	if (close(fd) < 0)
 	{
 		ft_putstr_fd(strerror(errno), STDERR_FILENO);
