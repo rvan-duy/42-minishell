@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/14 15:32:55 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/23 17:11:44 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/22 13:10:14 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,28 @@
 #include <unistd.h>
 #include <stdbool.h>
 
+static void	print_numeric_arg_error(const char *arg)
+{
+	ft_putstr_fd(PROGRAM_NAME, STDERR_FILENO);
+	ft_putstr_fd(": exit: ", STDERR_FILENO);
+	ft_putstr_fd(arg, STDERR_FILENO);
+	ft_putendl_fd(": numeric argument required", STDERR_FILENO);
+	exit(ERROR_CODE_NUMERIC_ARGS);
+}
+
 static void	check_numeric_arguments(const char *arg)
 {
 	size_t	i;
 
 	i = 0;
+	if (ft_strncmp("-", arg, 2) == 0)
+		print_numeric_arg_error(arg);
 	if (arg[i] == '-' || arg[i] == '+')
 		i++;
 	while (arg[i])
 	{
 		if (ft_isdigit(arg[i]) == false)
-		{
-			ft_putstr_fd(PROGRAM_NAME, STDERR_FILENO);
-			ft_putstr_fd(": exit: ", STDERR_FILENO);
-			ft_putstr_fd(arg, STDERR_FILENO);
-			ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-			exit(ERROR_CODE_NUMERIC_ARGS);
-		}
+			print_numeric_arg_error(arg);
 		i++;
 	}
 	return ;
