@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/19 13:14:29 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/11 12:38:32 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/22 16:04:29 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,14 @@
 static void	execute_command(t_cmd_node *nodes, t_env_var *envp)
 {
 	char	*valid_path;
-	char	*tmp;
 
 	valid_path = cmd_get_valid_path(nodes->cmd);
 	if (valid_path == NULL)
 		exit(EXIT_FAILURE);
 	safe_check_access(valid_path, nodes->cmd, X_OK);
 	error_is_dir(valid_path);
-	tmp = nodes->cmd;
-	nodes->cmd = valid_path;
-	free(tmp);
 	change_signals(SIG_DFL, SIG_DFL);
-	execve(nodes->cmd, nodes->argv, env_list_to_arr(envp));
+	execve(valid_path, nodes->argv, env_list_to_arr(envp));
 	perror("execve");
 	exit(EXIT_FAILURE);
 }
