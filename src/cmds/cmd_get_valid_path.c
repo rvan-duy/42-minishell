@@ -6,11 +6,12 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 15:19:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/24 15:42:41 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/23 13:25:28 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "structs.h"
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -70,16 +71,21 @@ char	*cmd_get_valid_path(const char *command)
 	char		**splitted_paths;
 	char		*valid_path;
 
+	valid_path = NULL;
 	if (ft_strchr(command, '/'))
 		return (ft_strdup(command));
-	splitted_paths = ft_split(paths, ':');
-	splitted_paths = add_command_to_paths(splitted_paths, command);
-	valid_path = find_valid_path(splitted_paths);
+	if (command[0] != '.' && command[0] != '\0')
+	{
+		splitted_paths = ft_split(paths, ':');
+		splitted_paths = add_command_to_paths(splitted_paths, command);
+		valid_path = find_valid_path(splitted_paths);
+	}
 	if (valid_path == NULL)
 	{
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
 		ft_putstr_fd(command, STDERR_FILENO);
 		ft_putendl_fd(": command not found", STDERR_FILENO);
-		exit(127);
+		exit(ERROR_CODE_NO_FILE_FOUND);
 	}
 	return (valid_path);
 }
