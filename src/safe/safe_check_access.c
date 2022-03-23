@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/15 16:36:25 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/23 10:39:05 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/23 10:48:07 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ void	safe_check_access(char *absolute_path, const char *cmd, int oflag)
 		ft_putstr_fd(": ", STDERR_FILENO);
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 		free(absolute_path);
-		exit(ERROR_CODE_FOUND_BUT_NOT_EXECUTED);
+		if (errno == 2)
+			exit(ERROR_CODE_NO_FILE_FOUND);
+		else
+			exit(ERROR_CODE_FOUND_BUT_NOT_EXECUTED);
 	}
 }
