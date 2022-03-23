@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/19 13:14:29 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/22 20:19:31 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/23 11:59:26 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,7 @@ void	cmd_exec_single_file(t_cmd_node *nodes, t_env_var *envp,
 	}
 	cmd_io_redirections(nodes->files, true);
 	ret = builtin_check_and_exec(nodes, envp);
-	if (ret == SUCCESFULLY_EXECUTED_BUILTIN)
-		return ;
-	else if (ret == NO_BUILTIN)
+	if (ret == NO_BUILTIN)
 		execute_command(nodes, envp);
-	ft_putendl_fd("Error: builtin_check_and_exec == 1", STDERR_FILENO);
-	g_exit_status = FAILURE;
+	exit(ret);
 }

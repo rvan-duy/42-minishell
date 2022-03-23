@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/14 11:14:09 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/02/15 11:27:41 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/23 11:56:08 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,18 @@ static void	add_cwd_to_envp(const char *cwd, t_env_var **head)
 	env_node_add(head, new_node);
 }
 
+static t_status	end_function(const char *cwd, t_status exit_status)
+{
+	free((void *)cwd);
+	g_exit_status = exit_status;
+	return (exit_status);
+}
+
 t_status	builtin_cd(t_cmd_node *nodes, t_env_var *envp)
 {
 	t_env_var	*home_node;
 	const char	*cwd = getcwd(NULL, 0);
+	int			ret;
 
 	if (nodes->argv[1] == NULL || nodes->argv[1][0] == '~')
 	{
@@ -43,12 +51,12 @@ t_status	builtin_cd(t_cmd_node *nodes, t_env_var *envp)
 			g_exit_status = FAILURE;
 			return (FAILURE);
 		}
-		safe_chdir(home_node->value);
+		ret = safe_chdir(home_node->value);
 	}
 	else
-		safe_chdir(nodes->argv[1]);
+		ret = safe_chdir(nodes->argv[1]);
+	if (ret == FAILURE)
+		return (end_function(cwd, FAILURE));
 	add_cwd_to_envp(cwd, &envp);
-	free((void *)cwd);
-	g_exit_status = SUCCESS;
-	return (SUCCESS);
+	return (end_function(cwd, SUCCESS));
 }
