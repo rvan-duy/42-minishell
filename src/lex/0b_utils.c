@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/25 14:35:05 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/03/16 18:16:08 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/23 14:41:43 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ void	warn_or_error(t_error_code err)
 
 void	warn(t_error_code err)
 {
+	if (err == AMBIGUOUS_REDIRECT)
+		g_exit_status = FAILURE;
+	else
+		g_exit_status = 258;
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putendl_fd(get_err_str(err), STDERR_FILENO);
 }

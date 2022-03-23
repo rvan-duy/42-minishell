@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 15:45:21 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/03/23 10:47:18 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/23 14:27:34 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define ERROR_CODE_FOUND_BUT_NOT_EXECUTED 126
 
 // Exit to the exit status of the most recently executed foreground pipeline.
-unsigned char	g_exit_status;
+int	g_exit_status;
 
 /**
  * @param e_type type of in-/output

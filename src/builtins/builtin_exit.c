@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/14 15:32:55 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/23 12:03:30 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/23 14:26:28 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_status	builtin_exit(t_cmd_node *nodes)
 			ft_putendl_fd("exit", STDERR_FILENO);
 			ft_putstr_fd(PROGRAM_NAME, STDERR_FILENO);
 			ft_putendl_fd(": exit: too many arguments", STDERR_FILENO);
-			g_exit_status = 1;
+			g_exit_status = FAILURE;
 			return (FAILURE);
 		}
 		exit_code = ft_atoi(nodes->argv[1]);
