@@ -6,7 +6,7 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 15:45:21 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/03/18 11:59:36 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/23 10:47:18 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # define PROGRAM_NAME "minishell"
 
 # define ERROR_CODE_NUMERIC_ARGS 255
+# define ERROR_CODE_NO_FILE_FOUND 127
+# define ERROR_CODE_FOUND_BUT_NOT_EXECUTED 126
 
 // Exit to the exit status of the most recently executed foreground pipeline.
 unsigned char	g_exit_status;

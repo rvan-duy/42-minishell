@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2022/03/21 17:20:24 by mvan-wij      ########   odam.nl          #
+#    Updated: 2022/03/22 20:15:25 by rvan-duy      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,15 +65,15 @@ SOURCES	=									\
 	src/builtins/builtin_unset.c 			\
 	src/envp/env_arr_to_list.c 				\
 	src/envp/env_get_var.c 					\
-	src/envp/env_list_to_arr.c 				\
 	src/envp/env_node_add.c 				\
 	src/envp/env_node_last.c 				\
 	src/envp/env_node_new.c 				\
 	src/envp/env_node_del.c 				\
-	src/envp/env_list_len.c 				\
 	src/envp/env_node_dup.c 				\
+	src/envp/env_list_len.c 				\
 	src/envp/env_list_dup.c 				\
 	src/envp/env_list_free.c 				\
+	src/envp/env_list_to_arr.c 				\
 	src/lex/0a_utils.c						\
 	src/lex/0b_utils.c						\
 	src/lex/1_get_tokens.c					\
@@ -91,8 +91,7 @@ SOURCES	=									\
 	src/cmds/cmd_create_execve_array.c		\
 	src/cmds/cmd_exec_single_file.c			\
 	src/cmds/cmd_exec_multiple_files.c		\
-	src/cmds/cmd_redirect_stdin.c			\
-	src/cmds/cmd_redirect_stdout.c			\
+	src/cmds/cmd_io_redirections.c			\
 	src/cmds/cmd_expand_heredoc.c			\
 	src/errors/error_is_dir.c				\
 	src/debug/debug_print_nodes.c

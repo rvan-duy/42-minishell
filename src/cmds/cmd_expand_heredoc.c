@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 12:25:57 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/18 11:54:20 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/22 19:34:40 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	handle_heredoc(t_file *content)
 	file_number = ft_protect(ft_itoa(number));
 	file_name = ft_protect(ft_strjoin("/tmp/minishell_tmp_", file_number));
 	free(file_number);
-	fd = safe_open(file_name, O_WRONLY | O_TRUNC | O_CREAT);
+	fd = safe_open(file_name, O_WRONLY | O_TRUNC | O_CREAT, true);
 	number++;
 	do_heredoc(content->file_name, fd);
 	safe_close(fd);

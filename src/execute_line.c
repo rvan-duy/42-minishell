@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/16 11:58:04 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/22 20:18:53 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ static t_status	exec_builtin(t_cmd_node *nodes, t_env_var *envp)
 	int	*filestreams_backup;
 
 	filestreams_backup = create_backup();
-	cmd_redirect_stdin(nodes->files);
-	cmd_redirect_stdout(nodes->files);
-	builtin_check_and_exec(nodes, envp);
+	cmd_io_redirections(nodes->files, false);
+	if (g_exit_status != FAILURE)
+		builtin_check_and_exec(nodes, envp);
 	get_backup(filestreams_backup);
 	return (SUCCESS);
 }
