@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/14 15:32:55 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/22 13:10:14 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/23 12:03:30 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_status	builtin_exit(t_cmd_node *nodes)
 		}
 		exit_code = ft_atoi(nodes->argv[1]);
 	}
-	ft_putendl_fd("exit", STDERR_FILENO);
+	ft_putendl_fd("exit", STDOUT_FILENO);
 	exit(exit_code);
 	return (FAILURE);
 }

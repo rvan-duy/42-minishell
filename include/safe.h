@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/15 12:48:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/22 19:31:39 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/23 11:48:43 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_pipefds	safe_create_pipe(void);
 int			safe_open(const char *filename, int oflag, bool in_child);
 void		safe_close(int fd);
 void		safe_dup2(int fildes1, int fildes2);
-void		safe_chdir(const char *dir);
+int			safe_chdir(const char *dir);
 void		safe_check_access(char *absolute_path, const char *cmd, int oflag);
 
 #endif
