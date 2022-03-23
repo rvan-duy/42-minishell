@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/09 14:59:10 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/15 15:24:39 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/23 17:52:08 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	cmd_exec_multiple_files(t_cmd_node *nodes, t_env_var *envp)
 {
 	int				previous_read_pipe;
 	pid_t			pid;
-	pid_t			pid_last_cmd;
 	t_pipefds		pipe_fds;
 	const size_t	node_amount = node_len(nodes);
 
@@ -77,15 +76,17 @@ void	cmd_exec_multiple_files(t_cmd_node *nodes, t_env_var *envp)
 		pipe_fds = safe_create_pipe();
 		pid = safe_fork();
 		if (pid == CHILD_PROCESS)
-			exec_child(previous_read_pipe, pipe_fds.write, nodes, envp);
-		if (nodes->pipe_to == NULL)
 		{
-			pid_last_cmd = pid;
 			safe_close(pipe_fds.read);
+			exec_child(previous_read_pipe, pipe_fds.write, nodes, envp);
 		}
+		if (previous_read_pipe != STDIN_FILENO)
+			safe_close(previous_read_pipe);
+		if (nodes->pipe_to == NULL)
+			safe_close(pipe_fds.read);
 		safe_close(pipe_fds.write);
 		previous_read_pipe = pipe_fds.read;
 		nodes = nodes->pipe_to;
 	}
-	wait_for_all_processes(node_amount, pid_last_cmd);
+	wait_for_all_processes(node_amount, pid);
 }
