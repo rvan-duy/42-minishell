@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 16:51:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/21 18:24:51 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/25 11:00:32 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "signals.h"
 #include <stdio.h>
 #include <unistd.h>
+#include <stdbool.h>
 #include <signal.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -57,7 +58,7 @@ int	main(int argc, char **argv, char **envp)
 
 	line = NULL;
 	envp_linked = env_arr_to_list(envp);
-	while (1)
+	while (true)
 	{
 		change_signals(signal_handler, SIG_IGN);
 		free(line);

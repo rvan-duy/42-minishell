@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/22 20:18:53 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/25 11:00:05 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ static void	remove_tmp_files(t_cmd_node *nodes)
 	t_list	*files;
 	t_file	*content;
 
-	while (nodes)
+	while (nodes != NULL)
 	{
 		files = nodes->files;
-		while (files)
+		while (files != NULL)
 		{
 			content = files->content;
 			if (content->e_type == HERE_DOCUMENT)
@@ -75,7 +75,7 @@ static void	remove_tmp_files(t_cmd_node *nodes)
  * on whether the command has pipes or not
  * @param nodes pointer to `t_cmd_node *`
  * @param envp pointer to `t_env_var *`
- * @return 0 if bash command has succesfully been executed 
+ * @return 0 if bash command has succesfully been executed
  * - 1 in case of an error
  */
 t_status	execute_line(t_cmd_node *nodes, t_env_var *envp)

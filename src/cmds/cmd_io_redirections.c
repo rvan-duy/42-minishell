@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/22 20:09:19 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/22 20:30:35 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/25 11:03:29 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	cmd_io_redirections(t_list *files, bool in_child)
 	t_file	*content;
 
 	i = 0;
-	while (files)
+	while (files != NULL)
 	{
 		content = files->content;
 		if (content->e_type == REDIRECT_OUTPUT)

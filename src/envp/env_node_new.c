@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/27 14:15:38 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/11 15:04:22 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/25 11:04:54 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static t_status	first_occurrence(const char *env_var, const char c,
 	size_t	i;
 
 	i = 0;
-	while (env_var[i])
+	while (env_var[i] != '\0')
 	{
 		if (env_var[i] == c)
 		{

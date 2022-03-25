@@ -6,7 +6,7 @@
 /*   By: marius <marius@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/09/26 20:37:34 by marius        #+#    #+#                 */
-/*   Updated: 2021/10/19 14:47:52 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/17 16:16:30 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
  * e.g.: char *a[11];
  * a[10] = NULL;
  * ft_free_arr_dim(&a, 2);
+ * @param arr pointer to array
  * @param dim number of dimensions of array
  * (NOTE every * counts for a dimension (even char *))
  */

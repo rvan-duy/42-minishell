@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/06 16:45:07 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/15 14:55:10 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/25 11:03:44 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	print_files(t_list *files)
 		printf("NULL\n");
 		return ;
 	}
-	while (files)
+	while (files != NULL)
 	{
 		content = files->content;
 		printf("[%s - %u] ", content->file_name, content->e_type);
@@ -46,14 +46,14 @@ void	print_nodes(t_cmd_node *nodes)
 	size_t	i;
 
 	node_number = 1;
-	while (nodes)
+	while (nodes != NULL)
 	{
 		i = 0;
 		printf("-------------- NODE [%zu] --------------\n", node_number);
 		printf("address: %p\n", nodes);
 		printf("cmd:     %s\n", nodes->cmd);
 		printf("argv:    ");
-		while (nodes->argv[i])
+		while (nodes->argv[i] != NULL)
 			printf("[%s] ", nodes->argv[i++]);
 		printf("\n");
 		print_files(nodes->files);

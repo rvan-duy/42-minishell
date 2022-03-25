@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/19 13:14:29 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/23 11:59:26 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/25 10:58:18 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	cmd_exec_single_file(t_cmd_node *nodes, t_env_var *envp,
 {
 	int			ret;
 
-	if (nodes->pipe_to)
+	if (nodes->pipe_to != NULL)
 	{
 		safe_dup2(write_fd, STDOUT_FILENO);
 		safe_close(write_fd);

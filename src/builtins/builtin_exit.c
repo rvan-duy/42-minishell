@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/14 15:32:55 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/23 14:26:28 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/25 11:05:38 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ static void	check_numeric_arguments(const char *arg)
 		print_numeric_arg_error(arg);
 	if (arg[i] == '-' || arg[i] == '+')
 		i++;
-	while (arg[i])
+	while (arg[i] != '\0')
 	{
-		if (ft_isdigit(arg[i]) == false)
+		if (!ft_isdigit(arg[i]))
 			print_numeric_arg_error(arg);
 		i++;
 	}

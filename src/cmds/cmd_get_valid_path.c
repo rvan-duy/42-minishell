@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 15:19:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/23 13:25:28 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/25 11:03:23 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ static char	*find_valid_path(char **all_absolute_paths)
 
 	i = 0;
 	path = NULL;
-	while (all_absolute_paths[i])
+	while (all_absolute_paths[i] != NULL)
 	{
-		if (access(all_absolute_paths[i], X_OK) > -1)
+		if (access(all_absolute_paths[i], X_OK) >= 0)
 		{
 			path = ft_strdup(all_absolute_paths[i]);
 			if (path == NULL)
@@ -47,7 +47,7 @@ static char	**add_command_to_paths(char **split_paths, const char *command)
 	if (combined_path == NULL)
 		exit(EXIT_FAILURE);
 	i = 0;
-	while (split_paths[i])
+	while (split_paths[i] != NULL)
 	{
 		combined_path[i] = ft_strjoin_three(split_paths[i], "/", command);
 		if (combined_path[i] == NULL)
@@ -62,7 +62,7 @@ static char	**add_command_to_paths(char **split_paths, const char *command)
  * Searches for a valid path to a command
  * @param command pointer to `char *`
  * @return A pointer to a valid path allocated with malloc()
- * - if no valid path cannot be found, exit(127) is called 
+ * - if no valid path cannot be found, exit(127) is called
  * with the appropriate error message
  */
 char	*cmd_get_valid_path(const char *command)

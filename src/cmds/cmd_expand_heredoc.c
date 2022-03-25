@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 12:25:57 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/22 19:34:40 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/25 11:03:05 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	do_heredoc(char *limiter, int fd)
 	if (pid == 0)
 	{
 		signal(SIGINT, signal_handler_heredoc);
-		while (1)
+		while (true)
 		{
 			line = readline("> ");
 			if (line == NULL)
@@ -76,7 +76,7 @@ static void	expand_files(t_list *files)
 {
 	t_file	*content;
 
-	while (files)
+	while (files != NULL)
 	{
 		content = files->content;
 		if (content->e_type == HERE_DOCUMENT)
@@ -96,7 +96,7 @@ static void	expand_files(t_list *files)
 t_status	cmd_expand_heredoc(t_cmd_node *nodes)
 {
 	g_exit_status = EXIT_SUCCESS;
-	while (nodes)
+	while (nodes != NULL)
 	{
 		expand_files(nodes->files);
 		if (g_exit_status == EXIT_FAILURE)

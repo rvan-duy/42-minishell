@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   builtin_env.c                                      :+:    :+:            */
+/*   ft_min.c                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
+/*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/11/14 14:52:28 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/25 11:01:18 by mvan-wij      ########   odam.nl         */
+/*   Created: 2022/01/27 14:24:13 by mvan-wij      #+#    #+#                 */
+/*   Updated: 2022/01/27 14:26:40 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
-#include <stdio.h>
+#include <unistd.h>
 
-t_status	builtin_env(t_env_var *envp)
+ssize_t	ft_min(ssize_t a, ssize_t b)
 {
-	while (envp != NULL)
-	{
-		printf("%s=%s\n", envp->name, envp->value);
-		envp = envp->next;
-	}
-	g_exit_status = SUCCESS;
-	return (SUCCESS);
+	if (a < b)
+		return (a);
+	return (b);
 }
