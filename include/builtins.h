@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/07 15:46:40 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/22 11:51:38 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/25 10:57:15 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdbool.h>
 
 # define VALID 0
-# define UNVALID 1
+# define INVALID 1
 # define NO_BUILTIN 2
 
 bool		builtin_check(const char *cmd);

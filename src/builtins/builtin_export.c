@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/20 13:04:28 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/22 12:12:49 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/25 11:02:20 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static t_status	list_export(t_env_var *envp)
 
 	sorted_env = env_list_dup(envp);
 	bubble_sort(&sorted_env);
-	while (sorted_env)
+	while (sorted_env != NULL)
 	{
 		if (sorted_env->value != NULL)
 			printf("declare -x %s=\"%s\"\n", sorted_env->name, sorted_env->value);
@@ -68,12 +68,12 @@ static int	check_valid_identifier(char *identifier)
 	size_t	i;
 
 	if (ft_isalpha(identifier[0]) == 0)
-		return (UNVALID);
+		return (INVALID);
 	i = 0;
-	while (identifier[i])
+	while (identifier[i] != '\0')
 	{
 		if (ft_isalnum(identifier[i]) == 0 && identifier[i] != '_')
-			return (UNVALID);
+			return (INVALID);
 		i++;
 	}
 	return (VALID);
@@ -103,7 +103,7 @@ t_status	builtin_export(t_cmd_node *nodes, t_env_var *envp)
 		new_env_var = env_node_new(nodes->argv[i]);
 		if (new_env_var == NULL)
 			return (FAILURE);
-		if (check_valid_identifier(new_env_var->name) == UNVALID)
+		if (check_valid_identifier(new_env_var->name) == INVALID)
 		{
 			print_identifier_error(new_env_var);
 			free(new_env_var);

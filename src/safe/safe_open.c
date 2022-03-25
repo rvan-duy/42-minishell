@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/15 12:41:06 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/23 10:37:58 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/25 11:05:26 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	safe_open(const char *filename, int oflag, bool in_child)
 		ft_putstr_fd(filename, STDERR_FILENO);
 		ft_putstr_fd(": ", STDERR_FILENO);
 		perror("");
-		if (in_child == true)
+		if (in_child)
 			exit(EXIT_FAILURE);
 		else
 		{

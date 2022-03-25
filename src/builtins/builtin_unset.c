@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/22 13:17:20 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/22 12:16:05 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/25 11:02:27 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ static int	check_valid_identifier(char *identifier)
 	size_t	i;
 
 	if (ft_isalpha(identifier[0]) == 0)
-		return (UNVALID);
+		return (INVALID);
 	i = 0;
-	while (identifier[i])
+	while (identifier[i] != '\0')
 	{
 		if (ft_isalnum(identifier[i]) == 0 && identifier[i] != '_')
-			return (UNVALID);
+			return (INVALID);
 		i++;
 	}
 	return (VALID);
@@ -49,7 +49,7 @@ t_status	buitlin_unset(t_cmd_node *nodes, t_env_var *envp)
 	i = 1;
 	while (nodes->argv[i] != NULL)
 	{
-		if (check_valid_identifier(nodes->argv[i]) == UNVALID)
+		if (check_valid_identifier(nodes->argv[i]) == INVALID)
 			print_identifier_error(nodes->argv[i]);
 		else
 			env_node_del(nodes->argv[i], &envp);

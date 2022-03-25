@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/14 14:35:02 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2021/11/14 14:35:47 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/25 11:03:57 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_env_var	*env_list_dup(t_env_var *envp)
 	t_env_var	*tmp;
 
 	dupped_list = NULL;
-	while (envp)
+	while (envp != NULL)
 	{
 		tmp = env_node_dup(envp);
 		if (tmp == NULL)

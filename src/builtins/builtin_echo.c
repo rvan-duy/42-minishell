@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/07 15:30:01 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/07 12:52:38 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/25 11:05:33 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ static bool	contains_flag(const char *string, const char *flag)
 
 	if (string == NULL || ft_strlen(string) < 2)
 		return (false);
-	while (*flag && *string)
+	while (*flag != '\0' && *string != '\0')
 	{
 		if (*flag != *string)
 			return (false);
 		string++;
 		flag++;
 	}
-	while (*string)
+	while (*string != '\0')
 	{
 		if (*string != flag_type)
 			return (false);
@@ -45,7 +45,7 @@ t_status	builtin_echo(t_cmd_node *nodes)
 
 	i = 1;
 	n_flag = false;
-	while (contains_flag(nodes->argv[i], "-n") == true)
+	while (contains_flag(nodes->argv[i], "-n"))
 	{
 		n_flag = true;
 		i++;
@@ -57,7 +57,7 @@ t_status	builtin_echo(t_cmd_node *nodes)
 			ft_putchar_fd(' ', STDOUT_FILENO);
 		i++;
 	}
-	if (n_flag == false)
+	if (!n_flag)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	g_exit_status = SUCCESS;
 	return (SUCCESS);
