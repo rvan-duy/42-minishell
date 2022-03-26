@@ -57,13 +57,11 @@ t_list	*extract_redirects(t_list **tokens)
 
 char	**create_argv(t_list *tokens)
 {
-	t_list	*files;
 	size_t	i;
 	char	**argv;
 	t_list	*tmp;
 
 	i = 0;
-	files = NULL;
 	tmp = tokens;
 	while (tmp != NULL && !is_type(((t_token *)tmp->content)->type, PIPE))
 	{

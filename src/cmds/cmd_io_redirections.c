@@ -55,10 +55,8 @@ static int	handle_stdin(t_file *content, bool in_child)
 void	cmd_io_redirections(t_list *files, bool in_child)
 {
 	int		fd;
-	size_t	i;
 	t_file	*content;
 
-	i = 0;
 	while (files != NULL)
 	{
 		content = files->content;

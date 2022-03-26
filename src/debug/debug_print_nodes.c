@@ -16,10 +16,8 @@
 
 static void	print_files(t_list *files)
 {
-	size_t	i;
 	t_file	*content;
 
-	i = 0;
 	printf("files:   ");
 	if (files == NULL)
 	{
