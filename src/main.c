@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 16:51:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/25 11:00:32 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/26 16:05:46 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 #include <signal.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+
+int	g_exit_status = 0;
 
 static int	exit_shell(void)
 {
