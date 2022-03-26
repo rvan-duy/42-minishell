@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2022/03/22 20:15:25 by rvan-duy      ########   odam.nl          #
+#    Updated: 2022/03/26 15:24:53 by mvan-wij      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -124,7 +124,7 @@ all: $(PRE_RULES) $(NAME)
 
 $(NAME): $(LIBFT) $(OBJECTS)
 	@printf "$(CYAN_FG)%-$(PROJECT_SPACING)s$(RESET_COLOR) $(GREEN_FG)%-$(RULE_SPACING)s$(RESET_COLOR) : " "[$(PROJECT)]" "make"
-	$(CC) $(CFLAGS) $(OBJECTS) $(HOME)/.brew/opt/readline/lib/libreadline.dylib $(INCLUDES) $(LIB_FLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJECTS) $(INCLUDES) $(LIB_FLAGS) -o $(NAME)
 	@printf "$(CYAN_FG)%-$(PROJECT_SPACING)s$(RESET_COLOR) $(GREEN_FG)%-$(RULE_SPACING)s$(RESET_COLOR) : $(BLUE_FG)$(NAME)$(RESET_COLOR) created\n" "[$(PROJECT)]" "make"
 	@echo "$(CFLAGS)" > $(DATA_FILE)
 
