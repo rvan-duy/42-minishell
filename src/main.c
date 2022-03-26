@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 16:51:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/26 16:05:46 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/26 16:08:50 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "parse.h"
 #include "envp.h"
 #include "signals.h"
+#include <signal.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdbool.h>

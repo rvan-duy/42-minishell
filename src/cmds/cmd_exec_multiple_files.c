@@ -6,13 +6,14 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/09 14:59:10 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/25 11:02:42 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/26 15:26:33 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cmds.h"
 #include "safe.h"
 #include "signals.h"
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/errno.h>
