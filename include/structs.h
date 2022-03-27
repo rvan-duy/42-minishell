@@ -22,7 +22,7 @@
 # define ERROR_CODE_FOUND_BUT_NOT_EXECUTED 126
 
 // Exit to the exit status of the most recently executed foreground pipeline.
-int	g_exit_status;
+extern int	g_exit_status;
 
 /**
  * @param e_type type of in-/output
