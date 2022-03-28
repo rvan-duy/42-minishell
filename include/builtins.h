@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/07 15:46:40 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/25 10:57:15 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/28 11:21:11 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_status	builtin_env(t_env_var *envp);
 t_status	builtin_echo(t_cmd_node *nodes);
 t_status	builtin_exit(t_cmd_node *nodes);
 t_status	builtin_cd(t_cmd_node *nodes, t_env_var *envp);
-t_status	buitlin_unset(t_cmd_node *nodes, t_env_var *envp);
+t_status	builtin_unset(t_cmd_node *nodes, t_env_var *envp);
 t_status	builtin_export(t_cmd_node *nodes, t_env_var *envp);
 
 #endif

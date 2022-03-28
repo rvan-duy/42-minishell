@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/22 13:17:20 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/25 11:02:27 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/28 11:21:13 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	print_identifier_error(char *identifier)
 	g_exit_status = FAILURE;
 }
 
-t_status	buitlin_unset(t_cmd_node *nodes, t_env_var *envp)
+t_status	builtin_unset(t_cmd_node *nodes, t_env_var *envp)
 {
 	size_t	i;
 
