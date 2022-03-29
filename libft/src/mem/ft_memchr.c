@@ -6,14 +6,14 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/26 18:15:11 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2021/06/22 13:25:33 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/28 11:39:28 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
 /**
- * Search for char `c` in `ptr` with lengh `n`
+ * Search for char `c` in `ptr` with length `n`
  */
 void	*ft_memchr(const void *const_ptr, int c, size_t n)
 {
