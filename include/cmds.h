@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 16:50:30 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/22 20:17:21 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/03/28 11:39:07 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include "structs.h"
 # include <stdbool.h>
-
-# define SUCCESFULLY_EXECUTED_BUILTIN 0
 
 char		*cmd_get_valid_path(const char *command);
 char		**cmd_create_execve_array(char *command, char **arguments);
