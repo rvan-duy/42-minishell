@@ -6,15 +6,16 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2022/03/26 15:24:53 by mvan-wij      ########   odam.nl          #
+#    Updated: 2022/03/29 14:32:58 by mvan-wij      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 PROJECT			= minishell
 NAME			= minishell
 LIBFT			= libft/libft.a
-LIBREADLINE		= $(HOME)/.brew/opt/readline/lib/libreadline
-LIBCRITERION	= $(HOME)/.brew/opt/criterion/lib/libcriterion
+BREW_DIR		= $(shell brew --prefix)
+LIBREADLINE		= $(BREW_DIR)/opt/readline/lib/libreadline
+LIBCRITERION	= $(BREW_DIR)/opt/criterion/lib/libcriterion
 
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
@@ -42,8 +43,8 @@ HEADERS	=					\
 	src/lex/lex.h
 
 HEADER_DIRS =							\
-	$(HOME)/.brew/opt/readline/include	\
-	# $(HOME)/.brew/opt/criterion/include
+	$(BREW_DIR)/opt/readline/include	\
+	# $(BREW_DIR)/opt/criterion/include
 
 SOURCES	=									\
 	src/execute_line.c						\
