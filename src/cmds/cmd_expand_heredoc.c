@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 12:25:57 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/25 11:03:05 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/29 14:18:01 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	exit_heredoc(char *line)
 	exit(EXIT_SUCCESS);
 }
 
-static void	do_heredoc(char *limiter, int fd)
+static int	do_heredoc(char *limiter, int fd)
 {
 	char	*line;
 	pid_t	pid;
@@ -49,14 +49,15 @@ static void	do_heredoc(char *limiter, int fd)
 		}
 	}
 	safe_wait(&exit_status);
-	g_exit_status = WEXITSTATUS(exit_status);
+	return (WEXITSTATUS(exit_status));
 }
 
-static void	handle_heredoc(t_file *content)
+static int	handle_heredoc(t_file *content)
 {
 	static int	number = 1;
-	char		*file_name;
 	int			fd;
+	int			ret;
+	char		*file_name;
 	char		*file_number;
 
 	file_number = ft_protect(ft_itoa(number));
@@ -64,15 +65,16 @@ static void	handle_heredoc(t_file *content)
 	free(file_number);
 	fd = safe_open(file_name, O_WRONLY | O_TRUNC | O_CREAT, true);
 	number++;
-	do_heredoc(content->file_name, fd);
+	ret = do_heredoc(content->file_name, fd);
 	safe_close(fd);
-	if (g_exit_status == EXIT_FAILURE)
-		return ;
+	if (ret == EXIT_FAILURE)
+		return (ret);
 	free(content->file_name);
 	content->file_name = file_name;
+	return (ret);
 }
 
-static void	expand_files(t_list *files)
+static t_status	expand_files(t_list *files)
 {
 	t_file	*content;
 
@@ -81,12 +83,15 @@ static void	expand_files(t_list *files)
 		content = files->content;
 		if (content->e_type == HERE_DOCUMENT)
 		{
-			handle_heredoc(files->content);
-			if (g_exit_status == EXIT_FAILURE)
-				return ;
+			if (handle_heredoc(files->content) == EXIT_FAILURE)
+			{
+				g_exit_status = EXIT_FAILURE;
+				return (FAILURE);
+			}
 		}
 		files = files->next;
 	}
+	return (SUCCESS);
 }
 
 /**
@@ -95,11 +100,9 @@ static void	expand_files(t_list *files)
  */
 t_status	cmd_expand_heredoc(t_cmd_node *nodes)
 {
-	g_exit_status = EXIT_SUCCESS;
 	while (nodes != NULL)
 	{
-		expand_files(nodes->files);
-		if (g_exit_status == EXIT_FAILURE)
+		if (expand_files(nodes->files) == FAILURE)
 			return (FAILURE);
 		nodes = nodes->pipe_to;
 	}
