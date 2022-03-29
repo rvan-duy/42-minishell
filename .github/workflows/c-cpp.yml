@@ -24,5 +24,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Install readline
+      run:  brew install readline
     - name: minishell
       run:  make
