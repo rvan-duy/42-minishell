@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/14 15:32:55 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/25 11:05:38 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/29 11:28:22 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,6 @@ static void	check_numeric_arguments(const char *arg)
 
 t_status	builtin_exit(t_cmd_node *nodes)
 {
-	int	exit_code;
-
-	exit_code = 0;
 	if (nodes->argv[1] != NULL)
 	{
 		check_numeric_arguments(nodes->argv[1]);
@@ -59,9 +56,9 @@ t_status	builtin_exit(t_cmd_node *nodes)
 			g_exit_status = FAILURE;
 			return (FAILURE);
 		}
-		exit_code = ft_atoi(nodes->argv[1]);
+		g_exit_status = ft_atoi(nodes->argv[1]);
 	}
 	ft_putendl_fd("exit", STDOUT_FILENO);
-	exit(exit_code);
+	exit(g_exit_status);
 	return (FAILURE);
 }

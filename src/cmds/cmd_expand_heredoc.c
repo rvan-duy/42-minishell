@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/15 12:25:57 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/25 11:03:05 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/29 11:31:21 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static void	expand_files(t_list *files)
 {
 	t_file	*content;
 
+	g_exit_status = EXIT_SUCCESS;
 	while (files != NULL)
 	{
 		content = files->content;
@@ -95,7 +96,6 @@ static void	expand_files(t_list *files)
  */
 t_status	cmd_expand_heredoc(t_cmd_node *nodes)
 {
-	g_exit_status = EXIT_SUCCESS;
 	while (nodes != NULL)
 	{
 		expand_files(nodes->files);
