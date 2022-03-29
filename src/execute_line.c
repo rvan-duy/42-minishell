@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/25 11:00:05 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/03/29 14:03:54 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ static t_status	exec_builtin(t_cmd_node *nodes, t_env_var *envp)
 
 	filestreams_backup = create_backup();
 	cmd_io_redirections(nodes->files, false);
-	if (g_exit_status != FAILURE)
-		builtin_check_and_exec(nodes, envp);
+	builtin_check_and_exec(nodes, envp);
 	get_backup(filestreams_backup);
 	return (SUCCESS);
 }
@@ -80,8 +79,7 @@ static void	remove_tmp_files(t_cmd_node *nodes)
  */
 t_status	execute_line(t_cmd_node *nodes, t_env_var *envp)
 {
-	int		pid;
-	int		exit_status;
+	int			pid;
 
 	if (cmd_expand_heredoc(nodes) == FAILURE)
 		return (FAILURE);
@@ -94,8 +92,8 @@ t_status	execute_line(t_cmd_node *nodes, t_env_var *envp)
 			pid = safe_fork();
 			if (pid == CHILD_PROCESS)
 				cmd_exec_single_file(nodes, envp, STDOUT_FILENO);
-			wait(&exit_status);
-			g_exit_status = WEXITSTATUS(exit_status);
+			wait(&g_exit_status);
+			g_exit_status = WEXITSTATUS(g_exit_status);
 			return (SUCCESS);
 		}
 	}
