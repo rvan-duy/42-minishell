@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2022/03/29 14:32:58 by mvan-wij      ########   odam.nl          #
+#    Updated: 2022/04/06 12:25:47 by mvan-wij      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,14 +33,16 @@ LIBS = $(LIBFT) $(LIBREADLINE) # $(LIBCRITERION)
 HEADERS	=					\
 	libft/libft.h			\
 	include/builtins.h		\
-	include/structs.h		\
-	include/execute.h		\
-	include/safe.h			\
-	include/signals.h		\
-	include/envp.h			\
 	include/cmds.h			\
 	include/debug.h			\
-	src/lex/lex.h
+	include/envp.h			\
+	include/error.h			\
+	include/execute.h		\
+	include/parse.h			\
+	include/safe.h			\
+	include/signals.h		\
+	include/structs.h		\
+	include/lex.h
 
 HEADER_DIRS =							\
 	$(BREW_DIR)/opt/readline/include	\

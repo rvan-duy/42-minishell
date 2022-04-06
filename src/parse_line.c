@@ -6,11 +6,11 @@
 /*   By: mvan-wij <mvan-wij@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/16 15:14:52 by mvan-wij      #+#    #+#                 */
-/*   Updated: 2022/03/21 17:13:36 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/04/06 12:30:08 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lex/lex.h"
+#include "lex.h"
 #include "structs.h"
 #include "libft.h"
 
