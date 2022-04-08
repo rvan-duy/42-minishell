@@ -6,12 +6,13 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 15:19:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/25 11:03:23 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/04/08 14:09:53 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "structs.h"
+#include "envp.h"
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -65,18 +66,20 @@ static char	**add_command_to_paths(char **split_paths, const char *command)
  * - if no valid path cannot be found, exit(127) is called
  * with the appropriate error message
  */
-char	*cmd_get_valid_path(const char *command)
+char	*cmd_get_valid_path(const char *command, t_env_var *envp)
 {
-	const char	*paths = getenv("PATH");
-	char		**splitted_paths;
-	char		*valid_path;
+	const t_env_var	*paths = env_get_var("PATH", envp);
+	char			**splitted_paths;
+	char			*valid_path;
 
+	if (paths == NULL)
+		return (ft_strdup(""));
 	valid_path = NULL;
 	if (ft_strchr(command, '/'))
 		return (ft_strdup(command));
 	if (command[0] != '.' && command[0] != '\0')
 	{
-		splitted_paths = ft_split(paths, ':');
+		splitted_paths = ft_split(paths->value, ':');
 		splitted_paths = add_command_to_paths(splitted_paths, command);
 		valid_path = find_valid_path(splitted_paths);
 	}

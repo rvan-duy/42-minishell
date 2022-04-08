@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/14 15:32:55 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/29 14:03:25 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/04/08 11:53:04 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 static void	print_numeric_arg_error(const char *arg)
 {
+	ft_putendl_fd("exit", STDERR_FILENO);
 	ft_putstr_fd(PROGRAM_NAME, STDERR_FILENO);
 	ft_putstr_fd(": exit: ", STDERR_FILENO);
 	ft_putstr_fd(arg, STDERR_FILENO);
@@ -40,6 +41,8 @@ static void	check_numeric_arguments(const char *arg)
 			print_numeric_arg_error(arg);
 		i++;
 	}
+	if (i >= 20)
+		print_numeric_arg_error(arg);
 	return ;
 }
 
