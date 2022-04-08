@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/20 13:04:28 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/25 11:02:20 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/04/08 12:29:18 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,9 @@ t_status	builtin_export(t_cmd_node *nodes, t_env_var *envp)
 			print_identifier_error(new_env_var);
 			free(new_env_var);
 		}
-		else
+		else if (env_get_var(new_env_var->name, envp) == NULL)
+			env_node_add(&envp, new_env_var);
+		else if (env_get_var(new_env_var->name, envp) != NULL && new_env_var->value != NULL)
 		{
 			env_node_del(new_env_var->name, &envp);
 			env_node_add(&envp, new_env_var);
