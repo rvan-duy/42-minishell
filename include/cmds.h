@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/08 16:50:30 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/28 11:39:07 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/04/08 14:02:21 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "structs.h"
 # include <stdbool.h>
 
-char		*cmd_get_valid_path(const char *command);
+char		*cmd_get_valid_path(const char *command, t_env_var *envp);
 char		**cmd_create_execve_array(char *command, char **arguments);
 void		cmd_exec_single_file(t_cmd_node *nodes, t_env_var *envp, \
 				int write_fd);
