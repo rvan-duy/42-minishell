@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/04/08 10:56:47 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/04/08 13:39:06 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static void	remove_tmp_files(t_cmd_node *nodes)
 		nodes = nodes->pipe_to;
 	}
 }
+
 /**
  * Reproduces the behavior of bash, the algorithm works slightly different based
  * on whether the command has pipes or not

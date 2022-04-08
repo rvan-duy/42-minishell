@@ -6,7 +6,7 @@
 #    By: mvan-wij <mvan-wij@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/10/06 11:47:27 by mvan-wij      #+#    #+#                  #
-#    Updated: 2022/04/06 12:25:47 by mvan-wij      ########   odam.nl          #
+#    Updated: 2022/04/08 13:36:17 by rvan-duy      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,6 +64,7 @@ SOURCES	=									\
 	src/builtins/builtin_env.c 				\
 	src/builtins/builtin_exit.c 			\
 	src/builtins/builtin_export.c 			\
+	src/builtins/builtin_export_list.c		\
 	src/builtins/builtin_pwd.c 				\
 	src/builtins/builtin_unset.c 			\
 	src/envp/env_arr_to_list.c 				\
