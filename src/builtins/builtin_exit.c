@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/14 15:32:55 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/04/08 11:53:04 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/04/11 13:57:57 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,16 @@ static void	print_numeric_arg_error(const char *arg)
 	exit(ERROR_CODE_NUMERIC_ARGS);
 }
 
-static void	check_numeric_arguments(const char *arg)
-{
-	size_t	i;
-
-	i = 0;
-	if (ft_strncmp("-", arg, 2) == 0)
-		print_numeric_arg_error(arg);
-	if (arg[i] == '-' || arg[i] == '+')
-		i++;
-	while (arg[i] != '\0')
-	{
-		if (!ft_isdigit(arg[i]))
-			print_numeric_arg_error(arg);
-		i++;
-	}
-	if (i >= 20)
-		print_numeric_arg_error(arg);
-	return ;
-}
-
 t_status	builtin_exit(t_cmd_node *nodes)
 {
+	long long	exit_status;
+	bool		had_overflow;
+
 	if (nodes->argv[1] != NULL)
 	{
-		check_numeric_arguments(nodes->argv[1]);
+		if (!ft_atoll_strict(nodes->argv[1], &exit_status, &had_overflow) \
+		|| had_overflow)
+			print_numeric_arg_error(nodes->argv[1]);
 		if (nodes->argv[2] != NULL)
 		{
 			ft_putendl_fd("exit", STDERR_FILENO);
@@ -59,7 +44,7 @@ t_status	builtin_exit(t_cmd_node *nodes)
 			g_exit_status = FAILURE;
 			return (FAILURE);
 		}
-		g_exit_status = ft_atoi(nodes->argv[1]);
+		g_exit_status = exit_status;
 	}
 	ft_putendl_fd("exit", STDOUT_FILENO);
 	exit(g_exit_status);
