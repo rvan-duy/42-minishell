@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/14 11:14:09 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/04/12 10:46:22 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/04/12 17:12:30 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 #include "safe.h"
 #include "libft.h"
 
-static void	add_cwd_to_envp(const char *cwd, t_env_var **head)
+static void	add_new_envp(const char *name, const char *value, t_env_var **head)
 {
 	t_env_var	*new_node;
 	char		*full_var_name;
 
-	full_var_name = ft_strjoin("OLDPWD=", cwd);
+	full_var_name = ft_strjoin_three(name, "=", value);
 	if (full_var_name == NULL)
 		exit(EXIT_FAILURE);
 	new_node = env_node_new(full_var_name);
 	if (new_node == NULL)
 		exit(EXIT_FAILURE);
-	env_node_del("OLDPWD", head);
+	env_node_del(name, head);
 	env_node_add(head, new_node);
 }
 
@@ -57,6 +57,8 @@ t_status	builtin_cd(t_cmd_node *nodes, t_env_var *envp)
 		ret = safe_chdir(nodes->argv[1]);
 	if (ret == FAILURE)
 		return (end_function(cwd, FAILURE));
-	add_cwd_to_envp(cwd, &envp);
+	add_new_envp("OLDPWD", cwd, &envp);
+	cwd = getcwd(NULL, 0);
+	add_new_envp("PWD", cwd, &envp);
 	return (end_function(cwd, SUCCESS));
 }
