@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/14 11:14:09 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/23 11:56:08 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/04/12 10:46:22 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_status	builtin_cd(t_cmd_node *nodes, t_env_var *envp)
 	const char	*cwd = getcwd(NULL, 0);
 	int			ret;
 
-	if (nodes->argv[1] == NULL || nodes->argv[1][0] == '~')
+	if (nodes->argv[1] == NULL)
 	{
 		home_node = env_get_var("HOME", envp);
 		if (home_node == NULL)

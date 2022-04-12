@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/09 14:59:10 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/26 15:26:33 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/04/12 12:10:38 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	wait_for_all_processes(size_t node_amount, pid_t pid_last_cmd)
 	{
 		pid = safe_wait(&exit_status);
 		if (pid == pid_last_cmd)
-			g_exit_status = WEXITSTATUS(exit_status);
+			g_exit_status = signal_conversion(exit_status);
 		i++;
 	}
 }
