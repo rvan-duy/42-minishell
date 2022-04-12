@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/04/08 13:39:06 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/04/12 12:10:09 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "builtins.h"
 #include "envp.h"
 #include "cmds.h"
+#include "signals.h"
 #include <fcntl.h>
 #include <sys/wait.h>
 #include <stdio.h>
@@ -93,7 +94,7 @@ t_status	execute_line(t_cmd_node *nodes, t_env_var *envp)
 			if (pid == CHILD_PROCESS)
 				cmd_exec_single_file(nodes, envp, STDOUT_FILENO);
 			wait(&g_exit_status);
-			g_exit_status = WEXITSTATUS(g_exit_status);
+			g_exit_status = signal_conversion(g_exit_status);
 			return (SUCCESS);
 		}
 	}
