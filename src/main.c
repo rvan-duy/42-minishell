@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 16:51:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/26 16:08:50 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/04/12 10:27:56 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	g_exit_status = 0;
 static int	exit_shell(void)
 {
 	ft_putendl_fd("exit", STDOUT_FILENO);
-	return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }
 
 static void	free_node_file(void *_file)
