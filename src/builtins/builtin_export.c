@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/20 13:04:28 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/04/08 13:38:18 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/04/13 12:02:39 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static int	check_valid_identifier(char *identifier)
 {
 	size_t	i;
 
-	if (ft_isalpha(identifier[0]) == 0)
+	if (ft_isdigit(identifier[0]))
 		return (INVALID);
 	i = 0;
 	while (identifier[i] != '\0')
 	{
-		if (ft_isalnum(identifier[i]) == 0 && identifier[i] != '_')
+		if (!ft_isalnum(identifier[i]) && identifier[i] != '_')
 			return (INVALID);
 		i++;
 	}
