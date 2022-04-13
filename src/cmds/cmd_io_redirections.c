@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/03/22 20:09:19 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/25 11:03:29 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/04/13 13:20:56 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	handle_stdin(t_file *content, bool in_child)
  * @param bool in_child
  * @return nothing, calls exit() on error
  */
-void	cmd_io_redirections(t_list *files, bool in_child)
+t_status	cmd_io_redirections(t_list *files, bool in_child)
 {
 	int		fd;
 	t_file	*content;
@@ -68,7 +68,8 @@ void	cmd_io_redirections(t_list *files, bool in_child)
 			|| content->e_type == HERE_DOCUMENT)
 			fd = handle_stdin(content, in_child);
 		if (fd == -1)
-			break ;
+			return (FAILURE);
 		files = files->next;
 	}
+	return (SUCCESS);
 }
