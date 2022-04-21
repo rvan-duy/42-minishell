@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/04/13 13:21:12 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/04/20 13:12:12 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,14 @@ static int	*create_backup(void)
 }
 
 static void	get_backup(int *backup)
-{
-	safe_close(STDIN_FILENO);
+{ safe_close(STDIN_FILENO);
 	safe_close(STDOUT_FILENO);
 	safe_dup2(backup[0], STDIN_FILENO);
 	safe_dup2(backup[1], STDOUT_FILENO);
 	free(backup);
 }
 
-static t_status	exec_builtin(t_cmd_node *nodes, t_env_var *envp)
+static t_status	exec_builtin(t_cmd_node *nodes, t_env_var **envp)
 {
 	int	*filestreams_backup;
 
@@ -79,7 +78,7 @@ static void	remove_tmp_files(t_cmd_node *nodes)
  * @return 0 if bash command has successfully been executed
  * - 1 in case of an error
  */
-t_status	execute_line(t_cmd_node *nodes, t_env_var *envp)
+t_status	execute_line(t_cmd_node *nodes, t_env_var **envp)
 {
 	int			pid;
 

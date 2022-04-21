@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/19 13:14:29 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/04/08 14:02:40 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/04/20 13:11:52 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	execute_command(t_cmd_node *nodes, t_env_var *envp)
  * @param envp pointer to `t_env_var *`
  * @return nothing, if file is executed the process is replaced
  */
-void	cmd_exec_single_file(t_cmd_node *nodes, t_env_var *envp,
+void	cmd_exec_single_file(t_cmd_node *nodes, t_env_var **envp,
 									int write_fd)
 {
 	int			ret;
@@ -56,6 +56,6 @@ void	cmd_exec_single_file(t_cmd_node *nodes, t_env_var *envp,
 	cmd_io_redirections(nodes->files, true);
 	ret = builtin_check_and_exec(nodes, envp);
 	if (ret == NO_BUILTIN)
-		execute_command(nodes, envp);
+		execute_command(nodes, *envp);
 	exit(ret);
 }

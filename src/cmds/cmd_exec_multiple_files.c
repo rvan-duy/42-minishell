@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/09 14:59:10 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/04/12 12:10:38 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/04/20 13:11:39 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	wait_for_all_processes(size_t node_amount, pid_t pid_last_cmd)
 }
 
 static void	exec_child(int read_pipe, int write_pipe,
-						t_cmd_node *nodes, t_env_var *envp)
+						t_cmd_node *nodes, t_env_var **envp)
 {
 	safe_dup2(read_pipe, STDIN_FILENO);
 	if (read_pipe != STDIN_FILENO)
@@ -64,7 +64,7 @@ static void	exec_child(int read_pipe, int write_pipe,
  * @param envp pointer to `t_env_var *`
  * @return nothing
  */
-void	cmd_exec_multiple_files(t_cmd_node *nodes, t_env_var *envp)
+void	cmd_exec_multiple_files(t_cmd_node *nodes, t_env_var **envp)
 {
 	int				previous_read_pipe;
 	pid_t			pid;
