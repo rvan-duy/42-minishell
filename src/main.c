@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/05 16:51:05 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/04/12 10:27:56 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/04/20 13:07:17 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		node = parse_line(line, envp_linked);
 		if (node != NULL)
-			execute_line(node, envp_linked);
+			execute_line(node, &envp_linked);
 		add_history(line);
 		free_nodes(node);
 	}
