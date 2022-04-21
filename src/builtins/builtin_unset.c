@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/22 13:17:20 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/03/28 11:21:13 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/04/20 13:09:53 by mvan-wij      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static int	check_valid_identifier(char *identifier)
 {
 	size_t	i;
 
-	if (ft_isalpha(identifier[0]) == 0)
+	if (ft_isdigit(identifier[0]))
 		return (INVALID);
 	i = 0;
 	while (identifier[i] != '\0')
 	{
-		if (ft_isalnum(identifier[i]) == 0 && identifier[i] != '_')
+		if (!ft_isalnum(identifier[i]) && identifier[i] != '_')
 			return (INVALID);
 		i++;
 	}
@@ -39,7 +39,7 @@ static void	print_identifier_error(char *identifier)
 	g_exit_status = FAILURE;
 }
 
-t_status	builtin_unset(t_cmd_node *nodes, t_env_var *envp)
+t_status	builtin_unset(t_cmd_node *nodes, t_env_var **envp)
 {
 	size_t	i;
 
@@ -52,7 +52,7 @@ t_status	builtin_unset(t_cmd_node *nodes, t_env_var *envp)
 		if (check_valid_identifier(nodes->argv[i]) == INVALID)
 			print_identifier_error(nodes->argv[i]);
 		else
-			env_node_del(nodes->argv[i], &envp);
+			env_node_del(nodes->argv[i], envp);
 		i++;
 	}
 	return (SUCCESS);
