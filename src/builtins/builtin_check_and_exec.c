@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/11 16:19:24 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/04/20 13:09:38 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/04/21 15:02:26 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	builtin_check_and_exec(t_cmd_node *nodes, t_env_var **envp)
 	if (ft_strncmp(nodes->cmd, "pwd", ft_strlen(nodes->cmd) + 1) == 0)
 		return (builtin_pwd());
 	if (ft_strncmp(nodes->cmd, "cd", ft_strlen(nodes->cmd) + 1) == 0)
-		return (builtin_cd(nodes, *envp));
+		return (builtin_cd(nodes, envp));
 	if (ft_strncmp(nodes->cmd, "export", ft_strlen(nodes->cmd) + 1) == 0)
 		return (builtin_export(nodes, *envp));
 	if (ft_strncmp(nodes->cmd, "unset", ft_strlen(nodes->cmd) + 1) == 0)
