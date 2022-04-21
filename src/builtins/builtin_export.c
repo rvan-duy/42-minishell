@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/20 13:04:28 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/04/13 12:02:39 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/04/21 15:04:58 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,24 @@ static void	print_identifier_error(t_env_var *var)
 	g_exit_status = FAILURE;
 }
 
-static void	add_node(t_env_var *new_env_var, t_env_var *envp)
+static void	add_node(t_env_var *new_env_var, t_env_var **envp)
 {
 	if (check_valid_identifier(new_env_var->name) == INVALID)
 	{
 		print_identifier_error(new_env_var);
 		free(new_env_var);
 	}
-	else if (env_get_var(new_env_var->name, envp) == NULL)
-		env_node_add(&envp, new_env_var);
-	else if (env_get_var(new_env_var->name, envp) != NULL
+	else if (env_get_var(new_env_var->name, *envp) == NULL)
+		env_node_add(envp, new_env_var);
+	else if (env_get_var(new_env_var->name, *envp) != NULL
 		&& new_env_var->value != NULL)
 	{
-		env_node_del(new_env_var->name, &envp);
-		env_node_add(&envp, new_env_var);
+		env_node_del(new_env_var->name, envp);
+		env_node_add(envp, new_env_var);
 	}
 }
 
-t_status	builtin_export(t_cmd_node *nodes, t_env_var *envp)
+t_status	builtin_export(t_cmd_node *nodes, t_env_var **envp)
 {
 	t_env_var	*new_env_var;
 	size_t		i;

@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/08 13:34:47 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/04/08 13:38:02 by rvan-duy      ########   odam.nl         */
+/*   Updated: 2022/04/21 15:06:38 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ static void	bubble_sort(t_env_var **head)
 	}
 }
 
-t_status	list_export(t_env_var *envp)
+t_status	list_export(t_env_var **envp)
 {
 	t_env_var	*sorted_env;
 
-	sorted_env = env_list_dup(envp);
+	sorted_env = env_list_dup(*envp);
 	bubble_sort(&sorted_env);
 	while (sorted_env != NULL)
 	{
