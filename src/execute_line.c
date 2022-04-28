@@ -6,7 +6,7 @@
 /*   By: rvan-duy <rvan-duy@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/10/06 11:36:39 by rvan-duy      #+#    #+#                 */
-/*   Updated: 2022/04/20 13:12:12 by mvan-wij      ########   odam.nl         */
+/*   Updated: 2022/04/28 16:15:09 by rvan-duy      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ static int	*create_backup(void)
 }
 
 static void	get_backup(int *backup)
-{ safe_close(STDIN_FILENO);
+{
+	safe_close(STDIN_FILENO);
 	safe_close(STDOUT_FILENO);
 	safe_dup2(backup[0], STDIN_FILENO);
 	safe_dup2(backup[1], STDOUT_FILENO);
